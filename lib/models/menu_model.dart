@@ -5,14 +5,20 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 0)
 class MenuModel extends HiveObject {
   @HiveField(0)
-  late String name;
+  late int foodMenuId;
 
   @HiveField(1)
-  late DateTime createdDate;
+  late int foodCode;
 
   @HiveField(2)
-  late bool isExpense = true;
+  late String foodName;
 
   @HiveField(3)
-  late double amount;
+  late String foodCategory;
+
+  @HiveField(4)
+  late int salePrice;
+
+  @HiveField(5)
+  late int totalIngredients;
 }
