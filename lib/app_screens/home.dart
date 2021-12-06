@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
               heightBox(context, 0.02),
               inputFieldsHome(context, "Reservation Number:", "Ex:Res.00042"),
               heightBox(context, 0.02),
-              inputFieldsHome(context, "Select Date:", "mm/dd/yy"),
+              inputFieldsHome(context, "Select Date:", "mm/dd/yy", check: true),
               heightBox(context, 0.03),
               coloredButton(context, "SEARCH", myOrange)
             ],
@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget inputFieldsHome(context, text1, hintText1) {
+Widget inputFieldsHome(context, text1, hintText1, {check = false}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -63,9 +63,24 @@ Widget inputFieldsHome(context, text1, hintText1) {
       Container(
         color: myWhite,
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.04)),
-        child: TextFormField(
-          decoration: InputDecoration(hintText: hintText1, fillColor: myWhite),
-        ),
+        child: (check == true)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: dynamicWidth(context, 0.5),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: hintText1, fillColor: myWhite),
+                    ),
+                  ),
+                  const Icon(Icons.calendar_today_outlined)
+                ],
+              )
+            : TextFormField(
+                decoration:
+                    InputDecoration(hintText: hintText1, fillColor: myWhite),
+              ),
       )
     ],
   );
