@@ -1,6 +1,7 @@
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
+import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: myBlack,
       appBar: bar(context),
-      // drawer: ,
+      drawer: SizedBox(
+        width: dynamicWidth(context, .7),
+        height: dynamicHeight(context, 1),
+        child: Drawer(
+          child: drawerItems(
+            context,
+          ),
+        ),
+      ),
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.1)),
