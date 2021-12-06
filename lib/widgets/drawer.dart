@@ -12,7 +12,6 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "All Reservations";
         Navigator.pop(context, function());
-        // push(context, AboutUs());
       },
     },
     {
@@ -21,7 +20,6 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "Waiting For Arrival";
         Navigator.pop(context, function());
-        // push(context, PoliciesPage());
       },
     },
     {
@@ -30,7 +28,6 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "Arrived Guests";
         Navigator.pop(context, function());
-        // push(context, StoreFinder());
       },
     },
     {
@@ -39,7 +36,6 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "Dine In Orders";
         Navigator.pop(context, function());
-        // push(context, ContactPage());
       },
     },
     {
@@ -48,7 +44,6 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "New Reservations";
         Navigator.pop(context, function());
-        // push(context, ContactPage());
       },
     },
     {
@@ -57,16 +52,13 @@ Widget drawerItems(context, function) {
       "function": () {
         pageDecider = "Notifications";
         Navigator.pop(context, function());
-        // push(context, ContactPage());
       },
     },
     {
       "icon": Icons.logout,
       "text": "LogOut",
       "function": () {
-        pop(context);
-        pop(context);
-        // push(context, ContactPage());
+        popUntil(context);
       },
     },
   ];

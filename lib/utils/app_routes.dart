@@ -17,5 +17,9 @@ void pushAndRemoveUntil(context, Widget page) {
       MaterialPageRoute(
         builder: (BuildContext context) => page,
       ),
-          (Route<dynamic> route) => false);
+      (Route<dynamic> route) => false);
+}
+
+void popUntil(context) {
+  Navigator.popUntil(context, (route) => route.isFirst);
 }

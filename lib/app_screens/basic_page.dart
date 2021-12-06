@@ -7,14 +7,14 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class BasicPage extends StatefulWidget {
+  const BasicPage({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _BasicPageState createState() => _BasicPageState();
 }
 
-class _HomeState extends State<Home> {
+class _BasicPageState extends State<BasicPage> {
   var hintText = "mm/dd/yy";
 
   @override
@@ -34,32 +34,32 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, 0.1),
           ),
-          child: (pageDecider == "Arrived Guests")
-              ? arrivedGuestPage(context)
-              : Column(
-                  children: [
-                    heightBox(context, 0.05),
-                    text(context, "ALL RESERVATIONS", 0.05, myWhite),
-                    const Divider(
-                      thickness: 1,
-                      color: myWhite,
-                    ),
-                    heightBox(context, 0.02),
-                    inputFieldsHome(
-                        context, "Reservation Number:", "Ex:Res.00042"),
-                    heightBox(context, 0.02),
-                    inputFieldsHome(context, "Select Date:", hintText,
-                        check: true),
-                    heightBox(context, 0.04),
-                    coloredButton(context, "SEARCH", myOrange, fontSize: 0.042)
-                  ],
-                ),
+          child: bodyPage(pageDecider),
         ),
       ),
     );
   }
 
-  Widget inputFieldsHome(context, text1, hintText1, {check = false}) {
+  Widget allReservationsPage() {
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "ALL RESERVATIONS", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+        heightBox(context, 0.02),
+        inputFieldsHome("Reservation Number:", "Ex:Res.00042"),
+        heightBox(context, 0.02),
+        inputFieldsHome("Select Date:", hintText, check: true),
+        heightBox(context, 0.04),
+        coloredButton(context, "SEARCH", myOrange, fontSize: 0.042)
+      ],
+    );
+  }
+
+  Widget inputFieldsHome(text1, hintText1, {check = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget notificationsPage(context) {
+  Widget notificationsPage() {
     return Column(
       children: [
         heightBox(context, 0.05),
@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget newReservationPage(context) {
+  Widget newReservationPage() {
     hintText = "mm/dd/yyyy";
     return Column(
       children: [
@@ -153,18 +153,18 @@ class _HomeState extends State<Home> {
         ),
         heightBox(context, 0.01),
         text(context, "BARANH LAHORE", 0.04, myWhite),
-        inputFieldsHome(context, "Date", hintText, check: true),
+        inputFieldsHome("Date", hintText, check: true),
         heightBox(context, 0.02),
-        inputFieldsHome(context, "Time:", ""),
+        inputFieldsHome("Time:", ""),
         heightBox(context, 0.02),
-        inputFieldsHome(context, "Seats:", ""),
+        inputFieldsHome("Seats:", ""),
         heightBox(context, 0.03),
         coloredButton(context, "CHECK AVAILABILITY", myOrange)
       ],
     );
   }
 
-  Widget dineInOrdersPage(context) {
+  Widget dineInOrdersPage() {
     return Column(
       children: [
         heightBox(context, 0.05),
@@ -174,14 +174,14 @@ class _HomeState extends State<Home> {
           color: myWhite,
         ),
         heightBox(context, 0.02),
-        inputFieldsHome(context, "Table Number:", "Ex:42"),
+        inputFieldsHome("Table Number:", "Ex:42"),
         heightBox(context, 0.03),
         coloredButton(context, "SEARCH", myOrange)
       ],
     );
   }
 
-  Widget arrivedGuestPage(context) {
+  Widget arrivedGuestPage() {
     return Column(
       children: [
         heightBox(context, 0.05),
@@ -194,7 +194,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget waitingForArrival(context) {
+  Widget waitingForArrival() {
     return Column(
       children: [
         heightBox(context, 0.05),
@@ -205,5 +205,30 @@ class _HomeState extends State<Home> {
         ),
       ],
     );
+  }
+
+  bodyPage(String page) {
+    switch (page) {
+      case "All Reservations":
+        return allReservationsPage();
+      case "Waiting For Arrival":
+        return waitingForArrival();
+      case "Arrived Guests":
+        return arrivedGuestPage();
+      case "Dine In Orders":
+        return dineInOrdersPage();
+      case "New Reservations":
+        return newReservationPage();
+      case "Notifications":
+        return notificationsPage();
+
+      default:
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            text(context, "error", .06, myWhite),
+          ],
+        );
+    }
   }
 }

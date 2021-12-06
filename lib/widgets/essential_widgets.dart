@@ -1,3 +1,4 @@
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,17 @@ bar(context) {
       ),
     ),
     actions: [
-      const Icon(Icons.logout),
+      InkWell(
+        onTap: () {
+          popUntil(context);
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, .02),
+          ),
+          child: const Icon(Icons.logout),
+        ),
+      ),
       widthBox(context, 0.01),
       const Icon(Icons.shopping_cart_outlined),
       widthBox(context, 0.01)
@@ -25,5 +36,3 @@ bar(context) {
         preferredSize: const Size.fromHeight(4.0)),
   );
 }
-
-

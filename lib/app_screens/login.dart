@@ -1,4 +1,4 @@
-import 'package:baranh/app_screens/home.dart';
+import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ).show(context);
                     } else if (EmailValidator.validate(email.text) &&
                         password.text.length >= 8) {
-                      push(context, const Home());
+                      push(context, const BasicPage());
                     }
                   }),
                 ],
