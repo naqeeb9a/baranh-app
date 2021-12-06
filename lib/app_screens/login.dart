@@ -1,3 +1,4 @@
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -5,6 +6,8 @@ import 'package:baranh/widgets/form_fields.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -102,7 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   heightBox(context, .04),
                   coloredButton(context, "SIGN IN", myOrange, function: () {
                     if (!_formKey.currentState!.validate()) {
-                      return;
+                      push(context, const Home());
+                      // return;
                     }
                   }),
                 ],

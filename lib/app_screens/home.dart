@@ -13,6 +13,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myBlack,
+      // drawer: ,
       body: SafeArea(
         child: text(context, "text", .6, myWhite),
       ),
