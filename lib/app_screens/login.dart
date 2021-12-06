@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         description: "Please enter valid email!",
                       ).show(context);
-                    } else if (password.text!.isEmpty ||
+                    } else if (password.text.isEmpty ||
                         password.text.length < 8) {
                       MotionToast.error(
                         title: "Error",

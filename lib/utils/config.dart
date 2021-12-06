@@ -6,3 +6,4 @@ const myOrange = Color(0xffff6624);
 const noColor = Colors.transparent;
 
 bool obscureText = true;
+var pageDecider = "";

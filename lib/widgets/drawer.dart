@@ -4,13 +4,14 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-Widget drawerItems(context) {
+Widget drawerItems(context, function) {
   List drawerItemList = [
     {
       "icon": Icons.calendar_today,
       "text": "All Reservations",
       "function": () {
-        pop(context);
+        pageDecider = "All Reservations";
+        Navigator.pop(context, function());
         // push(context, AboutUs());
       },
     },
@@ -18,7 +19,8 @@ Widget drawerItems(context) {
       "icon": Icons.share_arrival_time_rounded,
       "text": "Waiting For Arrival",
       "function": () {
-        pop(context);
+        pageDecider = "Waiting For Arrival";
+        Navigator.pop(context, function());
         // push(context, PoliciesPage());
       },
     },
@@ -26,7 +28,8 @@ Widget drawerItems(context) {
       "icon": Icons.supervised_user_circle_rounded,
       "text": "Arrived Guests",
       "function": () {
-        pop(context);
+        pageDecider = "Arrived Guests";
+        Navigator.pop(context, function());
         // push(context, StoreFinder());
       },
     },
@@ -34,7 +37,8 @@ Widget drawerItems(context) {
       "icon": Icons.notes_rounded,
       "text": "Dine In Orders",
       "function": () {
-        pop(context);
+        pageDecider = "Dine In Orders";
+        Navigator.pop(context, function());
         // push(context, ContactPage());
       },
     },
@@ -42,7 +46,8 @@ Widget drawerItems(context) {
       "icon": Icons.calendar_today,
       "text": "New Reservations",
       "function": () {
-        pop(context);
+        pageDecider = "New Reservations";
+        Navigator.pop(context, function());
         // push(context, ContactPage());
       },
     },
@@ -50,7 +55,8 @@ Widget drawerItems(context) {
       "icon": Icons.notifications_active_rounded,
       "text": "Notifications",
       "function": () {
-        pop(context);
+        pageDecider = "Notifications";
+        Navigator.pop(context, function());
         // push(context, ContactPage());
       },
     },

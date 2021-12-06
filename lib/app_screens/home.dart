@@ -24,9 +24,9 @@ class _HomeState extends State<Home> {
       appBar: bar(context),
       drawer: SafeArea(
         child: Drawer(
-          child: drawerItems(
-            context,
-          ),
+          child: drawerItems(context, () {
+            setState(() {});
+          }),
         ),
       ),
       body: SafeArea(
@@ -34,22 +34,26 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, 0.1),
           ),
-          child: Column(
-            children: [
-              heightBox(context, 0.05),
-              text(context, "ALL RESERVATIONS", 0.05, myWhite),
-              const Divider(
-                thickness: 1,
-                color: myWhite,
-              ),
-              heightBox(context, 0.02),
-              inputFieldsHome(context, "Reservation Number:", "Ex:Res.00042"),
-              heightBox(context, 0.02),
-              inputFieldsHome(context, "Select Date:", hintText, check: true),
-              heightBox(context, 0.04),
-              coloredButton(context, "SEARCH", myOrange, fontSize: 0.042)
-            ],
-          ),
+          child: (pageDecider == "Arrived Guests")
+              ? arrivedGuestPage(context)
+              : Column(
+                  children: [
+                    heightBox(context, 0.05),
+                    text(context, "ALL RESERVATIONS", 0.05, myWhite),
+                    const Divider(
+                      thickness: 1,
+                      color: myWhite,
+                    ),
+                    heightBox(context, 0.02),
+                    inputFieldsHome(
+                        context, "Reservation Number:", "Ex:Res.00042"),
+                    heightBox(context, 0.02),
+                    inputFieldsHome(context, "Select Date:", hintText,
+                        check: true),
+                    heightBox(context, 0.04),
+                    coloredButton(context, "SEARCH", myOrange, fontSize: 0.042)
+                  ],
+                ),
         ),
       ),
     );
@@ -87,9 +91,12 @@ class _HomeState extends State<Home> {
                         );
                       },
                     );
-                    setState(() {
-                      hintText = DateFormat.yMMMd().format(newTime!).toString();
-                    });
+                    if (newTime != null) {
+                      setState(() {
+                        hintText =
+                            DateFormat.yMMMd().format(newTime).toString();
+                      });
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,6 +120,89 @@ class _HomeState extends State<Home> {
                   decoration: InputDecoration(hintText: hintText1),
                 ),
         )
+      ],
+    );
+  }
+
+  Widget notificationsPage(context) {
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "Notifications", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+        heightBox(context, 0.03),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: text(context, "Nothing Found!!", 0.04, myWhite))
+      ],
+    );
+  }
+
+  Widget newReservationPage(context) {
+    hintText = "mm/dd/yyyy";
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "RESERVATION", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+        heightBox(context, 0.01),
+        text(context, "BARANH LAHORE", 0.04, myWhite),
+        inputFieldsHome(context, "Date", hintText, check: true),
+        heightBox(context, 0.02),
+        inputFieldsHome(context, "Time:", ""),
+        heightBox(context, 0.02),
+        inputFieldsHome(context, "Seats:", ""),
+        heightBox(context, 0.03),
+        coloredButton(context, "CHECK AVAILABILITY", myOrange)
+      ],
+    );
+  }
+
+  Widget dineInOrdersPage(context) {
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "DINE IN ORDERS", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+        heightBox(context, 0.02),
+        inputFieldsHome(context, "Table Number:", "Ex:42"),
+        heightBox(context, 0.03),
+        coloredButton(context, "SEARCH", myOrange)
+      ],
+    );
+  }
+
+  Widget arrivedGuestPage(context) {
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "ARRIVED GUESTS", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+      ],
+    );
+  }
+
+  Widget waitingForArrival(context) {
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "WAITING FOR ARRIVAL GUESTS", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
       ],
     );
   }
