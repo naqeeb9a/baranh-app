@@ -16,13 +16,27 @@ class BasicPage extends StatefulWidget {
 
 class _BasicPageState extends State<BasicPage> {
   var hintText = "mm/dd/yy";
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: myBlack,
-      appBar: bar(context),
+      appBar: bar(
+        context,
+        function: () {
+          _scaffoldKey.currentState!.openEndDrawer();
+        },
+      ),
       drawer: SafeArea(
+        child: Drawer(
+          child: drawerItems(context, () {
+            setState(() {});
+          }),
+        ),
+      ),
+      endDrawer: SafeArea(
         child: Drawer(
           child: drawerItems(context, () {
             setState(() {});

@@ -3,7 +3,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:flutter/material.dart';
 
-bar(context) {
+bar(context, {function = ""}) {
   return AppBar(
     backgroundColor: myBlack,
     title: Center(
@@ -24,8 +24,15 @@ bar(context) {
           child: const Icon(Icons.logout),
         ),
       ),
-      widthBox(context, 0.01),
-      const Icon(Icons.shopping_cart_outlined),
+      InkWell(
+        onTap: function == "" ? () {} : function,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, .02),
+          ),
+          child: const Icon(Icons.shopping_cart_outlined),
+        ),
+      ),
       widthBox(context, 0.01)
     ],
     bottom: PreferredSize(
