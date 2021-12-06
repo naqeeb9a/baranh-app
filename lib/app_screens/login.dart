@@ -1,3 +1,5 @@
+import 'package:baranh/app_screens/home.dart';
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -106,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         description: "Please enter valid password!",
                       ).show(context);
+                    } else if (EmailValidator.validate(email.text) &&
+                        password.text.length >= 8) {
+                      push(context, const Home());
                     }
                   }),
                 ],
