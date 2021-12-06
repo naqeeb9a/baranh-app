@@ -29,25 +29,28 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: SafeArea(
-          child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.1)),
-        child: Column(
-          children: [
-            heightBox(context, 0.05),
-            text(context, "ALL RESERVATIONS", 0.05, myWhite),
-            const Divider(
-              thickness: 1,
-              color: myWhite,
-            ),
-            heightBox(context, 0.02),
-            inputFieldsHome(context, "Reservation Number:", "Ex:Res.00042"),
-            heightBox(context, 0.02),
-            inputFieldsHome(context, "Select Date:", "mm/dd/yy"),
-            heightBox(context, 0.03),
-            coloredButton(context, "SEARCH", myOrange)
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, 0.1),
+          ),
+          child: Column(
+            children: [
+              heightBox(context, 0.05),
+              text(context, "ALL RESERVATIONS", 0.05, myWhite),
+              const Divider(
+                thickness: 1,
+                color: myWhite,
+              ),
+              heightBox(context, 0.02),
+              inputFieldsHome(context, "Reservation Number:", "Ex:Res.00042"),
+              heightBox(context, 0.02),
+              inputFieldsHome(context, "Select Date:", "mm/dd/yy"),
+              heightBox(context, 0.03),
+              coloredButton(context, "SEARCH", myOrange)
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
