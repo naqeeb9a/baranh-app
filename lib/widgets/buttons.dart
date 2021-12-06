@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/config.dart';
 
 Widget coloredButton(context, text, color,
-    {function = "", width = "", fontsize = 0.05}) {
+    {function = "", width = "", fontSize = 0.05}) {
   return GestureDetector(
     onTap: function == "" ? () {} : function,
     child: Container(
@@ -19,7 +19,7 @@ Widget coloredButton(context, text, color,
           style: TextStyle(
             color: myWhite,
             fontWeight: FontWeight.bold,
-            fontSize: dynamicWidth(context, fontsize),
+            fontSize: dynamicWidth(context, fontSize),
           ),
         ),
       ),
