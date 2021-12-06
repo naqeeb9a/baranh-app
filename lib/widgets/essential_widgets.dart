@@ -3,13 +3,24 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:flutter/material.dart';
 
-bar(context, {function = ""}) {
+bar(
+  context, {
+  function = "",
+  function1 = "",
+}) {
   return AppBar(
     backgroundColor: myBlack,
     title: Center(
       child: Image.asset(
         "assets/logo.png",
         width: dynamicWidth(context, 0.2),
+      ),
+    ),
+    leading: GestureDetector(
+      onTap: function == "" ? () {} : function,
+      child: Image.asset(
+        "assets/menu.png",
+        scale: 18,
       ),
     ),
     actions: [
@@ -25,7 +36,7 @@ bar(context, {function = ""}) {
         ),
       ),
       InkWell(
-        onTap: function == "" ? () {} : function,
+        onTap: function1 == "" ? () {} : function1,
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, .02),

@@ -15,7 +15,7 @@ class BasicPage extends StatefulWidget {
 }
 
 class _BasicPageState extends State<BasicPage> {
-  var hintText = "mm/dd/yy";
+  var hintText = "mm/dd/yyy";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -23,12 +23,11 @@ class _BasicPageState extends State<BasicPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: myBlack,
-      appBar: bar(
-        context,
-        function: () {
-          _scaffoldKey.currentState!.openEndDrawer();
-        },
-      ),
+      appBar: bar(context, function: () {
+        _scaffoldKey.currentState!.openDrawer();
+      }, function1: () {
+        _scaffoldKey.currentState!.openEndDrawer();
+      }),
       drawer: SafeArea(
         child: Drawer(
           child: drawerItems(context, () {
@@ -37,16 +36,12 @@ class _BasicPageState extends State<BasicPage> {
         ),
       ),
       endDrawer: SafeArea(
-        child: Drawer(
-          child: drawerItems(context, () {
-            setState(() {});
-          }),
-        ),
+        child: Drawer(child: drawerItems2(context)),
       ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.1),
+            horizontal: dynamicWidth(context, 0.05),
           ),
           child: bodyPage(pageDecider),
         ),
@@ -55,21 +50,27 @@ class _BasicPageState extends State<BasicPage> {
   }
 
   Widget allReservationsPage() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "ALL RESERVATIONS", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-        heightBox(context, 0.02),
-        inputFieldsHome("Reservation Number:", "Ex:Res.00042"),
-        heightBox(context, 0.02),
-        inputFieldsHome("Select Date:", hintText, check: true),
-        heightBox(context, 0.04),
-        coloredButton(context, "SEARCH", myOrange, fontSize: 0.042)
-      ],
+    hintText = "mm/dd/yyyy";
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          heightBox(context, 0.05),
+          text(context, "ALL RESERVATIONS", 0.05, myWhite),
+          const Divider(
+            thickness: 1,
+            color: myWhite,
+          ),
+          heightBox(context, 0.02),
+          inputFieldsHome("Reservation Number:", "Ex:Res.00042"),
+          heightBox(context, 0.02),
+          inputFieldsHome("Select Date:", hintText, check: true),
+          heightBox(context, 0.04),
+          coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
+          heightBox(context, 0.02),
+          orderCard(context),
+          orderCard(context)
+        ],
+      ),
     );
   }
 
@@ -179,45 +180,60 @@ class _BasicPageState extends State<BasicPage> {
   }
 
   Widget dineInOrdersPage() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "DINE IN ORDERS", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-        heightBox(context, 0.02),
-        inputFieldsHome("Table Number:", "Ex:42"),
-        heightBox(context, 0.03),
-        coloredButton(context, "SEARCH", myOrange)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          heightBox(context, 0.05),
+          text(context, "DINE IN ORDERS", 0.05, myWhite),
+          const Divider(
+            thickness: 1,
+            color: myWhite,
+          ),
+          heightBox(context, 0.02),
+          inputFieldsHome("Table Number:", "Ex:42"),
+          heightBox(context, 0.03),
+          coloredButton(context, "SEARCH", myOrange),
+          tableCards(context),
+          tableCards(context),
+          tableCards(context),
+        ],
+      ),
     );
   }
 
   Widget arrivedGuestPage() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "ARRIVED GUESTS", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          heightBox(context, 0.05),
+          text(context, "ARRIVED GUESTS", 0.05, myWhite),
+          const Divider(
+            thickness: 1,
+            color: myWhite,
+          ),
+          orderCard(context),
+          orderCard(context),
+          orderCard(context),
+        ],
+      ),
     );
   }
 
   Widget waitingForArrival() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "WAITING FOR ARRIVAL GUESTS", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          heightBox(context, 0.05),
+          text(context, "WAITING FOR ARRIVAL GUESTS", 0.05, myWhite),
+          const Divider(
+            thickness: 1,
+            color: myWhite,
+          ),
+          orderCard(context),
+          orderCard(context),
+          orderCard(context),
+        ],
+      ),
     );
   }
 
@@ -245,4 +261,91 @@ class _BasicPageState extends State<BasicPage> {
         );
     }
   }
+}
+
+Widget orderCard(context) {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(dynamicWidth(context, 0.015)),
+        border: Border.all(width: 1, color: myWhite.withOpacity(0.5))),
+    padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
+    child: Column(
+      children: [
+        text(context, "Order: 009862", 0.04, myWhite),
+        Divider(
+          thickness: 1,
+          color: myWhite.withOpacity(0.5),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                text(context, "Name:Anamzohaib Zohaib", 0.035, myWhite),
+                text(context, "Phone: 03212180787", 0.035, myWhite),
+                text(context, "Date: 2021-12-06", 0.035, myWhite),
+                text(context, "Time: 23:00-01:00", 0.035, myWhite),
+                text(context, "Seats:4", 0.035, myWhite),
+                text(context, "Status:Booked", 0.035, myWhite),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF008000),
+                  borderRadius:
+                      BorderRadius.circular(dynamicWidth(context, 0.01))),
+              child: text(context, "View Details", 0.035, myWhite),
+            )
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget tableCards(context) {
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(dynamicWidth(context, 0.015)),
+        border: Border.all(width: 1, color: myWhite.withOpacity(0.5))),
+    padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
+    child: Column(
+      children: [
+        text(context, "Table: Muiz Sir", 0.04, myWhite),
+        Divider(
+          thickness: 1,
+          color: myWhite.withOpacity(0.5),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                text(context, "Order: 009605", 0.035, myWhite),
+                text(context, "Name: H", 0.035, myWhite),
+                text(context, "Phone: 03212180787", 0.035, myWhite),
+                text(context, "Date: 2021-12-04", 0.035, myWhite),
+                text(context, "Time: 23:00-01:00", 0.035, myWhite),
+                text(context, "Seats:4", 0.035, myWhite),
+                text(context, "Status:Dine In", 0.035, myWhite),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF008000),
+                  borderRadius:
+                      BorderRadius.circular(dynamicWidth(context, 0.01))),
+              child: text(context, "View Details", 0.035, myWhite),
+            )
+          ],
+        )
+      ],
+    ),
+  );
 }

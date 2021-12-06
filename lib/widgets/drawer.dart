@@ -1,6 +1,7 @@
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -75,10 +76,9 @@ Widget drawerItems(context, function) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.menu_rounded,
-                  color: myWhite,
-                  size: dynamicWidth(context, .07),
+                Image.asset(
+                  "assets/menu.png",
+                  scale: 18,
                 ),
                 text(context, "MENU", .05, myWhite, bold: true),
                 InkWell(
@@ -145,6 +145,57 @@ Widget drawerItems(context, function) {
           ),
         ],
       ),
+    ),
+  );
+}
+
+Widget drawerItems2(context) {
+  return ColoredBox(
+    color: myBlack.withOpacity(.9),
+    child: Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: dynamicWidth(context, 0.04),
+      ),
+      child: Column(
+        children: [
+          dividerRowWigets(context, "YOUR CART"),
+          Divider(
+            thickness: 1,
+            color: myWhite.withOpacity(0.5),
+          ),
+          dividerRowWigets(context, "TOTAL:", check: true),
+          heightBox(context, 0.02),
+          coloredButton(context, "GO TO CHECKOUT", const Color(0xFF008000),
+              fontSize: 0.035),
+          heightBox(context, 0.02),
+          coloredButton(context, "CONTINUE ORDERING", Colors.transparent,
+              fontSize: 0.035)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget dividerRowWigets(context, text1, {check = false}) {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        text(context, text1, 0.04, myWhite),
+        check == true
+            ? text(context, "PKR 0", 0.04, myWhite)
+            : InkWell(
+                onTap: () {
+                  pop(context);
+                },
+                child: Icon(
+                  Icons.close_rounded,
+                  color: myWhite,
+                  size: dynamicWidth(context, .08),
+                ),
+              ),
+      ],
     ),
   );
 }
