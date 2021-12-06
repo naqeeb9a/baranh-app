@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: myBlack,
       body: SafeArea(
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: dynamicWidth(context, .9),
             height: dynamicHeight(context, .6),
             child: Form(

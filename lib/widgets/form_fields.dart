@@ -89,7 +89,7 @@ Widget searchbar(context, {enabled = true, controller, setStateFunction}) {
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
               hintText: "Search Your Product",
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: myBlack,
               ),
               contentPadding: EdgeInsets.only(
@@ -111,7 +111,7 @@ Widget searchbar(context, {enabled = true, controller, setStateFunction}) {
             padding: EdgeInsets.only(
               right: dynamicWidth(context, .02),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.search_sharp,
               color: myBlack,
             ),
