@@ -21,9 +21,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: myBlack,
       appBar: bar(context),
-      drawer: SizedBox(
-        width: dynamicWidth(context, .7),
-        height: dynamicHeight(context, 1),
+      drawer: SafeArea(
         child: Drawer(
           child: drawerItems(
             context,

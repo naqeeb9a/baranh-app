@@ -6,12 +6,7 @@ import '../utils/config.dart';
 Widget inputTextField(context, label, myController,
     {function, function2, password = false}) {
   return Container(
-    decoration: BoxDecoration(
-      color: myWhite,
-      borderRadius: BorderRadius.circular(
-        dynamicWidth(context, .02),
-      ),
-    ),
+    color: myWhite,
     child: TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (function == "") ? () {} : function,
@@ -37,19 +32,14 @@ Widget inputTextField(context, label, myController,
                   size: dynamicWidth(context, .06),
                 ),
               ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: myBlack,
+          ),
+        ),
         contentPadding: EdgeInsets.symmetric(
           vertical: dynamicHeight(context, .01),
           horizontal: dynamicWidth(context, .05),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            dynamicWidth(context, .02),
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(
-            dynamicWidth(context, .02),
-          ),
         ),
       ),
     ),

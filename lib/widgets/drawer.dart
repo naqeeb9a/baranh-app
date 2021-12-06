@@ -59,6 +59,7 @@ Widget drawerItems(context) {
       "text": "LogOut",
       "function": () {
         pop(context);
+        pop(context);
         // push(context, ContactPage());
       },
     },
@@ -95,9 +96,13 @@ Widget drawerItems(context) {
               ],
             ),
           ),
+          const Divider(
+            height: 0,
+            color: myWhite,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .03),
+              vertical: dynamicHeight(context, .04),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +110,7 @@ Widget drawerItems(context) {
                 text(
                   context,
                   "Hi user name\n(Floor Manager)",
-                  .05,
+                  .054,
                   myWhite,
                   bold: true,
                 ),
