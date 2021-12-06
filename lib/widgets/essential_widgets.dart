@@ -12,7 +12,7 @@ bar(context) {
       ),
     ),
     actions: [
-      const Icon(Icons.person_outline),
+      const Icon(Icons.logout),
       widthBox(context, 0.01),
       const Icon(Icons.shopping_cart_outlined),
       widthBox(context, 0.01)

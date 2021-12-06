@@ -45,8 +45,8 @@ class _HomeState extends State<Home> {
               inputFieldsHome(context, "Reservation Number:", "Ex:Res.00042"),
               heightBox(context, 0.02),
               inputFieldsHome(context, "Select Date:", hintText, check: true),
-              heightBox(context, 0.03),
-              coloredButton(context, "SEARCH", myOrange, fontsize: 0.038)
+              heightBox(context, 0.04),
+              coloredButton(context, "SEARCH", myOrange, fontsize: 0.042)
             ],
           ),
         ),
@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         text(context, text1, 0.04, myWhite),
+        heightBox(context, .01),
         Container(
           color: myWhite,
           padding:
