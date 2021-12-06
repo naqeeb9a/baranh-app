@@ -1,4 +1,3 @@
-import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -6,8 +5,7 @@ import 'package:baranh/widgets/form_fields.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -54,13 +52,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     context,
                     "Email",
                     email,
-                    function: (value) {
-                      if (EmailValidator.validate(value)) {
-                      } else {
-                        return "Enter Valid Email";
-                      }
-                      return null;
-                    },
                   ),
                   heightBox(context, .02),
                   Row(
@@ -75,12 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Password",
                     password,
                     password: true,
-                    function: (value) {
-                      if (value!.isEmpty || value.length < 8) {
-                        return 'Password must have 8 characters';
-                      }
-                      return null;
-                    },
                     function2: () {
                       setState(() {
                         obscureText = !obscureText;
@@ -104,9 +89,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   heightBox(context, .04),
                   coloredButton(context, "SIGN IN", myOrange, function: () {
-                    if (!_formKey.currentState!.validate()) {
-                      push(context, const Home());
-                      // return;
+                    if (!EmailValidator.validate(email.text)) {
+                      MotionToast.error(
+                        title: "Error",
+                        titleStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        description: "Please enter valid email!",
+                      ).show(context);
+                    } else if (password.text!.isEmpty ||
+                        password.text.length < 8) {
+                      MotionToast.error(
+                        title: "Error",
+                        titleStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        description: "Please enter valid password!",
+                      ).show(context);
                     }
                   }),
                 ],
