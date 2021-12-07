@@ -1,3 +1,4 @@
+import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -26,7 +27,10 @@ class OrdersPage extends StatelessWidget {
             heightBox(context, 0.02),
             coloredButton(context, "Guest Arrived", myGreen, fontSize: 0.035),
             heightBox(context, 0.01),
-            coloredButton(context, "Order Summary", myGreen, fontSize: 0.035),
+            coloredButton(context, "Order Summary", myGreen, fontSize: 0.035,
+                function: () {
+              push(context, const OrderSummaryPage());
+            }),
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
-import 'package:baranh/widgets/orders_page.dart';
+import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -246,7 +246,7 @@ class _BasicPageState extends State<BasicPage> {
   }
 }
 
-Widget orderCard(context) {
+Widget orderCard(context, {check = false}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -255,7 +255,8 @@ Widget orderCard(context) {
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(context, "Order: 009862", 0.04, myWhite),
+        text(context, (check == true) ? "Status: Booked" : "Order: 009862",
+            0.04, myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -275,16 +276,24 @@ Widget orderCard(context) {
               ],
             ),
             InkWell(
-              onTap: () {
-                push(context, const OrdersPage());
-              },
+              onTap: (check == true)
+                  ? () {
+                      pop(context);
+                    }
+                  : () {
+                      push(context, const OrdersPage());
+                    },
               child: Container(
                 padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
                 decoration: BoxDecoration(
-                    color: myGreen,
+                    color: (check == true) ? myRed : myGreen,
                     borderRadius:
                         BorderRadius.circular(dynamicWidth(context, 0.01))),
-                child: text(context, "View Details", 0.035, myWhite),
+                child: text(
+                    context,
+                    (check == true) ? "  Back  " : "View Details",
+                    0.035,
+                    myWhite),
               ),
             )
           ],
