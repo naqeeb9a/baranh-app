@@ -6,7 +6,7 @@
     <!-- You can insert your own image assets here -->
     <item
         android:width="250dp"
-        android:height="200dp"
+        android:height="150dp"
         android:gravity="center">
         <bitmap
             android:layout_width="match_parent"
