@@ -23,6 +23,7 @@ bar(
         scale: 30,
       ),
     ),
+    centerTitle: true,
     actions: [
       InkWell(
         onTap: () {
