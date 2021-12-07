@@ -78,7 +78,7 @@ Widget drawerItems(context, function) {
               children: [
                 Image.asset(
                   "assets/menu.png",
-                  scale: 18,
+                  scale: 30,
                 ),
                 text(context, "MENU", .05, myWhite, bold: true),
                 InkWell(

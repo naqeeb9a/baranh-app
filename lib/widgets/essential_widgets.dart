@@ -20,7 +20,7 @@ bar(
       onTap: function == "" ? () {} : function,
       child: Image.asset(
         "assets/menu.png",
-        scale: 18,
+        scale: 30,
       ),
     ),
     actions: [
