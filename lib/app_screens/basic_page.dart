@@ -1,8 +1,8 @@
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
-import 'package:baranh/widgets/drawer.dart';
-import 'package:baranh/widgets/essential_widgets.dart';
+import 'package:baranh/widgets/orders_page.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,21 +23,21 @@ class _BasicPageState extends State<BasicPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: myBlack,
-      appBar: bar(context, function: () {
-        _scaffoldKey.currentState!.openDrawer();
-      }, function1: () {
-        _scaffoldKey.currentState!.openEndDrawer();
-      }),
-      drawer: SafeArea(
-        child: Drawer(
-          child: drawerItems(context, () {
-            setState(() {});
-          }),
-        ),
-      ),
-      endDrawer: SafeArea(
-        child: Drawer(child: drawerItems2(context)),
-      ),
+      // appBar: bar(context, function: () {
+      //   _scaffoldKey.currentState!.openDrawer();
+      // }, function1: () {
+      //   _scaffoldKey.currentState!.openEndDrawer();
+      // }),
+      // drawer: SafeArea(
+      //   child: Drawer(
+      //     child: drawerItems(context, () {
+      //       setState(() {});
+      //     }),
+      //   ),
+      // ),
+      // endDrawer: SafeArea(
+      //   child: Drawer(child: drawerItems2(context)),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -290,13 +290,18 @@ Widget orderCard(context) {
                 text(context, "Status:Booked", 0.035, myWhite),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
-              decoration: BoxDecoration(
-                  color: myGreen,
-                  borderRadius:
-                      BorderRadius.circular(dynamicWidth(context, 0.01))),
-              child: text(context, "View Details", 0.035, myWhite),
+            InkWell(
+              onTap: () {
+                push(context, const OrdersPage());
+              },
+              child: Container(
+                padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
+                decoration: BoxDecoration(
+                    color: myGreen,
+                    borderRadius:
+                        BorderRadius.circular(dynamicWidth(context, 0.01))),
+                child: text(context, "View Details", 0.035, myWhite),
+              ),
             )
           ],
         )

@@ -83,7 +83,7 @@ Widget drawerItems(context, function) {
                 text(context, "MENU", .05, myWhite, bold: true),
                 InkWell(
                   onTap: () {
-                    pop(context);
+                    Navigator.pop(context);
                   },
                   child: Icon(
                     Icons.close_rounded,
