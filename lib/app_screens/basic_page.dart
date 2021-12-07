@@ -50,7 +50,6 @@ class _BasicPageState extends State<BasicPage> {
   }
 
   Widget allReservationsPage() {
-    hintText = "mm/dd/yyyy";
     return SingleChildScrollView(
       child: Column(
         children: [
