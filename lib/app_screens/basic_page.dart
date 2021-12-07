@@ -293,7 +293,7 @@ Widget orderCard(context) {
             Container(
               padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
               decoration: BoxDecoration(
-                  color: const Color(0xFF008000),
+                  color: myGreen,
                   borderRadius:
                       BorderRadius.circular(dynamicWidth(context, 0.01))),
               child: text(context, "View Details", 0.035, myWhite),
@@ -337,7 +337,7 @@ Widget tableCards(context) {
             Container(
               padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
               decoration: BoxDecoration(
-                  color: const Color(0xFF008000),
+                  color: myGreen,
                   borderRadius:
                       BorderRadius.circular(dynamicWidth(context, 0.01))),
               child: text(context, "View Details", 0.035, myWhite),
