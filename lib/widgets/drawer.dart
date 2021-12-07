@@ -12,6 +12,7 @@ Widget drawerItems(context, function) {
       "text": "All Reservations",
       "function": () {
         pageDecider = "All Reservations";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -20,6 +21,7 @@ Widget drawerItems(context, function) {
       "text": "Waiting For Arrival",
       "function": () {
         pageDecider = "Waiting For Arrival";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -28,6 +30,7 @@ Widget drawerItems(context, function) {
       "text": "Arrived Guests",
       "function": () {
         pageDecider = "Arrived Guests";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -36,6 +39,7 @@ Widget drawerItems(context, function) {
       "text": "Dine In Orders",
       "function": () {
         pageDecider = "Dine In Orders";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -44,6 +48,7 @@ Widget drawerItems(context, function) {
       "text": "New Reservations",
       "function": () {
         pageDecider = "New Reservations";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -52,6 +57,7 @@ Widget drawerItems(context, function) {
       "text": "Notifications",
       "function": () {
         pageDecider = "Notifications";
+        popUntil(customContext);
         Navigator.pop(context, function());
       },
     },
@@ -83,7 +89,7 @@ Widget drawerItems(context, function) {
                 text(context, "MENU", .05, myWhite, bold: true),
                 InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    pop(context);
                   },
                   child: Icon(
                     Icons.close_rounded,

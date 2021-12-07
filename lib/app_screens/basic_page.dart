@@ -16,28 +16,12 @@ class BasicPage extends StatefulWidget {
 
 class _BasicPageState extends State<BasicPage> {
   var hintText = "mm/dd/yyy";
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    customContext = context;
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: myBlack,
-      // appBar: bar(context, function: () {
-      //   _scaffoldKey.currentState!.openDrawer();
-      // }, function1: () {
-      //   _scaffoldKey.currentState!.openEndDrawer();
-      // }),
-      // drawer: SafeArea(
-      //   child: Drawer(
-      //     child: drawerItems(context, () {
-      //       setState(() {});
-      //     }),
-      //   ),
-      // ),
-      // endDrawer: SafeArea(
-      //   child: Drawer(child: drawerItems2(context)),
-      // ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -339,13 +323,18 @@ Widget tableCards(context) {
                 text(context, "Status:Dine In", 0.035, myWhite),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
-              decoration: BoxDecoration(
-                  color: myGreen,
-                  borderRadius:
-                      BorderRadius.circular(dynamicWidth(context, 0.01))),
-              child: text(context, "View Details", 0.035, myWhite),
+            InkWell(
+              onTap: () {
+                push(context, const OrdersPage());
+              },
+              child: Container(
+                padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
+                decoration: BoxDecoration(
+                    color: myGreen,
+                    borderRadius:
+                        BorderRadius.circular(dynamicWidth(context, 0.01))),
+                child: text(context, "View Details", 0.035, myWhite),
+              ),
             )
           ],
         )
