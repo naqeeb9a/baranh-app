@@ -1,4 +1,5 @@
 import 'package:baranh/app_screens/order_summary_page.dart';
+import 'package:baranh/app_screens/reservation_history.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -38,7 +39,7 @@ class OrdersPage extends StatelessWidget {
   }
 }
 
-Widget orderDetailCard(context) {
+Widget orderDetailCard(context, {check = false}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -47,12 +48,17 @@ Widget orderDetailCard(context) {
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(context, "Table:", 0.05, myWhite),
-        Divider(
-          thickness: 1,
-          color: myWhite.withOpacity(0.5),
-        ),
-        text(context, "Status: Booked", 0.035, myWhite),
+        (check == true)
+            ? const Center()
+            : text(context, "Table:", 0.05, myWhite),
+        (check == true)
+            ? const Center()
+            : Divider(
+                thickness: 1,
+                color: myWhite.withOpacity(0.5),
+              ),
+        text(context, (check == true) ? "Order: 009954" : "Status: Booked",
+            0.035, myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -63,12 +69,18 @@ Widget orderDetailCard(context) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                text(context, "Name:Anamzohaib Zohaib", 0.035, myWhite),
-                text(context, "Phone: 03212180787", 0.035, myWhite),
+                (check == true)
+                    ? const Center()
+                    : text(context, "Name:Anamzohaib Zohaib", 0.035, myWhite),
+                (check == true)
+                    ? const Center()
+                    : text(context, "Phone: 03212180787", 0.035, myWhite),
                 text(context, "Date: 2021-12-06", 0.035, myWhite),
                 text(context, "Time: 23:00-01:00", 0.035, myWhite),
                 text(context, "Seats:4", 0.035, myWhite),
-                text(context, "Status:Booked", 0.035, myWhite),
+                (check == true)
+                    ? const Center()
+                    : text(context, "Status:Booked", 0.035, myWhite),
               ],
             ),
             SizedBox(
@@ -77,16 +89,22 @@ Widget orderDetailCard(context) {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      push(context, const OrdersPage());
-                    },
+                    onTap: (check == true)
+                        ? () {}
+                        : () {
+                            push(context, const ReservationHistoryPage());
+                          },
                     child: Container(
                       padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
                       decoration: BoxDecoration(
                           color: myGreen,
                           borderRadius: BorderRadius.circular(
                               dynamicWidth(context, 0.01))),
-                      child: text(context, "History", 0.035, myWhite),
+                      child: text(
+                          context,
+                          (check == true) ? "View Details" : "History",
+                          0.035,
+                          myWhite),
                     ),
                   ),
                   InkWell(
@@ -99,7 +117,13 @@ Widget orderDetailCard(context) {
                           color: myRed,
                           borderRadius: BorderRadius.circular(
                               dynamicWidth(context, 0.01))),
-                      child: text(context, "  Back  ", 0.035, myWhite),
+                      child: text(
+                          context,
+                          (check == true)
+                              ? "        Back       "
+                              : "   back   ",
+                          0.035,
+                          myWhite),
                     ),
                   ),
                 ],
