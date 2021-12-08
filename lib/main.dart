@@ -1,4 +1,5 @@
 import 'package:baranh/app_screens/basic_page.dart';
+import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,26 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  startAnimation() {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..forward();
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+  }
+
+  late Animation<double> _animation;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   final MaterialColor primaryColor = const MaterialColor(
     0xff000000,
     <int, Color>{
@@ -39,6 +59,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    startAnimation();
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -78,7 +99,10 @@ class _MyAppState extends State<MyApp> {
             body: child,
           );
         },
-        home: const BasicPage(),
+        home: Scaffold(
+            backgroundColor: myBlack,
+            body:
+                FadeTransition(opacity: _animation, child: const BasicPage())),
       ),
     );
   }
