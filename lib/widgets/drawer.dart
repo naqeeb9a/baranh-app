@@ -1,11 +1,16 @@
+import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-Widget drawerItems(context, function) {
+Widget drawerItems(
+  context,
+  function,
+) {
   List drawerItemList = [
     {
       "icon": Icons.calendar_today,
@@ -64,8 +69,10 @@ Widget drawerItems(context, function) {
     {
       "icon": Icons.logout,
       "text": "LogOut",
-      "function": () {
-        popUntil(context);
+      "function": () async {
+        SharedPreferences loginUser = await SharedPreferences.getInstance();
+        loginUser.clear();
+        checkLoginStatus(context);
       },
     },
   ];

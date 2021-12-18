@@ -26,17 +26,6 @@ bar(
     centerTitle: true,
     actions: [
       InkWell(
-        onTap: () {
-          popUntil(context);
-        },
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, .02),
-          ),
-          child: const Icon(Icons.logout),
-        ),
-      ),
-      InkWell(
         onTap: function1 == "" ? () {} : function1,
         child: Padding(
           padding: EdgeInsets.symmetric(
