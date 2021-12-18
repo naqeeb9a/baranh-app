@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -6,6 +7,7 @@ import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -50,8 +52,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
           heightBox(context, 0.04),
           coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
           heightBox(context, 0.02),
-          orderCard(context),
-          orderCard(context)
+          orderCard()
         ],
       ),
     );
@@ -128,9 +129,6 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             thickness: 1,
             color: myWhite,
           ),
-          orderCard(context),
-          orderCard(context),
-          orderCard(context),
         ],
       ),
     );
@@ -146,9 +144,6 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             thickness: 1,
             color: myWhite,
           ),
-          orderCard(context),
-          orderCard(context),
-          orderCard(context),
         ],
       ),
     );
@@ -245,7 +240,31 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   }
 }
 
-Widget orderCard(context, {check = false}) {
+Widget orderCard() {
+  return FutureBuilder(
+    future: getReservationData(),
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return LottieBuilder.asset(
+          "assets/loader.json",
+          width: dynamicWidth(context, 0.3),
+        );
+      } else if (snapshot.connectionState == ConnectionState.done) {
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: snapshot.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return orderCardExtension(context, snapshot.data, index);
+          },
+        );
+      } else {
+        return text(context, "not working", 0.028, Colors.white);
+      }
+    },
+  );
+}
+
+Widget orderCardExtension(context, snaphot, index, {check = false}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -254,8 +273,13 @@ Widget orderCard(context, {check = false}) {
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(context, (check == true) ? "Status: Booked" : "Order: 009862",
-            0.04, myWhite),
+        text(
+            context,
+            (check == true)
+                ? "Status: Booked"
+                : "Order: " + snaphot[index]["sale_no"],
+            0.04,
+            myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -266,12 +290,17 @@ Widget orderCard(context, {check = false}) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                text(context, "Name:Anamzohaib Zohaib", 0.035, myWhite),
-                text(context, "Phone: 03212180787", 0.035, myWhite),
-                text(context, "Date: 2021-12-06", 0.035, myWhite),
+                text(context, "Name: " + snaphot[index]["customer_name"], 0.035,
+                    myWhite),
+                text(context, "Phone: " + snaphot[index]["customer_phone"],
+                    0.035, myWhite),
+                text(context, "Date: " + snaphot[index]["booking_date"], 0.035,
+                    myWhite),
                 text(context, "Time: 23:00-01:00", 0.035, myWhite),
-                text(context, "Seats:4", 0.035, myWhite),
-                text(context, "Status:Booked", 0.035, myWhite),
+                text(context, "Seats: " + snaphot[index]["booked_seats"], 0.035,
+                    myWhite),
+                text(context, "Status: " + snaphot[index]["usage_status"],
+                    0.035, myWhite),
               ],
             ),
             InkWell(

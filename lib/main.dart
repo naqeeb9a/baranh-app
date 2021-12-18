@@ -1,11 +1,13 @@
 import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/app_screens/login.dart';
 import 'package:baranh/utils/config.dart';
+import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -42,6 +44,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  bool loader = false;
   final MaterialColor primaryColor = const MaterialColor(
     0xff000000,
     <int, Color>{
@@ -81,25 +84,39 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ),
         builder: (context, child) {
           checkLoginStatus(context);
-          return Scaffold(
-            key: _scaffoldKey,
-            appBar: bar(context, function: () {
-              _scaffoldKey.currentState!.openDrawer();
-            }, function1: () {
-              _scaffoldKey.currentState!.openEndDrawer();
-            }),
-            drawer: SafeArea(
-              child: Drawer(
-                child: drawerItems(context, () {
-                  setState(() {});
-                }),
-              ),
-            ),
-            endDrawer: SafeArea(
-              child: Drawer(child: drawerItems2(context)),
-            ),
-            body: child,
-          );
+          return loader == true
+              ? Scaffold(
+                  backgroundColor: myBlack,
+                  body: Center(
+                    child: LottieBuilder.asset(
+                      "assets/loader.json",
+                      width: dynamicWidth(context, 0.3),
+                    ),
+                  ),
+                )
+              : Scaffold(
+                  key: _scaffoldKey,
+                  appBar: bar(context, function: () {
+                    _scaffoldKey.currentState!.openDrawer();
+                  }, function1: () {
+                    _scaffoldKey.currentState!.openEndDrawer();
+                  }),
+                  drawer: SafeArea(
+                    child: Drawer(
+                      child: drawerItems(context, () {
+                        setState(() {});
+                      }, () {
+                        setState(() {
+                          loader = true;
+                        });
+                      }),
+                    ),
+                  ),
+                  endDrawer: SafeArea(
+                    child: Drawer(child: drawerItems2(context)),
+                  ),
+                  body: child,
+                );
         },
         home: Scaffold(
             backgroundColor: myBlack,

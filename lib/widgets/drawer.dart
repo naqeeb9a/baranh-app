@@ -7,10 +7,7 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Widget drawerItems(
-  context,
-  function,
-) {
+Widget drawerItems(context, function, changeState) {
   List drawerItemList = [
     {
       "icon": Icons.calendar_today,
@@ -70,9 +67,12 @@ Widget drawerItems(
       "icon": Icons.logout,
       "text": "LogOut",
       "function": () async {
-        SharedPreferences loginUser = await SharedPreferences.getInstance();
-        loginUser.clear();
-        checkLoginStatus(context);
+        changeState();
+        Future.delayed(const Duration(milliseconds: 500), () async {
+          SharedPreferences loginUser = await SharedPreferences.getInstance();
+          loginUser.clear();
+          checkLoginStatus(context);
+        });
       },
     },
   ];

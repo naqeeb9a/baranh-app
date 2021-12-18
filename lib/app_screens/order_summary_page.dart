@@ -1,4 +1,3 @@
-import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -22,7 +21,6 @@ class OrderSummaryPage extends StatelessWidget {
               thickness: 1,
               color: myWhite,
             ),
-            orderCard(context,check:true),
             heightBox(context, 0.02),
             billRow(context, "Product", "Total", 0.03, myWhite),
             billRow(context, "Subtotal", "PKR 0.00", 0.03, myWhite),
