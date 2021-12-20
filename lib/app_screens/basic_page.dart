@@ -1,13 +1,13 @@
-import 'package:baranh/app_functions/functions.dart';
-import 'package:baranh/utils/app_routes.dart';
+import 'package:baranh/app_screens/all_reservations.dart';
+import 'package:baranh/app_screens/arrived_guests.dart';
+import 'package:baranh/app_screens/dine_in_orders.dart';
+import 'package:baranh/app_screens/new_reservations.dart';
+import 'package:baranh/app_screens/notifications_page.dart';
+import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/buttons.dart';
-import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -35,134 +35,20 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget allReservationsPage() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          heightBox(context, 0.05),
-          text(context, "ALL RESERVATIONS", 0.05, myWhite),
-          const Divider(
-            thickness: 1,
-            color: myWhite,
-          ),
-          heightBox(context, 0.02),
-          inputFieldsHome("Reservation Number:", "Ex:Res.00042"),
-          heightBox(context, 0.02),
-          inputFieldsHome("Select Date:", hintText, check: true),
-          heightBox(context, 0.04),
-          coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
-          heightBox(context, 0.02),
-          orderCard()
-        ],
-      ),
-    );
-  }
-
-  Widget notificationsPage() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "Notifications", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-        heightBox(context, 0.03),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: text(context, "Nothing Found!!", 0.04, myWhite))
-      ],
-    );
-  }
-
-  Widget newReservationPage() {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "RESERVATION", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
-        ),
-        heightBox(context, 0.01),
-        text(context, "BARANH LAHORE", 0.04, myWhite),
-        inputFieldsHome("Date", hintText, check: true),
-        heightBox(context, 0.02),
-        inputFieldsHome("Time:", ""),
-        heightBox(context, 0.02),
-        inputFieldsHome("Seats:", ""),
-        heightBox(context, 0.03),
-        coloredButton(context, "CHECK AVAILABILITY", myOrange)
-      ],
-    );
-  }
-
-  Widget dineInOrdersPage() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          heightBox(context, 0.05),
-          text(context, "DINE IN ORDERS", 0.05, myWhite),
-          const Divider(
-            thickness: 1,
-            color: myWhite,
-          ),
-          heightBox(context, 0.02),
-          inputFieldsHome("Table Number:", "Ex:42"),
-          heightBox(context, 0.03),
-          coloredButton(context, "SEARCH", myOrange),
-          tableCards(context),
-          tableCards(context),
-          tableCards(context),
-        ],
-      ),
-    );
-  }
-
-  Widget arrivedGuestPage() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          heightBox(context, 0.05),
-          text(context, "ARRIVED GUESTS", 0.05, myWhite),
-          const Divider(
-            thickness: 1,
-            color: myWhite,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget waitingForArrival() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          heightBox(context, 0.05),
-          text(context, "WAITING FOR ARRIVAL GUESTS", 0.05, myWhite),
-          const Divider(
-            thickness: 1,
-            color: myWhite,
-          ),
-        ],
-      ),
-    );
-  }
-
   bodyPage(String page) {
     switch (page) {
       case "All Reservations":
-        return allReservationsPage();
+        return const AllReservationsPage();
       case "Waiting For Arrival":
-        return waitingForArrival();
+        return const WaitingForArrival();
       case "Arrived Guests":
-        return arrivedGuestPage();
+        return const ArrivedGuest();
       case "Dine In Orders":
-        return dineInOrdersPage();
+        return const DineInOrders();
       case "New Reservations":
-        return newReservationPage();
+        return const NewReservationsPage();
       case "Notifications":
-        return notificationsPage();
+        return const NotificationsPage();
 
       default:
         return Column(
@@ -173,209 +59,4 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         );
     }
   }
-
-  Widget inputFieldsHome(text1, hintText1, {check = false}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        text(context, text1, 0.04, myWhite),
-        heightBox(context, .01),
-        Container(
-          color: myWhite,
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.04),
-          ),
-          child: (check == true)
-              ? InkWell(
-                  onTap: () async {
-                    var newTime = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1999, 1, 1),
-                      lastDate: DateTime(2999, 1, 1),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: myBlack,
-                            colorScheme:
-                                const ColorScheme.light(primary: myOrange),
-                            buttonTheme: const ButtonThemeData(
-                                textTheme: ButtonTextTheme.primary),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (newTime != null) {
-                      setState(() {
-                        hintText =
-                            DateFormat.yMMMd().format(newTime).toString();
-                      });
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: dynamicWidth(context, 0.5),
-                        child: TextFormField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: hintText,
-                              fillColor: myWhite),
-                        ),
-                      ),
-                      const Icon(Icons.calendar_today_outlined)
-                    ],
-                  ),
-                )
-              : TextFormField(
-                  decoration: InputDecoration(hintText: hintText1),
-                ),
-        )
-      ],
-    );
-  }
-}
-
-Widget orderCard() {
-  return FutureBuilder(
-    future: getReservationData(),
-    builder: (BuildContext context, AsyncSnapshot snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return LottieBuilder.asset(
-          "assets/loader.json",
-          width: dynamicWidth(context, 0.3),
-        );
-      } else if (snapshot.connectionState == ConnectionState.done) {
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: snapshot.data.length,
-          itemBuilder: (BuildContext context, int index) {
-            return orderCardExtension(context, snapshot.data, index);
-          },
-        );
-      } else {
-        return text(context, "not working", 0.028, Colors.white);
-      }
-    },
-  );
-}
-
-Widget orderCardExtension(context, snaphot, index, {check = false}) {
-  return Container(
-    margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(dynamicWidth(context, 0.015)),
-        border: Border.all(width: 1, color: myWhite.withOpacity(0.5))),
-    padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
-    child: Column(
-      children: [
-        text(
-            context,
-            (check == true)
-                ? "Status: Booked"
-                : "Order: " + snaphot[index]["sale_no"],
-            0.04,
-            myWhite),
-        Divider(
-          thickness: 1,
-          color: myWhite.withOpacity(0.5),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text(context, "Name: " + snaphot[index]["customer_name"], 0.035,
-                    myWhite),
-                text(context, "Phone: " + snaphot[index]["customer_phone"],
-                    0.035, myWhite),
-                text(context, "Date: " + snaphot[index]["booking_date"], 0.035,
-                    myWhite),
-                text(context, "Time: 23:00-01:00", 0.035, myWhite),
-                text(context, "Seats: " + snaphot[index]["booked_seats"], 0.035,
-                    myWhite),
-                text(context, "Status: " + snaphot[index]["usage_status"],
-                    0.035, myWhite),
-              ],
-            ),
-            InkWell(
-              onTap: (check == true)
-                  ? () {
-                      pop(context);
-                    }
-                  : () {
-                      push(context, const OrdersPage());
-                    },
-              child: Container(
-                padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
-                decoration: BoxDecoration(
-                    color: (check == true) ? myRed : myGreen,
-                    borderRadius:
-                        BorderRadius.circular(dynamicWidth(context, 0.01))),
-                child: text(
-                    context,
-                    (check == true) ? "  Back  " : "View Details",
-                    0.035,
-                    myWhite),
-              ),
-            )
-          ],
-        )
-      ],
-    ),
-  );
-}
-
-Widget tableCards(context) {
-  return Container(
-    margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(dynamicWidth(context, 0.015)),
-        border: Border.all(width: 1, color: myWhite.withOpacity(0.5))),
-    padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
-    child: Column(
-      children: [
-        text(context, "Table: Muiz Sir", 0.04, myWhite),
-        Divider(
-          thickness: 1,
-          color: myWhite.withOpacity(0.5),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text(context, "Order: 009605", 0.035, myWhite),
-                text(context, "Name: H", 0.035, myWhite),
-                text(context, "Phone: 03212180787", 0.035, myWhite),
-                text(context, "Date: 2021-12-04", 0.035, myWhite),
-                text(context, "Time: 23:00-01:00", 0.035, myWhite),
-                text(context, "Seats:4", 0.035, myWhite),
-                text(context, "Status:Dine In", 0.035, myWhite),
-              ],
-            ),
-            InkWell(
-              onTap: () {
-                push(context, const OrdersPage());
-              },
-              child: Container(
-                padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
-                decoration: BoxDecoration(
-                    color: myGreen,
-                    borderRadius:
-                        BorderRadius.circular(dynamicWidth(context, 0.01))),
-                child: text(context, "View Details", 0.035, myWhite),
-              ),
-            )
-          ],
-        )
-      ],
-    ),
-  );
 }
