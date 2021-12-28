@@ -18,7 +18,8 @@ Widget tableCards(context, function) {
       } else if (snapshot.data == false) {
         return text(context, "Server Error", 0.028, Colors.white);
       } else if (snapshot.data.length == 0) {
-        return text(context, "no Orders Yet!!", 0.028, Colors.white);
+        return Center(
+            child: text(context, "no Orders Yet!!", 0.028, Colors.white));
       } else if (snapshot.connectionState == ConnectionState.done) {
         return ListView.builder(
           itemCount: snapshot.data.length,
