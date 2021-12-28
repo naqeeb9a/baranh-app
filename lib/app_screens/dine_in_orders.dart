@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -11,24 +12,22 @@ class DineInOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          heightBox(context, 0.05),
-          text(context, "DINE IN ORDERS", 0.05, myWhite),
-          const Divider(
-            thickness: 1,
-            color: myWhite,
-          ),
-          heightBox(context, 0.02),
-          inputFieldsHome("Table Number:", "Ex:42", context),
-          heightBox(context, 0.03),
-          coloredButton(context, "SEARCH", myOrange),
-          tableCards(context),
-          tableCards(context),
-          tableCards(context),
-        ],
-      ),
+    return Column(
+      children: [
+        heightBox(context, 0.05),
+        text(context, "DINE IN ORDERS", 0.05, myWhite),
+        const Divider(
+          thickness: 1,
+          color: myWhite,
+        ),
+        heightBox(context, 0.02),
+        inputFieldsHome("Table Number:", "Ex:42", context),
+        heightBox(context, 0.03),
+        coloredButton(context, "SEARCH", myOrange),
+        Expanded(
+          child: tableCards(context, getReservationData("dinein-orders")),
+        )
+      ],
     );
   }
 }
