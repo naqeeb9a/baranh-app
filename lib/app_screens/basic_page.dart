@@ -5,7 +5,6 @@ import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/notifications_page.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
-import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -24,14 +23,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
     customContext = context;
     return Scaffold(
       backgroundColor: myBlack,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.05),
-          ),
-          child: bodyPage(pageDecider),
-        ),
-      ),
+      body: bodyPage(pageDecider),
     );
   }
 

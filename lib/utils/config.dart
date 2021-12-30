@@ -9,5 +9,5 @@ const noColor = Colors.transparent;
 
 bool obscureText = true;
 var pageDecider = "All Reservations";
-var hintText = "mm/dd/yyyy";
+dynamic hintText = "mm/dd/yyyy";
 dynamic customContext = "";

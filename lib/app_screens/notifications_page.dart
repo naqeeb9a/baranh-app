@@ -8,19 +8,29 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        heightBox(context, 0.05),
-        text(context, "Notifications", 0.05, myWhite),
-        const Divider(
-          thickness: 1,
-          color: myWhite,
+    return Scaffold(
+      backgroundColor: myBlack,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, 0.05),
+          ),
+          child: Column(
+            children: [
+              heightBox(context, 0.05),
+              text(context, "Notifications", 0.05, myWhite),
+              const Divider(
+                thickness: 1,
+                color: myWhite,
+              ),
+              heightBox(context, 0.03),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: text(context, "Nothing Found!!", 0.04, myWhite))
+            ],
+          ),
         ),
-        heightBox(context, 0.03),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: text(context, "Nothing Found!!", 0.04, myWhite))
-      ],
+      ),
     );
   }
 }

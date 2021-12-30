@@ -137,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ).show(context);
                           } else {
                             var response = await loginFunction();
-                            if (response ==
-                                "Oops!Something went wrong, Please try again!!") {
+
+                            if (response["status"] == 401) {
                               setState(() {
                                 loading = false;
                               });
@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               SharedPreferences loginUser =
                                   await SharedPreferences.getInstance();
                               loginUser.setString(
-                                  "User", response["users"][0]["full_name"]);
+                                  "User", response["data"]["full_name"]);
                               pushAndRemoveUntil(context, const MyApp());
                             }
                           }

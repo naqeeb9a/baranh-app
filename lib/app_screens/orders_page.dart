@@ -8,7 +8,8 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class OrdersPage extends StatelessWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+  final dynamic snapShot;
+  const OrdersPage({Key? key, this.snapShot}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class OrdersPage extends StatelessWidget {
               thickness: 1,
               color: myWhite,
             ),
-            orderDetailCard(context),
+            orderDetailCard(context, snapShot),
             heightBox(context, 0.02),
             coloredButton(context, "Guest Arrived", myGreen, fontSize: 0.035),
             heightBox(context, 0.01),
@@ -39,7 +40,7 @@ class OrdersPage extends StatelessWidget {
   }
 }
 
-Widget orderDetailCard(context, {check = false}) {
+Widget orderDetailCard(context, snapShot, {check = false}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -50,15 +51,20 @@ Widget orderDetailCard(context, {check = false}) {
       children: [
         (check == true)
             ? const Center()
-            : text(context, "Table:", 0.05, myWhite),
+            : text(context, "Table: " + snapShot["table_id"], 0.05, myWhite),
         (check == true)
             ? const Center()
             : Divider(
                 thickness: 1,
                 color: myWhite.withOpacity(0.5),
               ),
-        text(context, (check == true) ? "Order: 009954" : "Status: Booked",
-            0.035, myWhite),
+        text(
+            context,
+            (check == true)
+                ? "Order: " + snapShot["sale_no"]
+                : "Status: " + snapShot["usage_status"],
+            0.035,
+            myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -71,16 +77,28 @@ Widget orderDetailCard(context, {check = false}) {
               children: [
                 (check == true)
                     ? const Center()
-                    : text(context, "Name:Anamzohaib Zohaib", 0.035, myWhite),
+                    : text(context, "Name: " + snapShot["customer_name"], 0.035,
+                        myWhite),
                 (check == true)
                     ? const Center()
-                    : text(context, "Phone: 03212180787", 0.035, myWhite),
-                text(context, "Date: 2021-12-06", 0.035, myWhite),
-                text(context, "Time: 23:00-01:00", 0.035, myWhite),
-                text(context, "Seats:4", 0.035, myWhite),
+                    : text(context, "Phone: " + snapShot["customer_phone"],
+                        0.035, myWhite),
+                text(context, "Date: " + snapShot["booking_date"], 0.035,
+                    myWhite),
+                text(
+                    context,
+                    "Time: " +
+                        snapShot["opening_time"] +
+                        " - " +
+                        snapShot["closing_time"],
+                    0.035,
+                    myWhite),
+                text(context, "Seats: " + snapShot["booked_seats"], 0.035,
+                    myWhite),
                 (check == true)
                     ? const Center()
-                    : text(context, "Status:Booked", 0.035, myWhite),
+                    : text(context, "Status: " + snapShot["usage_status"],
+                        0.035, myWhite),
               ],
             ),
             SizedBox(

@@ -1,4 +1,3 @@
-import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
@@ -20,13 +19,13 @@ class ReservationHistoryPage extends StatelessWidget {
               text(context, "Reservation History", 0.05, myWhite),
               text(context, "VARDA SARWAR", 0.05, myWhite),
               heightBox(context, 0.02),
-              orderDetailCard(context, check: true),
-              heightBox(context, 0.005),
-              orderDetailCard(context, check: true),
-              heightBox(context, 0.005),
-              orderDetailCard(context, check: true),
-              heightBox(context, 0.005),
-              orderDetailCard(context, check: true),
+              // orderDetailCard(context, check: true),
+              // heightBox(context, 0.005),
+              // orderDetailCard(context, check: true),
+              // heightBox(context, 0.005),
+              // orderDetailCard(context, check: true),
+              // heightBox(context, 0.005),
+              // orderDetailCard(context, check: true),
               heightBox(context, 0.005),
             ],
           ),

@@ -2,9 +2,16 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:intl/intl.dart';
 
-Widget inputFieldsHome(text1, hintText1, context, {check = false}) {
+Widget inputFieldsHome(text1, hintText1, context,
+    {check = false,
+    generatePasswordCheck = false,
+    timeSlot = false,
+    function = ""}) {
+  final TextEditingController _password = TextEditingController();
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +29,7 @@ Widget inputFieldsHome(text1, hintText1, context, {check = false}) {
                     var newTime = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(1999, 1, 1),
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2999, 1, 1),
                       builder: (BuildContext context, Widget? child) {
                         return Theme(
@@ -39,8 +46,8 @@ Widget inputFieldsHome(text1, hintText1, context, {check = false}) {
                     );
                     if (newTime != null) {
                       changeState(() {
-                        hintText =
-                            DateFormat.yMMMd().format(newTime).toString();
+                        hintText = DateFormat.yMd().format(newTime).toString();
+                        function();
                       });
                     }
                   },
@@ -54,7 +61,7 @@ Widget inputFieldsHome(text1, hintText1, context, {check = false}) {
                           decoration: InputDecoration(
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
-                              hintText: hintText,
+                              hintText: hintText.toString(),
                               fillColor: myWhite),
                         ),
                       ),
@@ -62,9 +69,35 @@ Widget inputFieldsHome(text1, hintText1, context, {check = false}) {
                     ],
                   ),
                 )
-              : TextFormField(
-                  decoration: InputDecoration(hintText: hintText1),
-                ),
+              : generatePasswordCheck == true
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _password,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: hintText1,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              var rng = Random();
+                              _password.text = rng.nextInt(9999999).toString();
+                            },
+                            child: const Icon(Icons.rotate_left))
+                      ],
+                    )
+                  : TextFormField(
+                      decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          hintText: hintText1),
+                    ),
         )
       ],
     );
