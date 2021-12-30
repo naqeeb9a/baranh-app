@@ -1,9 +1,11 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 
 class ContactInformation extends StatelessWidget {
@@ -30,9 +32,23 @@ class ContactInformation extends StatelessWidget {
               heightBox(context, 0.02),
               inputFieldsHome("Email", "someone@gmail.com", context),
               heightBox(context, 0.04),
-              coloredButton(context, "Submit", myOrange, function: () {
-                pageDecider = "All Reservations";
-                popUntil(customContext);
+              coloredButton(context, "Submit", myOrange, function: () async {
+                var response = await reserveTable();
+                if (response == false) {
+                  CoolAlert.show(
+                      title: "Server Error",
+                      text: "please Try again",
+                      context: context,
+                      loopAnimation: true,
+                      backgroundColor: myOrange,
+                      confirmBtnColor: myOrange,
+                      confirmBtnText: "Retry",
+                      type: CoolAlertType.error,
+                      animType: CoolAlertAnimType.slideInRight);
+                } else {
+                  pageDecider = "All Reservations";
+                  popUntil(customContext);
+                }
               })
             ],
           ),

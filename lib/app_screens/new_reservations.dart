@@ -21,6 +21,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   bool loading = false;
   String indexValue = "";
   dynamic bigArray = [];
+  var timeDropDown = "";
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +62,14 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                   AsyncSnapshot snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
-                                  indexValue = snapshot.data[0]
-                                          ["opening_time"] +
-                                      " - " +
-                                      snapshot.data[0]["closing_time"];
+                                  (snapshot.data == false)
+                                      ? ""
+                                      : indexValue = snapshot.data[0]
+                                              ["opening_time"] +
+                                          " - " +
+                                          snapshot.data[0]["closing_time"] +
+                                          "  ${snapshot.data[0]["discount"]} % off" +
+                                          "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
                                   return (snapshot.data == false)
                                       ? text(context, "Server Error", 0.04,
                                           Colors.red)
@@ -83,12 +88,16 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                                                 "opening_time"] +
                                                             " - " +
                                                             value[
-                                                                "closing_time"],
+                                                                "closing_time"] +
+                                                            "  ${value["discount"]} % off" +
+                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
                                                         child: Text(value[
                                                                 "opening_time"] +
                                                             " - " +
                                                             value[
-                                                                "closing_time"]),
+                                                                "closing_time"] +
+                                                            "  ${value["discount"]} % off" +
+                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}"),
                                                       ))
                                                   .toList(),
                                               onChanged: (value) {
@@ -114,22 +123,36 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                 inputFieldsHome("Seats:", "", context),
                 heightBox(context, 0.03),
                 coloredButton(context, "CHECK AVAILABILITY", myOrange,
-                    function: () {
-                  checkAvailibility();
+                    function: () async {
+                  var response = await checkAvailibility(indexValue, hintText,
+                      indexValue.substring(indexValue.indexOf("#") + 1), "2");
 
-                  CoolAlert.show(
-                      onConfirmBtnTap: () {
-                        push(context, const ContactInformation());
-                      },
-                      title: "Slots Available",
-                      text: "Do you wish to proceed?",
-                      context: context,
-                      loopAnimation: true,
-                      backgroundColor: myOrange,
-                      confirmBtnColor: myOrange,
-                      confirmBtnText: "Continue",
-                      type: CoolAlertType.confirm,
-                      animType: CoolAlertAnimType.slideInRight);
+                  if (response == true) {
+                    CoolAlert.show(
+                        onConfirmBtnTap: () {
+                          push(context, const ContactInformation());
+                        },
+                        title: "Slots Available",
+                        text: "Do you wish to proceed?",
+                        context: context,
+                        loopAnimation: true,
+                        backgroundColor: myOrange,
+                        confirmBtnColor: myOrange,
+                        confirmBtnText: "Continue",
+                        type: CoolAlertType.confirm,
+                        animType: CoolAlertAnimType.slideInRight);
+                  } else {
+                    CoolAlert.show(
+                        title: "Server Error",
+                        text: "please Try again",
+                        context: context,
+                        loopAnimation: true,
+                        backgroundColor: myOrange,
+                        confirmBtnColor: myOrange,
+                        confirmBtnText: "Retry",
+                        type: CoolAlertType.error,
+                        animType: CoolAlertAnimType.slideInRight);
+                  }
                 }),
               ],
             ),
@@ -139,5 +162,3 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
     );
   }
 }
-
-checkAvailibility() {}
