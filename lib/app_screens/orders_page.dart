@@ -51,7 +51,8 @@ Widget orderDetailCard(context, snapShot, {check = false}) {
       children: [
         (check == true)
             ? const Center()
-            : text(context, "Table: " + snapShot["table_id"], 0.05, myWhite),
+            : text(context, "Table: " + snapShot["table_id"].toString(), 0.05,
+                myWhite),
         (check == true)
             ? const Center()
             : Divider(

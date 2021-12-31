@@ -49,7 +49,8 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(context, "Table: " + snapshot[index]["table_id"], 0.04, myWhite),
+        text(context, "Table: " + snapshot[index]["table_id"].toString(), 0.04,
+            myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -60,20 +61,38 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                text(context, "Order: " + snapshot[index]["sale_no"], 0.035,
+                text(context, "Order: " + snapshot[index]["sale_no"].toString(),
+                    0.035, myWhite),
+                text(
+                    context,
+                    "Name: " + snapshot[index]["customer_name"].toString(),
+                    0.035,
                     myWhite),
-                text(context, "Name: " + snapshot[index]["customer_name"],
-                    0.035, myWhite),
-                text(context, "Phone: " + snapshot[index]["customer_phone"],
-                    0.035, myWhite),
-                text(context, "Date: " + snapshot[index]["booking_date"], 0.035,
+                text(
+                    context,
+                    "Phone: " + snapshot[index]["customer_phone"].toString(),
+                    0.035,
                     myWhite),
-                text(context, "Time: " + snapshot[index]["opening_time"], 0.035,
+                text(
+                    context,
+                    "Date: " + snapshot[index]["booking_date"].toString(),
+                    0.035,
                     myWhite),
-                text(context, "Seats: " + snapshot[index]["booked_seats"],
-                    0.035, myWhite),
-                text(context, "Status: " + snapshot[index]["usage_status"],
-                    0.035, myWhite),
+                text(
+                    context,
+                    "Time: " + snapshot[index]["opening_time"].toString(),
+                    0.035,
+                    myWhite),
+                text(
+                    context,
+                    "Seats: " + snapshot[index]["booked_seats"].toString(),
+                    0.035,
+                    myWhite),
+                text(
+                    context,
+                    "Status: " + snapshot[index]["usage_status"].toString(),
+                    0.035,
+                    myWhite),
               ],
             ),
             SizedBox(

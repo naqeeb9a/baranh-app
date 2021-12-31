@@ -3,7 +3,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/input_field_home.dart';
-import 'package:baranh/widgets/orders_card.dart';
+import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,9 @@ class AllReservationsPage extends StatelessWidget {
               heightBox(context, 0.04),
               coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
               heightBox(context, 0.02),
-              Expanded(child: orderCard(getReservationData("reservelist")))
+              Expanded(
+                  child: tableCards(context, getReservationData("reservelist"),
+                      "History", "View Details"))
             ],
           ),
         ),

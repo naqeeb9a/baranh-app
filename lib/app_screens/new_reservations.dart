@@ -77,8 +77,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                           builder: (BuildContext context,
                                               changeSate) {
                                             return DropdownButton<String>(
-                                              hint: text(context, indexValue,
-                                                  0.04, Colors.white),
+                                              hint: text(
+                                                  context,
+                                                  indexValue.substring(0,
+                                                      indexValue.indexOf("#")),
+                                                  0.04,
+                                                  Colors.white),
                                               items: snapshot.data
                                                   .map<
                                                       DropdownMenuItem<
@@ -96,8 +100,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                                             " - " +
                                                             value[
                                                                 "closing_time"] +
-                                                            "  ${value["discount"]} % off" +
-                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}"),
+                                                            "  ${value["discount"]} % off"),
                                                       ))
                                                   .toList(),
                                               onChanged: (value) {
