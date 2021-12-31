@@ -26,7 +26,9 @@ class ArrivedGuest extends StatelessWidget {
                 color: myWhite,
               ),
               Expanded(
-                  child: tableCards(context, getReservationData("arrived"),"Assign Table","Take Order"))
+                  child: tableCards(context, getReservationData("arrived"),
+                      "Assign Table", "Take Order",
+                      function1check: true, function2check: true))
             ],
           ),
         ),

@@ -37,6 +37,21 @@ checkAvailibility(String indexValue, date, timedropdown, seats) async {
   }
 }
 
+getTables() async {
+  try {
+    var response = await http
+        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/booking-details/1"));
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"]["tables"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
 reserveTable() async {
   try {
     var response = await http
@@ -80,6 +95,22 @@ getTimeSlots(outletId, date) async {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
         body: {"outlet_id": outletId, "filter_date": date});
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
+getMenu() async {
+  try {
+    var response = await http.post(
+        Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
+        body: {"outletid": "1", "term": "all"});
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];

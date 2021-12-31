@@ -1,4 +1,5 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/app_screens/menu.dart';
 import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 Widget tableCards(context, function, buttonText1, buttonText2,
-    {setstate = ""}) {
+    {setstate = "", function1check = false, function2check = false}) {
   return FutureBuilder(
     future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -29,7 +30,9 @@ Widget tableCards(context, function, buttonText1, buttonText2,
           itemBuilder: (BuildContext context, int index) {
             return tableCardsExtension(
                 context, snapshot.data, index, buttonText1, buttonText2,
-                function: setstate);
+                function: setstate,
+                function1check: function1check,
+                function2check: function2check);
           },
         );
       } else {
@@ -40,7 +43,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
 }
 
 Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
-    {function = ""}) {
+    {function = "", function1check = false, function2check = false}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -101,39 +104,127 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   greenButtons(context, buttonText1, snapshot, index,
-                      function: () async {
-                    var respone =
-                        await arrivedGuests(snapshot[index]["sale_id"]);
-                    if (respone == false) {
-                      CoolAlert.show(
-                          context: context,
-                          text:
-                              "There is some problem in Internet or the Server",
-                          confirmBtnText: "Retry",
-                          type: CoolAlertType.error,
-                          backgroundColor: myOrange,
-                          confirmBtnColor: myOrange);
-                    } else {
-                      CoolAlert.show(
-                          context: context,
-                          text: "Guest Arrived Successfully",
-                          confirmBtnText: "continue",
-                          type: CoolAlertType.success,
-                          onConfirmBtnTap: () {
-                            pageDecider = "Arrived Guests";
-                            globalRefresh();
-                          },
-                          backgroundColor: myOrange,
-                          confirmBtnColor: myOrange);
-                    }
-                  }),
+                      function: function1check == true
+                          ? () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: myBlack,
+                                      content: Container(
+                                        color: myBlack,
+                                        height: dynamicHeight(context, 0.6),
+                                        width: dynamicWidth(context, 0.8),
+                                        child: FutureBuilder(
+                                          future: getTables(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return LottieBuilder.asset(
+                                                "assets/loader.json",
+                                                width:
+                                                    dynamicWidth(context, 0.1),
+                                              );
+                                            } else if (snapshot.data == false) {
+                                              return text(
+                                                  context,
+                                                  "Server Error",
+                                                  0.028,
+                                                  Colors.white);
+                                            } else if (snapshot.data.length ==
+                                                0) {
+                                              return Center(
+                                                  child: text(
+                                                      context,
+                                                      "no Tables!!",
+                                                      0.028,
+                                                      Colors.white));
+                                            } else if (snapshot
+                                                    .connectionState ==
+                                                ConnectionState.done) {
+                                              return GridView.builder(
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 4,
+                                                        mainAxisSpacing: 5,
+                                                        crossAxisSpacing: 5),
+                                                itemCount: snapshot.data.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      assignTable = snapshot
+                                                          .data[index]["id"];
+                                                      pop(context);
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      color: myOrange,
+                                                      child: text(
+                                                          context,
+                                                          "Table\n" +
+                                                              snapshot.data[
+                                                                      index]
+                                                                  ["name"],
+                                                          0.04,
+                                                          Colors.white,
+                                                          alignText:
+                                                              TextAlign.center),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              return text(
+                                                  context,
+                                                  "not working",
+                                                  0.028,
+                                                  Colors.white);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }
+                          : () async {
+                              var respone = await arrivedGuests(
+                                  snapshot[index]["sale_id"]);
+                              if (respone == false) {
+                                CoolAlert.show(
+                                    context: context,
+                                    text:
+                                        "There is some problem in Internet or the Server",
+                                    confirmBtnText: "Retry",
+                                    type: CoolAlertType.error,
+                                    backgroundColor: myOrange,
+                                    confirmBtnColor: myOrange);
+                              } else {
+                                CoolAlert.show(
+                                    context: context,
+                                    text: "Guest Arrived Successfully",
+                                    confirmBtnText: "continue",
+                                    type: CoolAlertType.success,
+                                    onConfirmBtnTap: () {
+                                      pageDecider = "Arrived Guests";
+                                      globalRefresh();
+                                    },
+                                    backgroundColor: myOrange,
+                                    confirmBtnColor: myOrange);
+                              }
+                            }),
                   greenButtons(context, buttonText2, snapshot, index,
                       function: () {
                     push(
                         context,
-                        OrdersPage(
-                          snapShot: snapshot[index],
-                        ));
+                        function2check == true
+                            ? const MenuPage()
+                            : OrdersPage(
+                                snapShot: snapshot[index],
+                              ));
                   })
                 ],
               ),
