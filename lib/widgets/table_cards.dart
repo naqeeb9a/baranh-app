@@ -120,7 +120,8 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                           confirmBtnText: "continue",
                           type: CoolAlertType.success,
                           onConfirmBtnTap: () {
-                            function();
+                            pageDecider = "Arrived Guests";
+                            globalRefresh();
                           },
                           backgroundColor: myOrange,
                           confirmBtnColor: myOrange);

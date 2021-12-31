@@ -31,8 +31,11 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
                 color: myWhite,
               ),
               Expanded(
-                child: tableCards(context, getReservationData("dinein-orders"),
-                    "Arrived Guests", "View Details", setstate: () {
+                child: tableCards(
+                    context,
+                    getReservationData("waiting-for-arrival"),
+                    "Arrived Guests",
+                    "View Details", setstate: () {
                   setState(() {});
                 }),
               )

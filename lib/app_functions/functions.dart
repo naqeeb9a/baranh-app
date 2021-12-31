@@ -45,7 +45,7 @@ reserveTable() async {
       "phone": "1244325234",
       "email": "naqeeb9a@gmail.com",
       "seats": "5",
-      "date": "6/2/2022",
+      "date": "2021-12-31",
       "timedropdown": "18#50#0#2",
       "outlet_id": "1"
     });

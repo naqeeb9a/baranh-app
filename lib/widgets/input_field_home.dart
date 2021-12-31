@@ -46,7 +46,8 @@ Widget inputFieldsHome(text1, hintText1, context,
                     );
                     if (newTime != null) {
                       changeState(() {
-                        hintText = DateFormat.yMd().format(newTime).toString();
+                        hintText =
+                            DateFormat('yyyy-MM-dd').format(newTime).toString();
                         function();
                       });
                     }

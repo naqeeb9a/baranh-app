@@ -63,6 +63,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    globalRefresh = () {
+      setState(() {});
+    };
     startAnimation();
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
