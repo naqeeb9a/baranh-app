@@ -182,7 +182,9 @@ Widget drawerItems2(context) {
               fontSize: 0.035),
           heightBox(context, 0.02),
           coloredButton(context, "CONTINUE ORDERING", Colors.transparent,
-              fontSize: 0.035)
+              fontSize: 0.035, function: () {
+            pop(context);
+          })
         ],
       ),
     ),
