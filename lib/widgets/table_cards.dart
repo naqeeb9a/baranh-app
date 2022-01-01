@@ -9,8 +9,16 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-Widget tableCards(context, function, buttonText1, buttonText2,
-    {setstate = "", function1check = false, function2check = false}) {
+Widget tableCards(
+  context,
+  function,
+  buttonText1,
+  buttonText2, {
+  setstate = "",
+  function1check = false,
+  function2check = false,
+}) {
+  var assignTable = 0;
   return FutureBuilder(
     future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -32,7 +40,8 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                 context, snapshot.data, index, buttonText1, buttonText2,
                 function: setstate,
                 function1check: function1check,
-                function2check: function2check);
+                function2check: function2check,
+                assignTable: assignTable);
           },
         );
       } else {
@@ -43,7 +52,10 @@ Widget tableCards(context, function, buttonText1, buttonText2,
 }
 
 Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
-    {function = "", function1check = false, function2check = false}) {
+    {function = "",
+    function1check = false,
+    function2check = false,
+    assignTable}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -110,6 +122,9 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
+                                      title: text(context, "Assign Table", 0.04,
+                                          Colors.white,
+                                          bold: true),
                                       backgroundColor: myBlack,
                                       content: Container(
                                         color: myBlack,
@@ -157,6 +172,7 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                                                     onTap: () {
                                                       assignTable = snapshot
                                                           .data[index]["id"];
+
                                                       pop(context);
                                                     },
                                                     child: Container(

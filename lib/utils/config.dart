@@ -11,5 +11,4 @@ bool obscureText = true;
 var pageDecider = "All Reservations";
 dynamic hintText = "mm/dd/yyyy";
 dynamic customContext = "";
-dynamic assignTable = "";
 dynamic globalRefresh = "";

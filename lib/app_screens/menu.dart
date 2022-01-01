@@ -1,8 +1,10 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 
 class MenuPage extends StatelessWidget {
@@ -17,12 +19,41 @@ class MenuPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
         child: Column(
           children: [
-            heightBox(context, 0.05),
+            heightBox(context, 0.02),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: InkWell(
+                onTap: () {
+                  pop(context);
+                },
+                child: const Icon(
+                  LineIcons.arrowLeft,
+                  color: myWhite,
+                ),
+              ),
+            ),
+            heightBox(context, 0.02),
             text(context, "Menu", 0.05, myWhite),
             const Divider(
               thickness: 1,
               color: myWhite,
             ),
+            heightBox(context, 0.02),
+            Container(
+              decoration: BoxDecoration(
+                  color: myWhite,
+                  borderRadius:
+                      BorderRadius.circular(dynamicWidth(context, 0.1))),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    border:
+                        const UnderlineInputBorder(borderSide: BorderSide.none),
+                    hintText: "Search",
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: dynamicWidth(context, 0.05))),
+              ),
+            ),
+            heightBox(context, 0.02),
             Expanded(
               child: FutureBuilder(
                 future: getMenu(),
@@ -64,7 +95,7 @@ class MenuPage extends StatelessWidget {
 menuCards(context, snapshot, index, quantity) {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.grey.withOpacity(0.3),
+      color: Colors.grey.withOpacity(0.2),
       borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
     ),
     child: Column(
@@ -79,7 +110,7 @@ menuCards(context, snapshot, index, quantity) {
                 topRight: Radius.circular(dynamicWidth(context, 0.02))),
             child: Image.network(
               snapshot[index]["photo"] ??
-                  "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png",
+                  "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
               height: dynamicWidth(context, 0.3),
               width: dynamicWidth(context, 0.5),
               fit: BoxFit.cover,
@@ -89,7 +120,7 @@ menuCards(context, snapshot, index, quantity) {
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: text(context, snapshot[index]["name"], 0.04, Colors.white),
+          child: text(context, snapshot[index]["name"], 0.03, Colors.white),
         ),
         Padding(
           padding:
@@ -134,11 +165,11 @@ tapIcon() {
       },
       child: (check == true)
           ? const Icon(
-              Icons.shopping_bag_rounded,
-              color: myWhite,
+              LineIcons.shoppingCart,
+              color: myOrange,
             )
           : const Icon(
-              Icons.shopping_bag_outlined,
+              LineIcons.addToShoppingCart,
               color: myWhite,
             ),
     );
@@ -150,7 +181,8 @@ Widget itemPlusMinus(context, quantity) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
+        InkWell(
+          splashColor: Colors.transparent,
           onTap: () {
             if (quantity > 1) {
               changeState(() {
@@ -175,7 +207,8 @@ Widget itemPlusMinus(context, quantity) {
             fontSize: dynamicWidth(context, .03),
           ),
         ),
-        GestureDetector(
+        InkWell(
+          splashColor: Colors.transparent,
           onTap: () {
             if (quantity < 30) {
               changeState(() {
