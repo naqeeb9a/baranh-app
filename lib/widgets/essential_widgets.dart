@@ -1,6 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 bar(
   context, {
@@ -30,7 +33,16 @@ bar(
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, .02),
           ),
-          child: const Icon(Icons.shopping_cart_outlined),
+          child: Obx(() {
+            return Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Badge(
+                  position: BadgePosition.topEnd(),
+                  badgeContent: text(
+                      context, cartItems.length.toString(), 0.02, Colors.white),
+                  child: const Icon(Icons.shopping_cart_outlined)),
+            );
+          }),
         ),
       ),
       widthBox(context, 0.01)

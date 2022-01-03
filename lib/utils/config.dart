@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const myWhite = Color(0xffffffff);
 const myBlack = Color(0xff000000);
@@ -12,3 +13,4 @@ var pageDecider = "All Reservations";
 dynamic hintText = "mm/dd/yyyy";
 dynamic customContext = "";
 dynamic globalRefresh = "";
+var cartItems = [].obs;

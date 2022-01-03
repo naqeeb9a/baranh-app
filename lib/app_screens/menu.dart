@@ -12,7 +12,6 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var quantity = 1;
     return Scaffold(
       backgroundColor: myBlack,
       body: Padding(
@@ -68,11 +67,10 @@ class MenuPage extends StatelessWidget {
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                             childAspectRatio: dynamicWidth(context, 0.5) /
-                                dynamicWidth(context, 0.7)),
+                                dynamicWidth(context, 0.5)),
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return menuCards(
-                              context, snapshot.data, index, quantity);
+                          return menuCards(context, snapshot.data, index);
                         },
                       );
                     }
@@ -92,7 +90,7 @@ class MenuPage extends StatelessWidget {
   }
 }
 
-menuCards(context, snapshot, index, quantity) {
+menuCards(context, snapshot, index) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.grey.withOpacity(0.2),
@@ -111,7 +109,7 @@ menuCards(context, snapshot, index, quantity) {
             child: Image.network(
               snapshot[index]["photo"] ??
                   "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
-              height: dynamicWidth(context, 0.3),
+              height: dynamicWidth(context, 0.2),
               width: dynamicWidth(context, 0.5),
               fit: BoxFit.cover,
             ),
@@ -129,104 +127,108 @@ menuCards(context, snapshot, index, quantity) {
               Colors.white),
         ),
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(dynamicWidth(context, 0.02)),
-                      border: Border.all(color: myWhite, width: 1)),
-                  child: itemPlusMinus(context, quantity)),
-              tapIcon()
-            ],
-          ),
-        ),
+            padding:
+                EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+            child: iconsRow(context, snapshot[index])),
         heightBox(context, 0.005),
       ],
     ),
   );
 }
 
-tapIcon() {
+iconsRow(context, snapshot) {
   bool check = false;
-  return StatefulBuilder(builder: (context, changestate) {
-    return GestureDetector(
-      onTap: () {
-        changestate(() {
-          if (check == false) {
-            check = true;
-          } else {
-            check = false;
-          }
-        });
-      },
-      child: (check == true)
-          ? const Icon(
-              LineIcons.shoppingCart,
-              color: myOrange,
-            )
-          : const Icon(
-              LineIcons.addToShoppingCart,
-              color: myWhite,
-            ),
-    );
-  });
-}
-
-Widget itemPlusMinus(context, quantity) {
-  return StatefulBuilder(builder: (context, changeState) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          splashColor: Colors.transparent,
+  var quantity = 1;
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
+              border: Border.all(color: myWhite, width: 1)),
+          child: StatefulBuilder(builder: (context, changeState) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    if (quantity > 1) {
+                      changeState(() {
+                        quantity--;
+                      });
+                    }
+                  },
+                  child: SizedBox(
+                    width: dynamicWidth(context, .1),
+                    height: dynamicWidth(context, .07),
+                    child: Icon(
+                      Icons.remove,
+                      size: dynamicWidth(context, .03),
+                      color: myOrange,
+                    ),
+                  ),
+                ),
+                Text(
+                  quantity.toString(),
+                  style: TextStyle(
+                    color: myOrange,
+                    fontSize: dynamicWidth(context, .03),
+                  ),
+                ),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    if (quantity < 30) {
+                      changeState(() {
+                        quantity++;
+                      });
+                    }
+                  },
+                  child: SizedBox(
+                    width: dynamicWidth(context, .1),
+                    height: dynamicWidth(context, .07),
+                    child: Icon(
+                      Icons.add,
+                      size: dynamicWidth(context, .03),
+                      color: myOrange,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          })),
+      StatefulBuilder(builder: (context, changestate) {
+        return GestureDetector(
           onTap: () {
-            if (quantity > 1) {
-              changeState(() {
-                quantity--;
-              });
-            }
+            changestate(() {
+              if (check == false) {
+                cartItems.add({
+                  "name": snapshot["name"],
+                  "sale_price": snapshot["sale_price"],
+                  "photo": snapshot["photo"],
+                  "quantity": quantity
+                });
+                check = true;
+              } else {
+                cartItems.remove(snapshot);
+                check = false;
+              }
+            });
           },
-          child: SizedBox(
-            width: dynamicWidth(context, .1),
-            height: dynamicWidth(context, .07),
-            child: Icon(
-              Icons.remove,
-              size: dynamicWidth(context, .03),
-              color: myOrange,
-            ),
-          ),
-        ),
-        Text(
-          quantity.toString(),
-          style: TextStyle(
-            color: myOrange,
-            fontSize: dynamicWidth(context, .03),
-          ),
-        ),
-        InkWell(
-          splashColor: Colors.transparent,
-          onTap: () {
-            if (quantity < 30) {
-              changeState(() {
-                quantity++;
-              });
-            }
-          },
-          child: SizedBox(
-            width: dynamicWidth(context, .1),
-            height: dynamicWidth(context, .07),
-            child: Icon(
-              Icons.add,
-              size: dynamicWidth(context, .03),
-              color: myOrange,
-            ),
-          ),
-        ),
-      ],
-    );
-  });
+          child: (check == true)
+              ? Icon(
+                  LineIcons.shoppingCart,
+                  color: myOrange,
+                  size: dynamicWidth(context, 0.07),
+                )
+              : Icon(
+                  LineIcons.addToShoppingCart,
+                  color: myWhite,
+                  size: dynamicWidth(context, 0.07),
+                ),
+        );
+      })
+    ],
+  );
 }

@@ -5,6 +5,7 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget drawerItems(context, function, changeState) {
@@ -176,6 +177,20 @@ Widget drawerItems2(context) {
             thickness: 1,
             color: myWhite.withOpacity(0.5),
           ),
+          Expanded(
+            child: Obx(() {
+              return ListView.builder(
+                itemCount: cartItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, 0.01)),
+                    child: cartCards(context, index),
+                  );
+                },
+              );
+            }),
+          ),
           dividerRowWigets(context, "TOTAL:", check: true),
           heightBox(context, 0.02),
           coloredButton(context, "GO TO CHECKOUT", const Color(0xFF008000),
@@ -188,6 +203,50 @@ Widget drawerItems2(context) {
         ],
       ),
     ),
+  );
+}
+
+cartCards(context, index) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Image.network(
+        cartItems[index][""] ??
+            "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
+        height: dynamicWidth(context, 0.2),
+        width: dynamicWidth(context, 0.15),
+        fit: BoxFit.cover,
+      ),
+      FittedBox(
+        child: SizedBox(
+          width: dynamicWidth(context, 0.4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              text(context, cartItems[index]["name"], 0.04, Colors.white),
+              text(
+                  context,
+                  "Rs. " +
+                      cartItems[index]["sale_price"] +
+                      " x " +
+                      cartItems[index]["quantity"].toString(),
+                  0.04,
+                  Colors.white),
+            ],
+          ),
+        ),
+      ),
+      InkWell(
+        onTap: () {
+          cartItems.remove(cartItems[index]);
+        },
+        child: const Icon(
+          Icons.close,
+          color: myWhite,
+        ),
+      )
+    ],
   );
 }
 
