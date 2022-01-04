@@ -121,3 +121,19 @@ getMenu() async {
     return false;
   }
 }
+
+getCategory() async {
+  try {
+    var response = await http.get(
+      Uri.parse("https://baranhweb.cmcmtech.com/api/cat-listing"),
+    );
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
