@@ -8,7 +8,9 @@ import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 
 class MenuPage extends StatelessWidget {
-  const MenuPage({Key? key}) : super(key: key);
+  final String saleId, tableNo;
+  const MenuPage({Key? key, required this.saleId, required this.tableNo})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

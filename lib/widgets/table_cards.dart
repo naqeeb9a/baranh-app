@@ -8,6 +8,7 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 Widget tableCards(
   context,
@@ -51,7 +52,8 @@ Widget tableCards(
   );
 }
 
-Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
+Widget tableCardsExtension(
+    context, snapshotTable, indexTable, buttonText1, buttonText2,
     {function = "",
     function1check = false,
     function2check = false,
@@ -64,7 +66,10 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(context, "Table: " + snapshot[index]["table_id"].toString(), 0.04,
+        text(
+            context,
+            "Table: " + snapshotTable[indexTable]["table_id"].toString(),
+            0.04,
             myWhite),
         Divider(
           thickness: 1,
@@ -76,36 +81,45 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                text(context, "Order: " + snapshot[index]["sale_no"].toString(),
-                    0.035, myWhite),
                 text(
                     context,
-                    "Name: " + snapshot[index]["customer_name"].toString(),
+                    "Order: " + snapshotTable[indexTable]["sale_no"].toString(),
                     0.035,
                     myWhite),
                 text(
                     context,
-                    "Phone: " + snapshot[index]["customer_phone"].toString(),
+                    "Name: " +
+                        snapshotTable[indexTable]["customer_name"].toString(),
                     0.035,
                     myWhite),
                 text(
                     context,
-                    "Date: " + snapshot[index]["booking_date"].toString(),
+                    "Phone: " +
+                        snapshotTable[indexTable]["customer_phone"].toString(),
                     0.035,
                     myWhite),
                 text(
                     context,
-                    "Time: " + snapshot[index]["opening_time"].toString(),
+                    "Date: " +
+                        snapshotTable[indexTable]["booking_date"].toString(),
                     0.035,
                     myWhite),
                 text(
                     context,
-                    "Seats: " + snapshot[index]["booked_seats"].toString(),
+                    "Time: " +
+                        snapshotTable[indexTable]["opening_time"].toString(),
                     0.035,
                     myWhite),
                 text(
                     context,
-                    "Status: " + snapshot[index]["usage_status"].toString(),
+                    "Seats: " +
+                        snapshotTable[indexTable]["booked_seats"].toString(),
+                    0.035,
+                    myWhite),
+                text(
+                    context,
+                    "Status: " +
+                        snapshotTable[indexTable]["usage_status"].toString(),
                     0.035,
                     myWhite),
               ],
@@ -115,7 +129,7 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  greenButtons(context, buttonText1, snapshot, index,
+                  greenButtons(context, buttonText1, snapshotTable, indexTable,
                       function: function1check == true
                           ? () {
                               showDialog(
@@ -169,11 +183,25 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                                                     (BuildContext context,
                                                         int index) {
                                                   return InkWell(
-                                                    onTap: () {
+                                                    onTap: () async {
                                                       assignTable = snapshot
-                                                          .data[index]["id"];
+                                                          .data[index]["name"];
 
-                                                      pop(context);
+                                                      var response =
+                                                          await asignTable(
+                                                              snapshotTable[
+                                                                      indexTable]
+                                                                  ["sale_id"],
+                                                              assignTable);
+                                                      if (response == false) {
+                                                        MotionToast.error(
+                                                                description:
+                                                                    "Table not assigned Check your internet")
+                                                            .show(context);
+                                                      } else {
+                                                        Navigator.pop(context,
+                                                            function());
+                                                      }
                                                     },
                                                     child: Container(
                                                       alignment:
@@ -208,7 +236,7 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                             }
                           : () async {
                               var respone = await arrivedGuests(
-                                  snapshot[index]["sale_id"]);
+                                  snapshotTable[indexTable]["sale_id"]);
                               if (respone == false) {
                                 CoolAlert.show(
                                     context: context,
@@ -232,14 +260,18 @@ Widget tableCardsExtension(context, snapshot, index, buttonText1, buttonText2,
                                     confirmBtnColor: myOrange);
                               }
                             }),
-                  greenButtons(context, buttonText2, snapshot, index,
+                  greenButtons(context, buttonText2, snapshotTable, indexTable,
                       function: () {
                     push(
                         context,
                         function2check == true
-                            ? const MenuPage()
+                            ? MenuPage(
+                                saleId: snapshotTable[indexTable]["sale_id"]
+                                    .toString(),
+                                tableNo: assignTable.toString(),
+                              )
                             : OrdersPage(
-                                snapShot: snapshot[index],
+                                snapShot: snapshotTable[indexTable],
                               ));
                   })
                 ],

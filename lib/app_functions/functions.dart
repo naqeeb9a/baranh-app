@@ -121,3 +121,20 @@ getMenu() async {
     return false;
   }
 }
+
+asignTable(saleId, tableId) async {
+  try {
+    var response = await http.post(
+        Uri.parse("http://baranhweb.cmcmtech.com/api/assign-table"),
+        body: {"sale_id": saleId, "table_id": tableId});
+    var jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}

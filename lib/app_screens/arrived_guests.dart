@@ -5,9 +5,14 @@ import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-class ArrivedGuest extends StatelessWidget {
+class ArrivedGuest extends StatefulWidget {
   const ArrivedGuest({Key? key}) : super(key: key);
 
+  @override
+  State<ArrivedGuest> createState() => _ArrivedGuestState();
+}
+
+class _ArrivedGuestState extends State<ArrivedGuest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +32,9 @@ class ArrivedGuest extends StatelessWidget {
               ),
               Expanded(
                   child: tableCards(context, getReservationData("arrived"),
-                      "Assign Table", "Take Order",
-                      function1check: true, function2check: true))
+                      "Assign Table", "Take Order", setstate: () {
+                setState(() {});
+              }, function1check: true, function2check: true))
             ],
           ),
         ),
