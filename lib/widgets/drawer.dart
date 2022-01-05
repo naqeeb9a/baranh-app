@@ -172,7 +172,7 @@ Widget drawerItems2(context) {
       ),
       child: Column(
         children: [
-          dividerRowWigets(context, "YOUR CART"),
+          dividerRowWidgets(context, "YOUR CART"),
           Divider(
             thickness: 1,
             color: myWhite.withOpacity(0.5),
@@ -191,7 +191,7 @@ Widget drawerItems2(context) {
               );
             }),
           ),
-          dividerRowWigets(context, "TOTAL:", check: true),
+          dividerRowWidgets(context, "TOTAL:", check: true),
           heightBox(context, 0.02),
           coloredButton(context, "GO TO CHECKOUT", const Color(0xFF008000),
               fontSize: 0.035),
@@ -250,7 +250,7 @@ cartCards(context, index) {
   );
 }
 
-Widget dividerRowWigets(context, text1, {check = false}) {
+Widget dividerRowWidgets(context, text1, {check = false}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     child: Row(

@@ -1,7 +1,11 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
+import 'menu.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -24,9 +28,38 @@ class NotificationsPage extends StatelessWidget {
                 color: myWhite,
               ),
               heightBox(context, 0.03),
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: text(context, "Nothing Found!!", 0.04, myWhite))
+              Expanded(
+                child: FutureBuilder(
+                  future: getMenu(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.data == false) {
+                        return text(
+                            context, "Server Error", 0.04, Colors.white);
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: dynamicWidth(context, 0.5) /
+                                      dynamicWidth(context, 0.7)),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return menuCards(context, snapshot.data, index);
+                          },
+                        );
+                      }
+                    } else {
+                      return LottieBuilder.asset(
+                        "assets/loader.json",
+                        width: dynamicWidth(context, 0.3),
+                      );
+                    }
+                  },
+                ),
+              )
             ],
           ),
         ),

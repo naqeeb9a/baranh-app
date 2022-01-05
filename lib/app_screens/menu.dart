@@ -95,8 +95,10 @@ class MenuPage extends StatelessWidget {
 menuCards(context, snapshot, index) {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.grey.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
+      color: myBlack,
+      borderRadius: BorderRadius.circular(
+        dynamicWidth(context, 0.02),
+      ),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,8 +108,13 @@ menuCards(context, snapshot, index) {
           alignment: Alignment.center,
           child: ClipRRect(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(dynamicWidth(context, 0.02)),
-                topRight: Radius.circular(dynamicWidth(context, 0.02))),
+              topLeft: Radius.circular(
+                dynamicWidth(context, 0.02),
+              ),
+              topRight: Radius.circular(
+                dynamicWidth(context, 0.02),
+              ),
+            ),
             child: Image.network(
               snapshot[index]["photo"] ??
                   "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
@@ -118,15 +125,25 @@ menuCards(context, snapshot, index) {
           ),
         ),
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: text(context, snapshot[index]["name"], 0.03, Colors.white),
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, 0.02),
+          ),
+          child: text(
+            context,
+            snapshot[index]["name"],
+            0.03,
+            myWhite,
+          ),
         ),
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: text(context, "Rs ." + snapshot[index]["sale_price"], 0.04,
-              Colors.white),
+          child: text(
+            context,
+            "Rs ." + snapshot[index]["sale_price"],
+            0.04,
+            myWhite,
+          ),
         ),
         Padding(
             padding:
