@@ -194,7 +194,7 @@ Widget drawerItems2(context) {
           dividerRowWidgets(context, "TOTAL:", check: true),
           heightBox(context, 0.02),
           coloredButton(context, "GO TO CHECKOUT", const Color(0xFF008000),
-              fontSize: 0.035),
+              fontSize: 0.035, function: () {}),
           heightBox(context, 0.02),
           coloredButton(context, "CONTINUE ORDERING", Colors.transparent,
               fontSize: 0.035, function: () {
@@ -211,7 +211,7 @@ cartCards(context, index) {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Image.network(
-        cartItems[index][""] ??
+        cartItems[index]["photo"] ??
             "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
         height: dynamicWidth(context, 0.2),
         width: dynamicWidth(context, 0.15),

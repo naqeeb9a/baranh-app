@@ -13,4 +13,6 @@ var pageDecider = "All Reservations";
 dynamic hintText = "mm/dd/yyyy";
 dynamic customContext = "";
 dynamic globalRefresh = "";
+dynamic saleIdGlobal;
+dynamic tableNoGlobal;
 var cartItems = [].obs;

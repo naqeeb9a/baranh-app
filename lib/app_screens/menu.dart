@@ -14,6 +14,9 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    saleIdGlobal = saleId;
+    tableNoGlobal = tableNo;
+
     return Scaffold(
       backgroundColor: myBlack,
       body: Padding(

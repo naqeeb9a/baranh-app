@@ -138,3 +138,26 @@ asignTable(saleId, tableId) async {
     return false;
   }
 }
+
+punchOrder() async {
+  try {
+    var response = await http.post(
+        Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
+        body: {
+          "outlet_id": "",
+          "sub_total": "",
+          "total_payable": "",
+          "table_no": "",
+          "saleid": ""
+        });
+    var jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
