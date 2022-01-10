@@ -186,7 +186,11 @@ punchOrder(total, cost) async {
   try {
     var response = await http.post(
       Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
-      body: bodyJson,
+      body: json.encode(bodyJson),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
     var jsonData = jsonDecode(response.body);
     print(jsonData);
