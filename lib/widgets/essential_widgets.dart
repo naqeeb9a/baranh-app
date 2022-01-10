@@ -4,6 +4,7 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 bar(
   context, {
@@ -53,5 +54,14 @@ bar(
           height: 1,
         ),
         preferredSize: const Size.fromHeight(4.0)),
+  );
+}
+
+loader(context) {
+  return Center(
+    child: LottieBuilder.asset(
+      "assets/loader.json",
+      width: dynamicWidth(context, 0.3),
+    ),
   );
 }

@@ -65,20 +65,30 @@ class MenuPage extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == false) {
-                      return text(context, "Server Error", 0.04, Colors.white);
+                      return Center(
+                          child: text(
+                              context, "Server Error", 0.04, Colors.white));
                     } else {
-                      return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: dynamicWidth(context, 0.5) /
-                                dynamicWidth(context, 0.5)),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return menuCards(context, snapshot.data, index);
-                        },
-                      );
+                      if (snapshot.data.length == 0) {
+                        return Center(
+                          child: text(
+                              context, "No Items in Menu", 0.04, Colors.white),
+                        );
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: dynamicWidth(context, 0.5) /
+                                      dynamicWidth(context, 0.5)),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return menuCards(context, snapshot.data, index);
+                          },
+                        );
+                      }
                     }
                   } else {
                     return LottieBuilder.asset(
@@ -232,11 +242,12 @@ iconsRow(context, snapshot) {
               if (check == false) {
                 cartItems.add({
                   "productid": snapshot["id"],
-                  "productcode": snapshot["code"],
                   "productname": snapshot["name"],
+                  "productcode": snapshot["code"],
                   "productprice": snapshot["sale_price"],
-                  "productimg": snapshot["photo"],
+                  "itemUnitCost": snapshot["cost"],
                   "productqty": quantity,
+                  "productimg": snapshot["photo"],
                 });
                 check = true;
               } else {

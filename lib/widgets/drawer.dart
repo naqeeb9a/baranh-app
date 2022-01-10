@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -5,7 +6,6 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget drawerItems(context, function, changeState) {
@@ -164,68 +164,86 @@ Widget drawerItems(context, function, changeState) {
 }
 
 Widget drawerItems2(context) {
-  return ColoredBox(
-    color: myBlack.withOpacity(.9),
-    child: Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: dynamicWidth(context, 0.04),
-      ),
-      child: Column(
-        children: [
-          dividerRowWidgets(context, "YOUR CART"),
-          Divider(
-            thickness: 1,
-            color: myWhite.withOpacity(0.5),
-          ),
-          Expanded(
-            child: Obx(() {
-              return ListView.builder(
-                itemCount: cartItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, 0.01)),
-                    child: cartCards(context, index),
-                  );
-                },
-              );
-            }),
-          ),
-          dividerRowWidgets(context, "TOTAL:", check: true),
-          heightBox(context, 0.02),
-          coloredButton(
-            context,
-            "Place Order",
-            const Color(0xFF008000),
-            fontSize: 0.035,
-            function: () {
+  return StatefulBuilder(builder: (context, changeState) {
+    num total = 0;
+    num cost = 0;
+    getTotal() {
+      for (var item in cartItems) {
+        total += num.parse(item["productprice"]) * item["productqty"];
+      }
+      return total;
+    }
 
-              print("object $saleIdGlobal");
-              print("object 1 $tableNoGlobal");
-            },
-          ),
-          heightBox(context, 0.02),
-          coloredButton(
-            context,
-            "CONTINUE ORDERING",
-            Colors.transparent,
-            fontSize: 0.035,
-            function: () {
-              pop(context);
-            },
-          )
-        ],
+    getCost() {
+      for (var item in cartItems) {
+        cost += num.parse(item["productprice"]) * item["productqty"];
+      }
+      return cost;
+    }
+
+    cost = getCost();
+    return ColoredBox(
+      color: myBlack.withOpacity(.9),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: dynamicWidth(context, 0.04),
+        ),
+        child: Column(
+          children: [
+            dividerRowWidgets(context, "YOUR CART", ""),
+            Divider(
+              thickness: 1,
+              color: myWhite.withOpacity(0.5),
+            ),
+            Expanded(
+                child: ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: dynamicHeight(context, 0.01)),
+                  child: cartCards(context, index, () {
+                    changeState(() {});
+                  }),
+                );
+              },
+            )),
+            dividerRowWidgets(
+                context, "TOTAL: ", "PKR " + getTotal().toString(),
+                check: true),
+            heightBox(context, 0.02),
+            coloredButton(
+              context,
+              "Place Order",
+              const Color(0xFF008000),
+              fontSize: 0.035,
+              function: () async {
+                var response = await punchOrder(total, cost);
+              },
+            ),
+            heightBox(context, 0.02),
+            coloredButton(
+              context,
+              "CONTINUE ORDERING",
+              Colors.transparent,
+              fontSize: 0.035,
+              function: () {
+                pop(context);
+              },
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  });
 }
 
-cartCards(context, index) {
+cartCards(context, index, function) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Image.network(
-        cartItems[index]["photo"] ??
+        cartItems[index]["productimg"] ??
             "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
         height: dynamicWidth(context, 0.2),
         width: dynamicWidth(context, 0.15),
@@ -238,13 +256,14 @@ cartCards(context, index) {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              text(context, cartItems[index]["name"], 0.04, Colors.white),
+              text(context, cartItems[index]["productname"].toString(), 0.04,
+                  Colors.white),
               text(
                   context,
                   "Rs. " +
-                      cartItems[index]["sale_price"] +
+                      cartItems[index]["productprice"].toString() +
                       " x " +
-                      cartItems[index]["quantity"].toString(),
+                      cartItems[index]["productqty"].toString(),
                   0.04,
                   Colors.white),
             ],
@@ -254,6 +273,7 @@ cartCards(context, index) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
+          function();
         },
         child: const Icon(
           Icons.close,
@@ -264,7 +284,7 @@ cartCards(context, index) {
   );
 }
 
-Widget dividerRowWidgets(context, text1, {check = false}) {
+Widget dividerRowWidgets(context, text1, text2, {check = false}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     child: Row(
@@ -272,7 +292,7 @@ Widget dividerRowWidgets(context, text1, {check = false}) {
       children: [
         text(context, text1, 0.04, myWhite),
         check == true
-            ? text(context, "PKR 0", 0.04, myWhite)
+            ? text(context, "$text2", 0.04, myWhite)
             : InkWell(
                 onTap: () {
                   pop(context);

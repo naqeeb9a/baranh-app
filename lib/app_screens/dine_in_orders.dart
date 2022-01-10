@@ -17,6 +17,7 @@ class DineInOrders extends StatefulWidget {
 class _DineInOrdersState extends State<DineInOrders> {
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _tableNo = TextEditingController();
     return Scaffold(
       backgroundColor: myBlack,
       body: SafeArea(
@@ -33,14 +34,15 @@ class _DineInOrdersState extends State<DineInOrders> {
                 color: myWhite,
               ),
               heightBox(context, 0.02),
-              inputFieldsHome("Table Number:", "Ex:42", context),
+              inputFieldsHome("Table Number:", "Ex:42", context,
+                  controller: _tableNo),
               heightBox(context, 0.03),
               coloredButton(context, "SEARCH", myOrange),
               Expanded(
-                child: tableCards(context, getReservationData("dinein-orders"),"Arrived Guests","View Details",
-                    setState: () {
+                child: tableCards(context, getReservationData("dinein-orders"),
+                    "Arrived Guests", "Take Order", setState: () {
                   setState(() {});
-                }),
+                }, function2check: true),
               )
             ],
           ),

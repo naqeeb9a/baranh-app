@@ -6,17 +6,13 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget inputFieldsHome(
-  text1,
-  hintText1,
-  context, {
-  check = false,
-  generatePasswordCheck = false,
-  timeSlot = false,
-  function = "",
-  keyBoardType = TextInputType.text,
-}) {
-  final TextEditingController _password = TextEditingController();
+Widget inputFieldsHome(text1, hintText1, context,
+    {check = false,
+    generatePasswordCheck = false,
+    timeSlot = false,
+    function = "",
+    keyBoardType = TextInputType.text,
+    controller = ""}) {
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +77,7 @@ Widget inputFieldsHome(
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: _password,
+                            controller: controller,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               enabledBorder: InputBorder.none,
@@ -93,12 +89,13 @@ Widget inputFieldsHome(
                         InkWell(
                             onTap: () {
                               var rng = Random();
-                              _password.text = rng.nextInt(9999999).toString();
+                              controller.text = rng.nextInt(9999999).toString();
                             },
                             child: const Icon(Icons.rotate_left))
                       ],
                     )
                   : TextFormField(
+                      controller: controller,
                       keyboardType: keyBoardType,
                       decoration: InputDecoration(
                           enabledBorder: InputBorder.none,

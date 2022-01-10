@@ -12,6 +12,7 @@ class AllReservationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _reservationNumber = TextEditingController();
     return Scaffold(
       backgroundColor: myBlack,
       body: SafeArea(
@@ -28,7 +29,9 @@ class AllReservationsPage extends StatelessWidget {
                 color: myWhite,
               ),
               heightBox(context, 0.02),
-              inputFieldsHome("Reservation Number:", "Ex:Res.00042", context, keyBoardType: TextInputType.number),
+              inputFieldsHome("Reservation Number:", "Ex:Res.00042", context,
+                  keyBoardType: TextInputType.number,
+                  controller: _reservationNumber),
               heightBox(context, 0.02),
               inputFieldsHome("Select Date:", hintText, context, check: true),
               heightBox(context, 0.04),

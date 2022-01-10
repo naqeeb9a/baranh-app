@@ -15,4 +15,5 @@ dynamic customContext = "";
 dynamic globalRefresh = "";
 dynamic saleIdGlobal;
 dynamic tableNoGlobal;
+
 var cartItems = [].obs;
