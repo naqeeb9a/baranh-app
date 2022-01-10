@@ -373,7 +373,8 @@ Widget tableCardsExtension(
                               ? MenuPage(
                                   saleId: snapshotTable[indexTable]["sale_id"]
                                       .toString(),
-                                  tableNo: assignTable.toString(),
+                                  tableNo: snapshotTable[indexTable]["table_id"]
+                                      .toString(),
                                 )
                               : OrdersPage(
                                   snapShot: snapshotTable[indexTable],

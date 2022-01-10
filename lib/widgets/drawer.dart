@@ -6,6 +6,7 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget drawerItems(context, function, changeState) {
@@ -219,6 +220,24 @@ Widget drawerItems2(context) {
               fontSize: 0.035,
               function: () async {
                 var response = await punchOrder(total, cost);
+                if (response == false) {
+                  MotionToast.error(
+                    description: "Server Error or check your internet",
+                    dismissable: true,
+                  ).show(context);
+                } else {
+                  cartItems.clear();
+                  saleIdGlobal = "";
+                  tableNoGlobal = "";
+
+                  pop(context);
+                  popUntil(globalDineInContext);
+                  globalDineInRefresh();
+                  MotionToast.success(
+                    description: "Order Placed",
+                    dismissable: true,
+                  ).show(context);
+                }
               },
             ),
             heightBox(context, 0.02),

@@ -175,13 +175,13 @@ assignWaiterOnline(saleId, waiterId) async {
 punchOrder(total, cost) async {
   dynamic bodyJson = {
     "outlet_id": "1",
-    "total_items": "3",
-    "sub_total": "0",
-    "total_payable": "0",
-    "total_cost": "0",
+    "total_items": "${cartItems.length}",
+    "sub_total": "$total",
+    "total_payable": "$total",
+    "total_cost": "$cost",
     "cart": cartItems,
-    "table_no": "12",
-    "saleid": "46"
+    "table_no": "$tableNoGlobal",
+    "saleid": "$saleIdGlobal"
   };
   try {
     var response = await http.post(
@@ -193,14 +193,13 @@ punchOrder(total, cost) async {
       },
     );
     var jsonData = jsonDecode(response.body);
-    print(jsonData);
+
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
       return false;
     }
   } catch (e) {
-    print(e);
     return false;
   }
 }

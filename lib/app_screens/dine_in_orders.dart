@@ -17,6 +17,10 @@ class DineInOrders extends StatefulWidget {
 class _DineInOrdersState extends State<DineInOrders> {
   @override
   Widget build(BuildContext context) {
+    globalDineInContext = context;
+    globalDineInRefresh = () {
+      setState(() {});
+    };
     final TextEditingController _tableNo = TextEditingController();
     return Scaffold(
       backgroundColor: myBlack,
