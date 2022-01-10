@@ -38,7 +38,7 @@ class DioData {
     // );
     // print(rs.data?.stream);
     // return rs.data?.stream;
-    print(response.data?.stream.toString());
+    // print(response.data?.stream.toString());
     return response.data?.stream..toString();
 
     // var url = Uri.https('baranhweb.cmcmtech.com', 'api/$query');

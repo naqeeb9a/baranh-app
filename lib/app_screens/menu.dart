@@ -17,7 +17,8 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     saleIdGlobal = saleId;
     tableNoGlobal = tableNo;
-  
+    // print(saleIdGlobal);
+    // print(tableNoGlobal);
     return Scaffold(
       backgroundColor: myBlack,
       body: Padding(

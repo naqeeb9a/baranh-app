@@ -159,6 +159,8 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                             });
                             CoolAlert.show(
                                 onConfirmBtnTap: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
                                   push(
                                       context,
                                       ContactInformation(
@@ -167,6 +169,10 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                         seats: _seats.text,
                                         date: hintText,
                                       ));
+                                },
+                                onCancelBtnTap: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
                                 },
                                 title: "Slots Available",
                                 text: "Do you wish to proceed?",

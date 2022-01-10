@@ -10,7 +10,6 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-// ignore: must_be_immutable
 class ContactInformation extends StatefulWidget {
   final String seats, dropDownTime, date;
 

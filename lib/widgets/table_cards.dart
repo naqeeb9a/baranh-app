@@ -1,5 +1,6 @@
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/menu.dart';
+import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/app_screens/orders_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -130,7 +131,11 @@ Widget tableCardsExtension(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   greenButtons(context, buttonText1, snapshotTable, indexTable,
-                      function: function1check == true
+                      function: () {
+                    if (buttonText1 == "View detail") {
+                      push(context, const OrderSummaryPage());
+                    } else {
+                      function1check == true
                           ? () {
                               showDialog(
                                   context: context,
@@ -262,7 +267,9 @@ Widget tableCardsExtension(
                                   confirmBtnColor: myOrange,
                                 );
                               }
-                            }),
+                            };
+                    }
+                  }),
                   greenButtons(
                     context,
                     buttonText2,
