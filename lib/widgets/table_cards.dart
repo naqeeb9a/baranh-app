@@ -15,7 +15,7 @@ Widget tableCards(
   function,
   buttonText1,
   buttonText2, {
-  setstate = "",
+  setState = "",
   function1check = false,
   function2check = false,
 }) {
@@ -39,7 +39,7 @@ Widget tableCards(
           itemBuilder: (BuildContext context, int index) {
             return tableCardsExtension(
                 context, snapshot.data, index, buttonText1, buttonText2,
-                function: setstate,
+                function: setState,
                 function1check: function1check,
                 function2check: function2check,
                 assignTable: assignTable);
@@ -188,7 +188,7 @@ Widget tableCardsExtension(
                                                           .data[index]["name"];
 
                                                       var response =
-                                                          await asignTable(
+                                                          await assignTable(
                                                               snapshotTable[
                                                                       indexTable]
                                                                   ["sale_id"],
@@ -235,9 +235,9 @@ Widget tableCardsExtension(
                                   });
                             }
                           : () async {
-                              var respone = await arrivedGuests(
+                              var response = await arrivedGuests(
                                   snapshotTable[indexTable]["sale_id"]);
-                              if (respone == false) {
+                              if (response == false) {
                                 CoolAlert.show(
                                     context: context,
                                     text:
@@ -248,21 +248,27 @@ Widget tableCardsExtension(
                                     confirmBtnColor: myOrange);
                               } else {
                                 CoolAlert.show(
-                                    context: context,
-                                    text: "Guest Arrived Successfully",
-                                    confirmBtnText: "continue",
-                                    type: CoolAlertType.success,
-                                    onConfirmBtnTap: () {
-                                      pageDecider = "Arrived Guests";
-                                      globalRefresh();
-                                    },
-                                    backgroundColor: myOrange,
-                                    confirmBtnColor: myOrange);
+                                  context: context,
+                                  text: "Guest Arrived Successfully",
+                                  confirmBtnText: "continue",
+                                  cancelBtnText: "Cancel",
+                                  type: CoolAlertType.success,
+                                  onConfirmBtnTap: () {
+                                    pageDecider = "Arrived Guests";
+                                    globalRefresh();
+                                  },
+                                  backgroundColor: myOrange,
+                                  confirmBtnColor: myOrange,
+                                );
                               }
                             }),
-                  greenButtons(context, buttonText2, snapshotTable, indexTable,
-                      function: () {
-                    push(
+                  greenButtons(
+                    context,
+                    buttonText2,
+                    snapshotTable,
+                    indexTable,
+                    function: () {
+                      push(
                         context,
                         function2check == true
                             ? MenuPage(
@@ -272,8 +278,10 @@ Widget tableCardsExtension(
                               )
                             : OrdersPage(
                                 snapShot: snapshotTable[indexTable],
-                              ));
-                  })
+                              ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

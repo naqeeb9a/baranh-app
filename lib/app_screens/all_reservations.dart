@@ -28,15 +28,20 @@ class AllReservationsPage extends StatelessWidget {
                 color: myWhite,
               ),
               heightBox(context, 0.02),
-              inputFieldsHome("Reservation Number:", "Ex:Res.00042", context),
+              inputFieldsHome("Reservation Number:", "Ex:Res.00042", context, keyBoardType: TextInputType.number),
               heightBox(context, 0.02),
               inputFieldsHome("Select Date:", hintText, context, check: true),
               heightBox(context, 0.04),
               coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
               heightBox(context, 0.02),
               Expanded(
-                  child: tableCards(context, getReservationData("reservelist"),
-                      "History", "View Details"))
+                child: tableCards(
+                  context,
+                  getReservationData("reservelist"),
+                  "Guest Arrived",
+                  "View Details",
+                ),
+              )
             ],
           ),
         ),

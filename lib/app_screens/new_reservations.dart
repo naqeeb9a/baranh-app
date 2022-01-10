@@ -123,11 +123,11 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                         ),
                       ),
                 heightBox(context, hintText == "mm/dd/yyyy" ? 0 : 0.02),
-                inputFieldsHome("Seats:", "", context),
+                inputFieldsHome("Seats:", "", context, keyBoardType: TextInputType.number),
                 heightBox(context, 0.03),
                 coloredButton(context, "CHECK AVAILABILITY", myOrange,
                     function: () async {
-                  var response = await checkAvailibility(indexValue, hintText,
+                  var response = await checkAvailability(indexValue, hintText,
                       indexValue.substring(indexValue.indexOf("#") + 1), "2");
 
                   if (response == true) {

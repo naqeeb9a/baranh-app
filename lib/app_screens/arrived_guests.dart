@@ -32,7 +32,7 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
               ),
               Expanded(
                   child: tableCards(context, getReservationData("arrived"),
-                      "Assign Table", "Take Order", setstate: () {
+                      "Assign Table", "Take Order", setState: () {
                 setState(() {});
               }, function1check: true, function2check: true))
             ],

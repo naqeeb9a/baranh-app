@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:baranh/utils/config.dart';
 import 'package:http/http.dart' as http;
 
-getReservationData(qurey) async {
+getReservationData(query) async {
   try {
     var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/$qurey/1"));
+        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/$query/1"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"]["result"];
@@ -17,13 +18,13 @@ getReservationData(qurey) async {
   }
 }
 
-checkAvailibility(String indexValue, date, timedropdown, seats) async {
+checkAvailability(String indexValue, date, timeDropdown, seats) async {
   try {
     var response = await http
         .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"), body: {
       "outlet_id": "1",
       "filter_date": "$date",
-      "timedropdown": "$timedropdown",
+      "timedropdown": "$timeDropdown",
       "seats": "$seats"
     });
     var jsonData = jsonDecode(response.body);
@@ -122,7 +123,7 @@ getMenu() async {
   }
 }
 
-asignTable(saleId, tableId) async {
+assignTable(saleId, tableId) async {
   try {
     var response = await http.post(
         Uri.parse("http://baranhweb.cmcmtech.com/api/assign-table"),
@@ -142,14 +143,21 @@ asignTable(saleId, tableId) async {
 punchOrder() async {
   try {
     var response = await http.post(
-        Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
-        body: {
-          "outlet_id": "",
-          "sub_total": "",
-          "total_payable": "",
-          "table_no": "",
-          "saleid": ""
-        });
+      Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
+      body: {
+        "outlet_id": "",
+        "total_items": "",
+        "sub_total": "",
+        "total_payable": "",
+        "table_no": "",
+        "saleid": "",
+        "cart": cartItems,
+      },
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {

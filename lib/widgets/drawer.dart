@@ -193,13 +193,27 @@ Widget drawerItems2(context) {
           ),
           dividerRowWidgets(context, "TOTAL:", check: true),
           heightBox(context, 0.02),
-          coloredButton(context, "GO TO CHECKOUT", const Color(0xFF008000),
-              fontSize: 0.035, function: () {}),
+          coloredButton(
+            context,
+            "Place Order",
+            const Color(0xFF008000),
+            fontSize: 0.035,
+            function: () {
+
+              print("object $saleIdGlobal");
+              print("object 1 $tableNoGlobal");
+            },
+          ),
           heightBox(context, 0.02),
-          coloredButton(context, "CONTINUE ORDERING", Colors.transparent,
-              fontSize: 0.035, function: () {
-            pop(context);
-          })
+          coloredButton(
+            context,
+            "CONTINUE ORDERING",
+            Colors.transparent,
+            fontSize: 0.035,
+            function: () {
+              pop(context);
+            },
+          )
         ],
       ),
     ),

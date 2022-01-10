@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 
 class MenuPage extends StatelessWidget {
   final String saleId, tableNo;
+
   const MenuPage({Key? key, required this.saleId, required this.tableNo})
       : super(key: key);
 
@@ -149,9 +150,13 @@ menuCards(context, snapshot, index) {
           ),
         ),
         Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-            child: iconsRow(context, snapshot[index])),
+          padding:
+              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+          child: iconsRow(
+            context,
+            snapshot[index],
+          ),
+        ),
         heightBox(context, 0.005),
       ],
     ),
@@ -220,16 +225,18 @@ iconsRow(context, snapshot) {
               ],
             );
           })),
-      StatefulBuilder(builder: (context, changestate) {
+      StatefulBuilder(builder: (context, changeState) {
         return GestureDetector(
           onTap: () {
-            changestate(() {
+            changeState(() {
               if (check == false) {
                 cartItems.add({
-                  "name": snapshot["name"],
-                  "sale_price": snapshot["sale_price"],
-                  "photo": snapshot["photo"],
-                  "quantity": quantity
+                  "productid": snapshot["id"],
+                  "productcode": snapshot["code"],
+                  "productname": snapshot["name"],
+                  "productprice": snapshot["sale_price"],
+                  "productimg": snapshot["photo"],
+                  "productqty": quantity,
                 });
                 check = true;
               } else {

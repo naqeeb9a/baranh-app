@@ -1,16 +1,21 @@
+import 'dart:math';
+
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
-
 import 'package:intl/intl.dart';
 
-Widget inputFieldsHome(text1, hintText1, context,
-    {check = false,
-    generatePasswordCheck = false,
-    timeSlot = false,
-    function = ""}) {
+Widget inputFieldsHome(
+  text1,
+  hintText1,
+  context, {
+  check = false,
+  generatePasswordCheck = false,
+  timeSlot = false,
+  function = "",
+  keyBoardType = TextInputType.text,
+}) {
   final TextEditingController _password = TextEditingController();
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
@@ -94,6 +99,7 @@ Widget inputFieldsHome(text1, hintText1, context,
                       ],
                     )
                   : TextFormField(
+                      keyboardType: keyBoardType,
                       decoration: InputDecoration(
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,

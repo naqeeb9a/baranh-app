@@ -38,7 +38,7 @@ class _DineInOrdersState extends State<DineInOrders> {
               coloredButton(context, "SEARCH", myOrange),
               Expanded(
                 child: tableCards(context, getReservationData("dinein-orders"),"Arrived Guests","View Details",
-                    setstate: () {
+                    setState: () {
                   setState(() {});
                 }),
               )
