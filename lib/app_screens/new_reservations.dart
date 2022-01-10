@@ -170,10 +170,6 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                         date: hintText,
                                       ));
                                 },
-                                onCancelBtnTap: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop();
-                                },
                                 title: "Slots Available",
                                 text: "Do you wish to proceed?",
                                 context: context,

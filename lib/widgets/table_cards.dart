@@ -262,6 +262,7 @@ Widget tableCardsExtension(
                                   onConfirmBtnTap: () {
                                     pageDecider = "Arrived Guests";
                                     globalRefresh();
+                                    Navigator.of(context, rootNavigator: true).pop();
                                   },
                                   backgroundColor: myOrange,
                                   confirmBtnColor: myOrange,
