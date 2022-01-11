@@ -1,5 +1,4 @@
 import 'package:baranh/app_functions/functions.dart';
-import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -73,7 +72,18 @@ Widget drawerItems(context, function, changeState) {
         Future.delayed(const Duration(milliseconds: 500), () async {
           SharedPreferences loginUser = await SharedPreferences.getInstance();
           loginUser.clear();
-          checkLoginStatus(context);
+
+          // checkLoginStatus(context1) async {
+          //   SharedPreferences loginUser = await SharedPreferences.getInstance();
+          //   if (loginUser.getString("User") == null) {
+          //     Navigator.pushAndRemoveUntil(
+          //         context1,
+          //         MaterialPageRoute(builder: (context1) => const LoginScreen()),
+          //         (route) => false);
+          //   }
+          // }
+          //
+          // checkLoginStatus(context);
         });
       },
     },
@@ -122,7 +132,7 @@ Widget drawerItems(context, function, changeState) {
               children: [
                 text(
                   context,
-                  "Hi user name\n(Floor Manager)",
+                  "Hi $userName\n($userDesignation)",
                   .054,
                   myWhite,
                   bold: true,

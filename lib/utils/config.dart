@@ -17,5 +17,7 @@ dynamic saleIdGlobal;
 dynamic tableNoGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
+dynamic userName = "";
+dynamic userDesignation = "";
 
 var cartItems = [].obs;

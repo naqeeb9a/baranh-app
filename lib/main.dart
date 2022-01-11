@@ -26,6 +26,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   late AnimationController _controller;
+
   startAnimation() {
     _controller = AnimationController(
       duration: const Duration(seconds: 1),
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   }
 
   late Animation<double> _animation;
+
   @override
   void dispose() {
     _controller.dispose();
@@ -60,6 +62,19 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
       900: Color(0xff000000),
     },
   );
+
+  checkLoginStatus(context1) async {
+    SharedPreferences loginUser = await SharedPreferences.getInstance();
+    userName = loginUser.getString("User");
+    userDesignation = loginUser.getString("userDesignation");
+    // globalRefresh();
+    if (loginUser.getString("User") == null) {
+      Navigator.pushAndRemoveUntil(
+          context1,
+          MaterialPageRoute(builder: (context1) => const LoginScreen()),
+          (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,15 +142,5 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                 FadeTransition(opacity: _animation, child: const BasicPage())),
       ),
     );
-  }
-}
-
-checkLoginStatus(context1) async {
-  SharedPreferences loginUser = await SharedPreferences.getInstance();
-  if (loginUser.getString("User") == null) {
-    Navigator.pushAndRemoveUntil(
-        context1,
-        MaterialPageRoute(builder: (context1) => const LoginScreen()),
-        (route) => false);
   }
 }

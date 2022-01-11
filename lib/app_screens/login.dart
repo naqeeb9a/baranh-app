@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -13,6 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final email = TextEditingController();
   final password = TextEditingController();
+
   loginFunction() async {
     setState(() {
       loading = true;
@@ -34,8 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/signin-waiter"),
         body: {"email": email.text, "password": password.text});
-    var jsonData = jsonDecode(response.body);
-    return jsonData;
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+
+      return jsonData["data"];
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -138,7 +145,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else {
                             var response = await loginFunction();
 
-                            if (response["status"] == 401) {
+                            if (response != null) {
+                              SharedPreferences loginUser =
+                                  await SharedPreferences.getInstance();
+                              loginUser.setString(
+                                  "User", response["full_name"]);
+                              loginUser.setString(
+                                  "userDesignation", response["designation"]);
+                              pushAndRemoveUntil(
+                                context,
+                                const MyApp(),
+                              );
+                            } else {
                               setState(() {
                                 loading = false;
                               });
@@ -150,12 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 description: "Invalid Credentials",
                               ).show(context);
-                            } else {
-                              SharedPreferences loginUser =
-                                  await SharedPreferences.getInstance();
-                              loginUser.setString(
-                                  "User", response["data"]["full_name"]);
-                              pushAndRemoveUntil(context, const MyApp());
                             }
                           }
                         }),
