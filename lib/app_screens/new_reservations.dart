@@ -200,6 +200,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                             setState(() {
                               loading = false;
                             });
+                          
                             CoolAlert.show(
                                 title: "Server Error",
                                 text: "please Try again",
