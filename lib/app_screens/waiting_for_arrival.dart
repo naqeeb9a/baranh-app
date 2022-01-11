@@ -34,7 +34,7 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
                 child: tableCards(
                     context,
                     getReservationData("waiting-for-arrival"),
-                    "Arrived Guests",
+                    "Guest Arrived",
                     "View Details", setState: () {
                   setState(() {});
                 }),

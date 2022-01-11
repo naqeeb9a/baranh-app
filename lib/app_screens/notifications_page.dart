@@ -33,7 +33,7 @@ class NotificationsPage extends StatelessWidget {
               heightBox(context, 0.03),
               IconButton(
                 onPressed: () {
-                  // log(menuList.toString());
+                  
                   showSearch(
                     context: context,
                     delegate: CustomSearchDelegate(),

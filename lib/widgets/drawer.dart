@@ -5,6 +5,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -230,13 +231,19 @@ Widget drawerItems2(context) {
               const Color(0xFF008000),
               fontSize: 0.035,
               function: () async {
+                CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.loading,
+                    lottieAsset: "assets/loader.json");
                 var response = await punchOrder(total, cost);
                 if (response == false) {
+                  Navigator.of(context, rootNavigator: true).pop();
                   MotionToast.error(
                     description: "Server Error or check your internet",
                     dismissable: true,
                   ).show(context);
                 } else {
+                  Navigator.of(context, rootNavigator: true).pop();
                   cartItems.clear();
                   saleIdGlobal = "";
                   tableNoGlobal = "";

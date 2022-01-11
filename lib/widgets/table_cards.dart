@@ -30,7 +30,8 @@ Widget tableCards(
           width: dynamicWidth(context, 0.3),
         );
       } else if (snapshot.data == false) {
-        return text(context, "Server Error", 0.028, Colors.white);
+        return Center(
+            child: text(context, "Server Error", 0.028, Colors.white));
       } else if (snapshot.data.length == 0) {
         return Center(
             child: text(context, "no Orders Yet!!", 0.028, Colors.white));
@@ -182,6 +183,11 @@ Widget tableCardsExtension(
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () async {
+                                              CoolAlert.show(
+                                                  context: context,
+                                                  type: CoolAlertType.loading,
+                                                  lottieAsset:
+                                                      "assets/loader.json");
                                               assignTable =
                                                   snapshot.data[index]["name"];
 
@@ -191,6 +197,9 @@ Widget tableCardsExtension(
                                                           ["sale_id"],
                                                       assignTable);
                                               if (response == false) {
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
                                                 MotionToast.error(
                                                   description:
                                                       "Table not assigned Check your internet",
@@ -200,6 +209,13 @@ Widget tableCardsExtension(
                                                 pageDecider = "Dine In Orders";
                                                 Navigator.pop(
                                                     context, globalRefresh());
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
+                                                MotionToast.success(
+                                                  description: "Table assigned",
+                                                  dismissable: true,
+                                                ).show(context);
                                               }
                                             },
                                             child: Container(
@@ -267,8 +283,8 @@ Widget tableCardsExtension(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: text(
-                                    context, "Assign Table", 0.04, Colors.white,
+                                title: text(context, "Assign Waiter", 0.04,
+                                    Colors.white,
                                     bold: true),
                                 backgroundColor: myBlack,
                                 content: Container(
@@ -286,8 +302,13 @@ Widget tableCardsExtension(
                                           width: dynamicWidth(context, 0.1),
                                         );
                                       } else if (snapshot.data == false) {
-                                        return text(context, "Server Error",
-                                            0.028, Colors.white);
+                                        return Center(
+                                          child: text(
+                                              context,
+                                              "Server Error or check your internet",
+                                              0.028,
+                                              Colors.white),
+                                        );
                                       } else if (snapshot.data.length == 0) {
                                         return Center(
                                             child: text(context, "no Waiters!!",
@@ -305,6 +326,11 @@ Widget tableCardsExtension(
                                               int index) {
                                             return InkWell(
                                               onTap: () async {
+                                                CoolAlert.show(
+                                                    context: context,
+                                                    type: CoolAlertType.loading,
+                                                    lottieAsset:
+                                                        "assets/loader.json");
                                                 assignTable =
                                                     snapshot.data[index]["id"];
 
@@ -315,6 +341,9 @@ Widget tableCardsExtension(
                                                             ["sale_id"],
                                                         assignTable);
                                                 if (response == false) {
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
                                                   MotionToast.error(
                                                     description:
                                                         "Waiter not assigned Check your internet",
@@ -323,6 +352,14 @@ Widget tableCardsExtension(
                                                 } else {
                                                   Navigator.pop(
                                                       context, function());
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
+                                                  MotionToast.success(
+                                                    description:
+                                                        "Waiter assigned",
+                                                    dismissable: true,
+                                                  ).show(context);
                                                 }
                                               },
                                               child: Container(

@@ -83,7 +83,6 @@ class _ContactInformationState extends State<ContactInformation> {
                           setState(() {
                             loading = false;
                           });
-                          print(response);
                           CoolAlert.show(
                               title: "Server Error",
                               text: "please Try again",

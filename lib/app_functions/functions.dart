@@ -70,30 +70,26 @@ getWaiters() async {
 
 reserveTable(name, phone, email, seats, date, dropDownTime) async {
   try {
-    var response =
-        await http.post(Uri.parse("https://baranhweb.cmcmtech.com/api/reserve"),
-            body: json.encode({
-              "name": "$name",
-              "phone": "$phone",
-              "email": "$email",
-              "seats": "$seats",
-              "date": "$date",
-              "timedropdown": "$dropDownTime",
-              "outlet_id": "1"
-            }),
-            headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        });
+    var response = await http
+        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/reserve"), body: {
+      "name": "$name",
+      "phone": "$phone",
+      "email": "$email",
+      "seats": "$seats",
+      "date": "$date",
+      "timedropdown": "$dropDownTime",
+      "outlet_id": "1"
+    }, headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
-      print(response);
       return false;
     }
   } catch (e) {
-    print(e);
     return false;
   }
 }

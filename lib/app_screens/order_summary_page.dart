@@ -2,7 +2,6 @@ import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -42,19 +41,22 @@ class OrderSummaryPage extends StatelessWidget {
                     return Center(
                       child: text(context, "No details", 0.04, Colors.white),
                     );
+                  } else if (snapshot.data == false) {
+                    return Center(
+                      child: text(
+                          context,
+                          "Server error or check your internet",
+                          0.04,
+                          Colors.white),
+                    );
                   } else {
                     return orderDetails(context, snapshot.data);
                   }
                 } else {
-                  return loader(context);
+                  return Expanded(child: loader(context));
                 }
               },
             ),
-            heightBox(context, 0.02),
-            coloredButton(context, "Update Kitchen Items", myGreen,
-                fontSize: 0.035),
-            heightBox(context, 0.01),
-            coloredButton(context, "Checkout", myGreen, fontSize: 0.035),
           ],
         ),
       ),
@@ -89,6 +91,21 @@ orderDetails(context, snapshot) {
         thickness: 1,
         color: myWhite,
       ),
+      heightBox(context, 0.05),
+      (snapshot[0]["sale_details"].length == 0)
+          ? text(context, "No items ordered yet!", 0.04, Colors.white)
+          : SizedBox(
+              width: dynamicWidth(context, 1),
+              height: dynamicWidth(context, 0.2),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot[0]["sale_details"].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return viewOrderCard(
+                      context, snapshot[0]["sale_details"], index);
+                },
+              ),
+            ),
       heightBox(context, 0.02),
       billRow(context, "Product", "Total", 0.03, myWhite),
       billRow(context, "Subtotal", "PKR " + snapshot[0]["sub_total"], 0.03,
@@ -101,5 +118,44 @@ orderDetails(context, snapshot) {
       billRow(context, "Paid", "PKR " + snapshot[0]["paid_amount"].toString(),
           0.03, myWhite),
     ],
+  );
+}
+
+viewOrderCard(context, snapshot, index) {
+  return Container(
+    margin: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.01)),
+    width: dynamicWidth(context, 0.3),
+    decoration: BoxDecoration(
+      color: myOrange,
+      borderRadius: BorderRadius.circular(
+        dynamicWidth(context, 0.02),
+      ),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context, 0.02),
+          ),
+          child: text(
+              context, snapshot[index]["menu_name"].toString(), 0.03, myWhite,
+              alignText: TextAlign.center),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+          child: text(
+            context,
+            "Rs ." +
+                snapshot[index]["menu_unit_price"] +
+                " x " +
+                snapshot[index]["qty"].toString(),
+            0.03,
+            myWhite,
+          ),
+        ),
+      ],
+    ),
   );
 }
