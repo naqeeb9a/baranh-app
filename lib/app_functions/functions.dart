@@ -139,7 +139,7 @@ getMenu() async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         });
-    var jsonData = jsonDecode(response.body);
+    var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {

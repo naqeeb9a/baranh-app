@@ -51,13 +51,13 @@ class MenuPage extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == false) {
                       return Center(
-                          child: text(
-                              context, "Server Error", 0.04, Colors.white));
+                        child: text(context, "Server Error", 0.04, myWhite),
+                      );
                     } else {
                       if (snapshot.data.length == 0) {
                         return Center(
-                          child: text(
-                              context, "No Items in Menu", 0.04, Colors.white),
+                          child:
+                              text(context, "No Items in Menu", 0.04, myWhite),
                         );
                       } else {
                         return StatefulBuilder(
@@ -259,20 +259,30 @@ iconsRow(context, snapshot) {
       StatefulBuilder(builder: (context, changeState) {
         return GestureDetector(
           onTap: () {
-            if (!cartItems.contains(snapshot)) {
+            print("cartItems ");
+            print("cartItems $cartItemsCheck");
+            print("\n\n\nsnapshot ${snapshot['id']}");
+            print("\n\n\ncheck ${cartItemsCheck.contains(snapshot['id'])}");
+
+            if (!cartItemsCheck.contains(snapshot['id'])) {
               snapshot["qty"] = quantity;
+              snapshot['setState'] = () {
+                changeState(() {});
+              };
               cartItems.add(snapshot);
+              cartItemsCheck.add(snapshot['id']);
               changeState(() {});
             } else {
               cartItems.remove(snapshot);
+              cartItemsCheck.remove(snapshot['id']);
               changeState(() {});
             }
           },
           child: Icon(
-            cartItems.contains(snapshot)
+            cartItemsCheck.contains(snapshot['id'])
                 ? LineIcons.shoppingCart
                 : LineIcons.addToShoppingCart,
-            color: cartItems.contains(snapshot) ? myOrange : myWhite,
+            color: cartItemsCheck.contains(snapshot['id']) ? myOrange : myWhite,
             size: dynamicWidth(context, 0.07),
           ),
         );
@@ -283,7 +293,9 @@ iconsRow(context, snapshot) {
 
 class CustomSearchDelegate extends SearchDelegate {
   dynamic menu;
+
   CustomSearchDelegate(this.menu);
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     return ThemeData(

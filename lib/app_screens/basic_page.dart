@@ -2,7 +2,6 @@ import 'package:baranh/app_screens/all_reservations.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
 import 'package:baranh/app_screens/dine_in_orders.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
-import 'package:baranh/app_screens/notifications_page.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
@@ -39,8 +38,6 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const DineInOrders();
       case "New Reservations":
         return const NewReservationsPage();
-      case "Notifications":
-        return const NotificationsPage();
 
       default:
         return Column(

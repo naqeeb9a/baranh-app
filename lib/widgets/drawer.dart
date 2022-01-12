@@ -58,15 +58,6 @@ Widget drawerItems(context, function, changeState) {
       },
     },
     {
-      "icon": Icons.notifications_active_rounded,
-      "text": "Notifications",
-      "function": () {
-        pageDecider = "Notifications";
-        popUntil(customContext);
-        Navigator.pop(context, function());
-      },
-    },
-    {
       "icon": Icons.logout,
       "text": "LogOut",
       "function": () async {
@@ -293,16 +284,21 @@ cartCards(context, index, function) {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              text(context, cartItems[index]["name"].toString(), 0.04,
-                  Colors.white),
               text(
-                  context,
-                  "Rs. " +
-                      cartItems[index]["sale_price"].toString() +
-                      " x " +
-                      cartItems[index]["qty"].toString(),
-                  0.04,
-                  Colors.white),
+                context,
+                cartItems[index]["name"].toString(),
+                0.04,
+                myWhite,
+              ),
+              text(
+                context,
+                "Rs. " +
+                    cartItems[index]["sale_price"].toString() +
+                    " x " +
+                    cartItems[index]["qty"].toString(),
+                0.04,
+                myWhite,
+              ),
             ],
           ),
         ),
@@ -310,7 +306,6 @@ cartCards(context, index, function) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
-
           function();
         },
         child: const Icon(

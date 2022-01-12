@@ -20,6 +20,7 @@ dynamic globalDineInRefresh;
 dynamic userName = "";
 dynamic userDesignation = "";
 dynamic outletId = 0;
+dynamic waiterId = 0;
 
 var cartItems = [].obs;
-var cartItemsCheck = [];
+var cartItemsCheck = [].obs;
