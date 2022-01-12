@@ -11,16 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-Widget tableCards(
-  context,
-  function,
-  buttonText1,
-  buttonText2, {
-  setState = "",
- 
-  function1check = false,
-  function2check = false,
-}) {
+import 'input_field_home.dart';
+
+Widget tableCards(context, function, buttonText1, buttonText2,
+    {setState = "",
+    function1check = false,
+    function2check = false,
+    visible = false}) {
+  final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
   return FutureBuilder(
     future: function,
@@ -37,17 +35,52 @@ Widget tableCards(
         return Center(
             child: text(context, "no Orders Yet!!", 0.028, Colors.white));
       } else if (snapshot.connectionState == ConnectionState.done) {
-     
-        return ListView.builder(
-          itemCount: snapshot.data.length,
-          itemBuilder: (BuildContext context, int index) {
-            return tableCardsExtension(
-                context, snapshot.data, index, buttonText1, buttonText2,
-                function: setState,
-                function1check: function1check,
-                function2check: function2check,
-                assignTable: assignTable);
-          },
+        return Column(
+          children: [
+            Visibility(
+                visible: visible,
+                child: Column(
+                  children: [
+                    heightBox(context, 0.02),
+                    InkWell(
+                      onTap: () {
+                        showSearch(
+                          context: context,
+                          delegate: CustomDineInSearchDelegate(
+                              snapshot.data,
+                              setState,
+                              assignTable,
+                              buttonText1,
+                              buttonText2,
+                              function1check,
+                              function2check),
+                        );
+                      },
+                      child: inputFieldsHome(
+                        "Table Number:",
+                        "Ex:42",
+                        context,
+                        enable: false,
+                        controller: _tableNo,
+                      ),
+                    ),
+                    heightBox(context, 0.03),
+                  ],
+                )),
+            Expanded(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return tableCardsExtension(
+                      context, snapshot.data, index, buttonText1, buttonText2,
+                      function: setState,
+                      function1check: function1check,
+                      function2check: function2check,
+                      assignTable: assignTable);
+                },
+              ),
+            ),
+          ],
         );
       } else {
         return text(context, "not working", 0.028, Colors.white);
@@ -189,6 +222,7 @@ Widget tableCardsExtension(
                                               CoolAlert.show(
                                                   context: context,
                                                   type: CoolAlertType.loading,
+                                                  barrierDismissible: false,
                                                   lottieAsset:
                                                       "assets/loader.json");
                                               assignTable =
@@ -246,9 +280,15 @@ Widget tableCardsExtension(
                             );
                           });
                     } else {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.loading,
+                          barrierDismissible: false,
+                          lottieAsset: "assets/loader.json");
                       var response = await arrivedGuests(
                           snapshotTable[indexTable]["sale_id"]);
                       if (response == false) {
+                        Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
                             context: context,
                             text:
@@ -258,6 +298,7 @@ Widget tableCardsExtension(
                             backgroundColor: myOrange,
                             confirmBtnColor: myOrange);
                       } else {
+                        Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
                           context: context,
                           text: "Guest Arrived Successfully",
@@ -333,6 +374,7 @@ Widget tableCardsExtension(
                                                 CoolAlert.show(
                                                     context: context,
                                                     type: CoolAlertType.loading,
+                                                    barrierDismissible: false,
                                                     lottieAsset:
                                                         "assets/loader.json");
                                                 assignTable =
@@ -441,4 +483,120 @@ Widget greenButtons(context, text1, snapshot, index, {function = ""}) {
       child: text(context, text1, 0.035, myWhite),
     ),
   );
+}
+
+class CustomDineInSearchDelegate extends SearchDelegate {
+  dynamic data,
+      setState,
+      assignTable,
+      buttonText1,
+      buttonText2,
+      function1check,
+      function2check;
+  CustomDineInSearchDelegate(
+      this.data,
+      this.setState,
+      this.assignTable,
+      this.buttonText1,
+      this.buttonText2,
+      this.function1check,
+      this.function2check);
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(cursorColor: myWhite),
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+        ),
+        textTheme: const TextTheme(
+            headline6: TextStyle(
+                // headline 6 affects the query text
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold)),
+        appBarTheme: const AppBarTheme(color: myBlack),
+        scaffoldBackgroundColor: myBlack);
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      ) // IconButton
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    ); // IconButton
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    dynamic matchQuery = [];
+    for (var item in data) {
+      if (item["table_id"]
+          .toString()
+          .toLowerCase()
+          .contains(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return Padding(
+        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+        child: ListView.builder(
+          itemCount: matchQuery.length,
+          itemBuilder: (BuildContext context, int index) {
+            return tableCardsExtension(
+                context, matchQuery, index, buttonText1, buttonText2,
+                function: setState,
+                function1check: function1check,
+                function2check: function2check,
+                assignTable: assignTable);
+          },
+        ));
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    dynamic matchQuery = [];
+    for (var item in data) {
+      if (item["table_id"]
+          .toString()
+          .toLowerCase()
+          .contains(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return Padding(
+        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+        child: ListView.builder(
+          itemCount: matchQuery.length,
+          itemBuilder: (BuildContext context, int index) {
+            return tableCardsExtension(
+                context, matchQuery, index, buttonText1, buttonText2,
+                function: setState,
+                function1check: function1check,
+                function2check: function2check,
+                assignTable: assignTable);
+          },
+        )); // ListTile
+  }
 }

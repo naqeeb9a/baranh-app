@@ -60,56 +60,56 @@ class MenuPage extends StatelessWidget {
                               context, "No Items in Menu", 0.04, Colors.white),
                         );
                       } else {
-                        return StatefulBuilder(builder: (context, changeState) {
-                          return Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showSearch(
-                                    context: context,
-                                    delegate:
-                                        CustomSearchDelegate(snapshot.data),
-                                  ).then((value) => changeState(() {}));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: myWhite,
-                                      borderRadius: BorderRadius.circular(
-                                          dynamicWidth(context, 0.1))),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        border: const UnderlineInputBorder(
-                                            borderSide: BorderSide.none),
-                                        hintText: "Search",
-                                        enabled: false,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                dynamicWidth(context, 0.05))),
+                        return StatefulBuilder(
+                          builder: (context,changeState) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    showSearch(
+                                      context: context,
+                                      delegate: CustomSearchDelegate(snapshot.data),
+                                    ).then((value) =>changeState((){}) );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: myWhite,
+                                        borderRadius: BorderRadius.circular(
+                                            dynamicWidth(context, 0.1))),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          border: const UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                          hintText: "Search",
+                                          enabled: false,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  dynamicWidth(context, 0.05))),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              heightBox(context, 0.02),
-                              Expanded(
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10,
-                                          childAspectRatio:
-                                              dynamicWidth(context, 0.5) /
-                                                  dynamicWidth(context, 0.5)),
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return menuCards(
-                                        context, snapshot.data, index);
-                                  },
+                                heightBox(context, 0.02),
+                                Expanded(
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10,
+                                            childAspectRatio:
+                                                dynamicWidth(context, 0.5) /
+                                                    dynamicWidth(context, 0.5)),
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return menuCards(
+                                          context, snapshot.data, index);
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        });
+                              ],
+                            );
+                          }
+                        );
                       }
                     }
                   } else {
