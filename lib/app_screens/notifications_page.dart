@@ -149,9 +149,9 @@ class CustomSearchDelegate extends SearchDelegate {
     //   },
     // );
     List<String> matchQuery = [];
-    for (var fruit in menuList) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    for (var item in menuList) {
+      if (item['name'].toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item);
       }
     }
     return ListView.builder(

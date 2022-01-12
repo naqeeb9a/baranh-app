@@ -67,11 +67,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     SharedPreferences loginUser = await SharedPreferences.getInstance();
     userName = loginUser.getString("User");
     userDesignation = loginUser.getString("userDesignation");
-    // globalRefresh();
+    outletId = loginUser.getString("outletId");
     if (loginUser.getString("User") == null) {
       Navigator.pushAndRemoveUntil(
           context1,
-          MaterialPageRoute(builder: (context1) => const LoginScreen()),
+          MaterialPageRoute(
+            builder: (context1) => const LoginScreen(),
+          ),
           (route) => false);
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 
+import 'package:baranh/utils/config.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class DioData {
     var dio = Dio();
     response = await dio.post(
       "https://baranhweb.cmcmtech.com/api/searchmenu",
-      data: {"outletid": "1", "term": "all"},
+      data: {"outletid": outletId, "term": "all"},
       options: Options(
         responseType: ResponseType.stream,
       ),
@@ -31,7 +32,7 @@ class DioData {
     // Response<ResponseBody> rs;
     // rs = await Dio().post<ResponseBody>(
     //   "https://baranhweb.cmcmtech.com/api/searchmenu",
-    //   data: {"outletid": "1", "term": "all"},
+    //   data: {"outletid": outletId, "term": "all"},
     //   options: Options(
     //     responseType: ResponseType.stream,
     //   ), // set responseType to `stream`

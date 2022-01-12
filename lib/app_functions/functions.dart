@@ -129,7 +129,7 @@ getMenu() async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
-        body: {"outletid": "1", "term": "all"});
+        body: {"outletid": outletId, "term": "all"});
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];

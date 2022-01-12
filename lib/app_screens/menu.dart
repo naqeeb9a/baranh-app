@@ -17,8 +17,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     saleIdGlobal = saleId;
     tableNoGlobal = tableNo;
-    // print(saleIdGlobal);
-    // print(tableNoGlobal);
+
     return Scaffold(
       backgroundColor: myBlack,
       body: Padding(
@@ -240,34 +239,56 @@ iconsRow(context, snapshot) {
         return GestureDetector(
           onTap: () {
             changeState(() {
-              if (check == false) {
-                cartItems.add({
-                  "productid": snapshot["id"],
-                  "productname": snapshot["name"],
-                  "productcode": snapshot["code"],
-                  "productprice": snapshot["sale_price"],
-                  "itemUnitCost": snapshot["cost"],
-                  "productqty": quantity,
-                  "productimg": snapshot["photo"],
-                });
-                check = true;
-              } else {
-                cartItems.remove(snapshot);
-                check = false;
-              }
+              cartItems.add({
+                "productid": snapshot["id"],
+                "productname": snapshot["name"],
+                "productcode": snapshot["code"],
+                "productprice": snapshot["sale_price"],
+                "itemUnitCost": snapshot["cost"],
+                "productqty": quantity,
+                "productimg": snapshot["photo"],
+              });
+
+              // if (cartItemsCheck.isEmpty) {
+              //   cartItemsCheck.add(snapshot["id"]);
+              //   cartItems.add({
+              //     "productid": snapshot["id"],
+              //     "productname": snapshot["name"],
+              //     "productcode": snapshot["code"],
+              //     "productprice": snapshot["sale_price"],
+              //     "itemUnitCost": snapshot["cost"],
+              //     "productqty": quantity,
+              //     "productimg": snapshot["photo"],
+              //   });
+              // } else {
+              //   for (int i = 0; i < cartItemsCheck.length; i++) {
+              //     if (cartItemsCheck[i].toString() == snapshot["id"].toString()) {
+              //       cartItemsCheck.removeAt(i);
+              //       cartItems.removeAt(i);
+              //     } else {
+              //       cartItemsCheck.add(snapshot["id"]);
+              //       cartItems.add({
+              //         "productid": snapshot["id"],
+              //         "productname": snapshot["name"],
+              //         "productcode": snapshot["code"],
+              //         "productprice": snapshot["sale_price"],
+              //         "itemUnitCost": snapshot["cost"],
+              //         "productqty": quantity,
+              //         "productimg": snapshot["photo"],
+              //       });
+              //       break;
+              //     }
+              //   }
+              // }
             });
           },
-          child: (check == true)
-              ? Icon(
-                  LineIcons.shoppingCart,
-                  color: myOrange,
-                  size: dynamicWidth(context, 0.07),
-                )
-              : Icon(
-                  LineIcons.addToShoppingCart,
-                  color: myWhite,
-                  size: dynamicWidth(context, 0.07),
-                ),
+          child: Icon(
+            cartItemsCheck.contains(snapshot["id"])
+                ? LineIcons.shoppingCart
+                : LineIcons.addToShoppingCart,
+            color: cartItemsCheck.contains(snapshot["id"]) ? myOrange : myWhite,
+            size: dynamicWidth(context, 0.07),
+          ),
         );
       })
     ],

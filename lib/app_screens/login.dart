@@ -152,6 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "User", response["full_name"]);
                               loginUser.setString(
                                   "userDesignation", response["designation"]);
+                              loginUser.setString(
+                                  "outletId", response["outlet_id"]);
                               pushAndRemoveUntil(
                                 context,
                                 const MyApp(),
