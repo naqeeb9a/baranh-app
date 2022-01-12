@@ -225,6 +225,7 @@ Widget drawerItems2(context) {
                 CoolAlert.show(
                     context: context,
                     type: CoolAlertType.loading,
+                    barrierDismissible: false,
                     lottieAsset: "assets/loader.json");
                 var response = await punchOrder(total, cost);
                 if (response == false) {
@@ -306,6 +307,7 @@ cartCards(context, index, function) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
+          cartItemsCheck.remove(cartItemsCheck[index]);
           function();
         },
         child: const Icon(
