@@ -17,6 +17,7 @@ Widget tableCards(
   buttonText1,
   buttonText2, {
   setState = "",
+ 
   function1check = false,
   function2check = false,
 }) {
@@ -36,6 +37,7 @@ Widget tableCards(
         return Center(
             child: text(context, "no Orders Yet!!", 0.028, Colors.white));
       } else if (snapshot.connectionState == ConnectionState.done) {
+     
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (BuildContext context, int index) {
@@ -154,7 +156,8 @@ Widget tableCardsExtension(
                                 height: dynamicHeight(context, 0.6),
                                 width: dynamicWidth(context, 0.8),
                                 child: FutureBuilder(
-                                  future: getTables(),
+                                  future: getTables(
+                                      snapshotTable[indexTable]["sale_id"]),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snapshot) {
                                     if (snapshot.connectionState ==
@@ -292,7 +295,8 @@ Widget tableCardsExtension(
                                   height: dynamicHeight(context, 0.6),
                                   width: dynamicWidth(context, 0.8),
                                   child: FutureBuilder(
-                                    future: getWaiters(),
+                                    future: getWaiters(
+                                        snapshotTable[indexTable]["sale_id"]),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.connectionState ==

@@ -12,7 +12,8 @@ Widget inputFieldsHome(text1, hintText1, context,
     timeSlot = false,
     function = "",
     keyBoardType = TextInputType.text,
-    controller = ""}) {
+    controller = "",
+    enable = true}) {
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,6 +99,7 @@ Widget inputFieldsHome(text1, hintText1, context,
                       controller: controller,
                       keyboardType: keyBoardType,
                       decoration: InputDecoration(
+                          enabled: enable,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           hintText: hintText1),

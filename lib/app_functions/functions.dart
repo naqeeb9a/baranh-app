@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:baranh/utils/config.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 getReservationData(query) async {
@@ -34,13 +33,14 @@ getOrderSummary(id) async {
   }
 }
 
-getTables() async {
+getTables(saleID) async {
   try {
     var response = await http.get(Uri.parse(
-        "https://baranhweb.cmcmtech.com/api/booking-details/$outletId"));
+        "https://baranhweb.cmcmtech.com/api/booking-details/$saleID"));
     var jsonData = jsonDecode(response.body);
+
     if (response.statusCode == 200) {
-      return jsonData["data"]["tables"];
+      return jsonData["data"][0]["tables"];
     } else {
       return false;
     }
@@ -49,13 +49,14 @@ getTables() async {
   }
 }
 
-getWaiters() async {
+getWaiters(saleID) async {
   try {
-    var response = await Dio()
-        .get("https://baranhweb.cmcmtech.com/api/booking-details/$outletId");
-    var jsonData = jsonDecode(response.data);
+    var response = await http.get(Uri.parse(
+        "https://baranhweb.cmcmtech.com/api/booking-details/$saleID"));
+    var jsonData = jsonDecode(response.body);
+
     if (response.statusCode == 200) {
-      return jsonData["data"]["waiters"];
+      return jsonData["data"][0]["waiters"];
     } else {
       return false;
     }
@@ -69,6 +70,7 @@ arrivedGuests(id) async {
     var response = await http
         .get(Uri.parse("https://baranhweb.cmcmtech.com/api/guest-arrived/$id"));
     var jsonData = jsonDecode(response.body);
+
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {

@@ -1,4 +1,5 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/app_screens/menu.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -39,7 +40,7 @@ class _DineInOrdersState extends State<DineInOrders> {
               ),
               heightBox(context, 0.02),
               inputFieldsHome("Table Number:", "Ex:42", context,
-                  controller: _tableNo),
+                  enable: false, controller: _tableNo),
               heightBox(context, 0.03),
               coloredButton(context, "SEARCH", myOrange),
               Expanded(
