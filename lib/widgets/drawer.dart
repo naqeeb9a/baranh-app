@@ -182,14 +182,14 @@ Widget drawerItems2(context) {
     num cost = 0;
     getTotal() {
       for (var item in cartItems) {
-        total += num.parse(item["productprice"]) * item["productqty"];
+        total += num.parse(item["sale_price"]) * item["qty"];
       }
       return total;
     }
 
     getCost() {
       for (var item in cartItems) {
-        cost += num.parse(item["productprice"]) * item["productqty"];
+        cost += num.parse(item["sale_price"]) * item["qty"];
       }
       return cost;
     }
@@ -280,7 +280,7 @@ cartCards(context, index, function) {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Image.network(
-        cartItems[index]["productimg"] ??
+        cartItems[index]["photo"] ??
             "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
         height: dynamicWidth(context, 0.2),
         width: dynamicWidth(context, 0.15),
@@ -293,14 +293,14 @@ cartCards(context, index, function) {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              text(context, cartItems[index]["productname"].toString(), 0.04,
+              text(context, cartItems[index]["name"].toString(), 0.04,
                   Colors.white),
               text(
                   context,
                   "Rs. " +
-                      cartItems[index]["productprice"].toString() +
+                      cartItems[index]["sale_price"].toString() +
                       " x " +
-                      cartItems[index]["productqty"].toString(),
+                      cartItems[index]["qty"].toString(),
                   0.04,
                   Colors.white),
             ],
@@ -310,6 +310,7 @@ cartCards(context, index, function) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
+
           function();
         },
         child: const Icon(

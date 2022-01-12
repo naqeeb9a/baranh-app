@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:baranh/utils/config.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 getReservationData(query) async {
@@ -18,30 +19,25 @@ getReservationData(query) async {
   }
 }
 
-checkAvailability(date, timeDropdown, seats) async {
+getOrderSummary(id) async {
   try {
     var response = await http
-        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"), body: {
-      "outlet_id": "1",
-      "filter_date": "$date",
-      "timedropdown": "$timeDropdown",
-      "seats": "$seats"
-    });
+        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/order-summary/$id"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
-      return "internet";
+      return false;
     }
   } catch (e) {
-    return "server";
+    return false;
   }
 }
 
 getTables() async {
   try {
-    var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/booking-details/1"));
+    var response = await http.get(Uri.parse(
+        "https://baranhweb.cmcmtech.com/api/booking-details/$outletId"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"]["tables"];
@@ -55,37 +51,11 @@ getTables() async {
 
 getWaiters() async {
   try {
-    var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/booking-details/1"));
-    var jsonData = jsonDecode(response.body);
+    var response = await Dio()
+        .get("https://baranhweb.cmcmtech.com/api/booking-details/$outletId");
+    var jsonData = jsonDecode(response.data);
     if (response.statusCode == 200) {
       return jsonData["data"]["waiters"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-reserveTable(name, phone, email, seats, date, dropDownTime) async {
-  try {
-    var response = await http
-        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/reserve"), body: {
-      "name": "$name",
-      "phone": "$phone",
-      "email": "$email",
-      "seats": "$seats",
-      "date": "$date",
-      "timedropdown": "$dropDownTime",
-      "outlet_id": "1"
-    }, headers: {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-    });
-    var jsonData = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      return jsonData["data"];
     } else {
       return false;
     }
@@ -109,11 +79,44 @@ arrivedGuests(id) async {
   }
 }
 
-getTimeSlots(outletId, date) async {
+reserveTable(name, phone, email, seats, date, dropDownTime) async {
+  try {
+    var response =
+        await http.post(Uri.parse("https://baranhweb.cmcmtech.com/api/reserve"),
+            body: json.encode({
+              "name": "$name",
+              "phone": "$phone",
+              "email": "$email",
+              "seats": "$seats",
+              "date": "$date",
+              "timedropdown": "$dropDownTime",
+              "outlet_id": outletId
+            }),
+            headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
+    var jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
+getTimeSlots(date) async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
-        body: {"outlet_id": outletId, "filter_date": date});
+        body: json.encode({"outlet_id": outletId, "filter_date": date}),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -129,7 +132,11 @@ getMenu() async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
-        body: {"outletid": outletId, "term": "all"});
+        body: json.encode({"outletid": outletId, "term": "all"}),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -145,7 +152,11 @@ assignTableOnline(saleId, tableId) async {
   try {
     var response = await http.post(
         Uri.parse("http://baranhweb.cmcmtech.com/api/assign-table"),
-        body: {"sale_id": saleId, "table_id": tableId});
+        body: json.encode({"sale_id": saleId, "table_id": tableId}),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -162,7 +173,11 @@ assignWaiterOnline(saleId, waiterId) async {
   try {
     var response = await http.post(
         Uri.parse("http://baranhweb.cmcmtech.com/api/assign-waiter"),
-        body: {"saleid": saleId, "waiters": waiterId});
+        body: json.encode({"saleid": saleId, "waiters": waiterId}),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -176,13 +191,29 @@ assignWaiterOnline(saleId, waiterId) async {
 }
 
 punchOrder(total, cost) async {
+  var filteredItems = [];
+  filterFunction() {
+    for (var item in cartItems) {
+      filteredItems.add({
+        "productid": item["id"],
+        "productname": item["name"],
+        "productcode": item["code"],
+        "productprice": item["sale_price"],
+        "itemUnitCost": item["cost"],
+        "productqty": item["qty"],
+        "productimg": item["photo"]
+      });
+    }
+    return filteredItems;
+  }
+
   dynamic bodyJson = {
-    "outlet_id": "1",
+    "outlet_id": "$outletId",
     "total_items": "${cartItems.length}",
     "sub_total": "$total",
     "total_payable": "$total",
     "total_cost": "$cost",
-    "cart": cartItems,
+    "cart": filterFunction(),
     "table_no": "$tableNoGlobal",
     "saleid": "$saleIdGlobal"
   };
@@ -207,17 +238,27 @@ punchOrder(total, cost) async {
   }
 }
 
-getOrderSummary(id) async {
+checkAvailability(date, timeDropdown, seats) async {
   try {
     var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/order-summary/$id"));
+        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"),
+            body: json.encode({
+              "outlet_id": "$outletId",
+              "filter_date": "$date",
+              "timedropdown": "$timeDropdown",
+              "seats": "$seats"
+            }),
+            headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
-      return false;
+      return "internet";
     }
   } catch (e) {
-    return false;
+    return "server";
   }
 }

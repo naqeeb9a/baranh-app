@@ -21,6 +21,5 @@ dynamic userName = "";
 dynamic userDesignation = "";
 dynamic outletId = 0;
 
-
 var cartItems = [].obs;
 var cartItemsCheck = [];

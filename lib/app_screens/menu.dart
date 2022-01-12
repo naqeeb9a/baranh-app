@@ -174,7 +174,6 @@ menuCards(context, snapshot, index) {
 }
 
 iconsRow(context, snapshot) {
-  bool check = false;
   var quantity = 1;
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,55 +237,20 @@ iconsRow(context, snapshot) {
       StatefulBuilder(builder: (context, changeState) {
         return GestureDetector(
           onTap: () {
-            changeState(() {
-              cartItems.add({
-                "productid": snapshot["id"],
-                "productname": snapshot["name"],
-                "productcode": snapshot["code"],
-                "productprice": snapshot["sale_price"],
-                "itemUnitCost": snapshot["cost"],
-                "productqty": quantity,
-                "productimg": snapshot["photo"],
-              });
-
-              // if (cartItemsCheck.isEmpty) {
-              //   cartItemsCheck.add(snapshot["id"]);
-              //   cartItems.add({
-              //     "productid": snapshot["id"],
-              //     "productname": snapshot["name"],
-              //     "productcode": snapshot["code"],
-              //     "productprice": snapshot["sale_price"],
-              //     "itemUnitCost": snapshot["cost"],
-              //     "productqty": quantity,
-              //     "productimg": snapshot["photo"],
-              //   });
-              // } else {
-              //   for (int i = 0; i < cartItemsCheck.length; i++) {
-              //     if (cartItemsCheck[i].toString() == snapshot["id"].toString()) {
-              //       cartItemsCheck.removeAt(i);
-              //       cartItems.removeAt(i);
-              //     } else {
-              //       cartItemsCheck.add(snapshot["id"]);
-              //       cartItems.add({
-              //         "productid": snapshot["id"],
-              //         "productname": snapshot["name"],
-              //         "productcode": snapshot["code"],
-              //         "productprice": snapshot["sale_price"],
-              //         "itemUnitCost": snapshot["cost"],
-              //         "productqty": quantity,
-              //         "productimg": snapshot["photo"],
-              //       });
-              //       break;
-              //     }
-              //   }
-              // }
-            });
+            if (!cartItems.contains(snapshot)) {
+              snapshot["qty"] = quantity;
+              cartItems.add(snapshot);
+              changeState(() {});
+            } else {
+              cartItems.remove(snapshot);
+              changeState(() {});
+            }
           },
           child: Icon(
-            cartItemsCheck.contains(snapshot["id"])
+            cartItems.contains(snapshot)
                 ? LineIcons.shoppingCart
                 : LineIcons.addToShoppingCart,
-            color: cartItemsCheck.contains(snapshot["id"]) ? myOrange : myWhite,
+            color: cartItems.contains(snapshot) ? myOrange : myWhite,
             size: dynamicWidth(context, 0.07),
           ),
         );

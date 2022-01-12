@@ -20,36 +20,11 @@ class ApiData {
 
 class DioData {
   getInfo() async {
-    Response<ResponseBody> response;
     var dio = Dio();
-    response = await dio.post(
+    var response = await dio.post(
       "https://baranhweb.cmcmtech.com/api/searchmenu",
       data: {"outletid": outletId, "term": "all"},
-      options: Options(
-        responseType: ResponseType.stream,
-      ),
     );
-    // Response<ResponseBody> rs;
-    // rs = await Dio().post<ResponseBody>(
-    //   "https://baranhweb.cmcmtech.com/api/searchmenu",
-    //   data: {"outletid": outletId, "term": "all"},
-    //   options: Options(
-    //     responseType: ResponseType.stream,
-    //   ), // set responseType to `stream`
-    // );
-    // print(rs.data?.stream);
-    // return rs.data?.stream;
-    // print(response.data?.stream.toString());
-    return response.data?.stream..toString();
-
-    // var url = Uri.https('baranhweb.cmcmtech.com', 'api/$query');
-    // var response = await http.get(url);
-    // if (response.statusCode == 200) {
-    //   var jsonResponse = convert.jsonDecode(response.body);
-    //
-    //   return jsonResponse["data"];
-    // } else {
-    //   return false;
-    // }
+    return response;
   }
 }

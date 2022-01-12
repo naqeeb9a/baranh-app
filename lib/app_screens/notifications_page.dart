@@ -1,4 +1,3 @@
-import 'package:baranh/apis/api.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'menu.dart';
-
-List menuList = [];
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -31,52 +28,65 @@ class NotificationsPage extends StatelessWidget {
                 color: myWhite,
               ),
               heightBox(context, 0.03),
-              IconButton(
-                onPressed: () {
-                  
-                  showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate(),
-                  );
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: myWhite,
-                ),
-              ), // IconButton
-              Expanded(
-                child: FutureBuilder(
-                  future: getMenu(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.data == false) {
-                        return text(
-                            context, "Server Error", 0.04, Colors.white);
+              FutureBuilder(
+                future: getMenu(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == false) {
+                      return Center(
+                          child: text(
+                              context, "Server Error", 0.04, Colors.white));
+                    } else {
+                      if (snapshot.data.length == 0) {
+                        return Center(
+                          child: text(
+                              context, "No Items in Menu", 0.04, Colors.white),
+                        );
                       } else {
-                        DioData().getInfo();
-                        return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: dynamicWidth(context, 0.5) /
-                                      dynamicWidth(context, 0.7)),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            menuList.add(snapshot.data[index]);
-                            return menuCards(context, snapshot.data, index);
-                          },
+                        return Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                showSearch(
+                                  context: context,
+                                  delegate: CustomSearchDelegate(snapshot.data),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.search,
+                                color: myWhite,
+                              ),
+                            ),
+                            SizedBox(
+                              height: dynamicHeight(context, 0.5),
+                              width: dynamicWidth(context, 1),
+                              child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10,
+                                        childAspectRatio:
+                                            dynamicWidth(context, 0.5) /
+                                                dynamicWidth(context, 0.5)),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return menuCards(
+                                      context, snapshot.data, index);
+                                },
+                              ),
+                            ),
+                          ],
                         );
                       }
-                    } else {
-                      return LottieBuilder.asset(
-                        "assets/loader.json",
-                        width: dynamicWidth(context, 0.3),
-                      );
                     }
-                  },
-                ),
+                  } else {
+                    return LottieBuilder.asset(
+                      "assets/loader.json",
+                      width: dynamicWidth(context, 0.3),
+                    );
+                  }
+                },
               )
             ],
           ),
@@ -87,18 +97,32 @@ class NotificationsPage extends StatelessWidget {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  // List searchTerms = getMenu();
-
-  List searchTerms = [
-    'Apple',
-    'Banana',
-    'Pear',
-    'Watermelons',
-    'Oranges',
-    'Blueberries',
-    'strawberries',
-    'Raspberries ',
-  ];
+  dynamic menu;
+  CustomSearchDelegate(this.menu);
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(cursorColor: myWhite),
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: myBlack),
+          ),
+        ),
+        textTheme: const TextTheme(
+            headline6: TextStyle(
+                // headline 6 affects the query text
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold)),
+        appBarTheme: const AppBarTheme(color: myBlack),
+        scaffoldBackgroundColor: myBlack);
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -124,63 +148,52 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // return FutureBuilder(
-    //   future: getMenu(),
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.done &&
-    //         snapshot.hasData) {
-    //       return GridView.builder(
-    //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    //             crossAxisCount: 2,
-    //             crossAxisSpacing: 10,
-    //             mainAxisSpacing: 10,
-    //             childAspectRatio:
-    //                 dynamicWidth(context, 0.5) / dynamicWidth(context, 0.7)),
-    //         itemCount: snapshot.data.length,
-    //         itemBuilder: (BuildContext context, int index) {
-    //           return menuCards(context, snapshot.data, index);
-    //         },
-    //       );
-    //     } else {
-    //       return const Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     }
-    //   },
-    // );
-    List<String> matchQuery = [];
-    for (var item in menuList) {
-      if (item['name'].toLowerCase().contains(query.toLowerCase())) {
+    dynamic matchQuery = [];
+    for (var item in menu) {
+      if (item["name"].toString().toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        ); // ListTile
-      },
-    ); // ListView.builder
+
+    return Padding(
+      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio:
+                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
+        itemCount: matchQuery.length,
+        itemBuilder: (BuildContext context, int index) {
+          return menuCards(context, matchQuery, index);
+        },
+      ),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    dynamic matchQuery = [];
+    for (var item in menu) {
+      if (item["name"].toString().toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item);
       }
     }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        ); // ListTile
-      },
-    ); // ListView.
+    return Padding(
+      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio:
+                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
+        itemCount: matchQuery.length,
+        itemBuilder: (BuildContext context, int index) {
+          return menuCards(context, matchQuery, index);
+        },
+      ),
+    ); // ListTile
   }
 }
