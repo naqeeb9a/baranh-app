@@ -4,6 +4,7 @@ import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,16 @@ Widget tableCards(context, function, buttonText1, buttonText2,
         );
       } else if (snapshot.data == false) {
         return Center(
-            child: text(context, "Server Error", 0.028, Colors.white));
+          child: coloredButton(
+            context,
+            "Retry",
+            myOrange,
+            width: dynamicWidth(context, .4),
+            function: () {
+              globalRefresh();
+            },
+          ),
+        );
       } else if (snapshot.data.length == 0) {
         return Center(
             child: text(context, "no Orders Yet!!", 0.028, Colors.white));
@@ -67,16 +77,28 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                   ],
                 )),
             Expanded(
-              child: ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return tableCardsExtension(
-                      context, snapshot.data, index, buttonText1, buttonText2,
+              child: RefreshIndicator(
+                onRefresh: () {
+                  return Future.delayed(const Duration(milliseconds: 400), () {
+                    setState();
+                  });
+                },
+                child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return tableCardsExtension(
+                      context,
+                      snapshot.data,
+                      index,
+                      buttonText1,
+                      buttonText2,
                       function: setState,
                       function1check: function1check,
                       function2check: function2check,
-                      assignTable: assignTable);
-                },
+                      assignTable: assignTable,
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -199,8 +221,15 @@ Widget tableCardsExtension(
                                         width: dynamicWidth(context, 0.1),
                                       );
                                     } else if (snapshot.data == false) {
-                                      return text(context, "Server Error",
-                                          0.028, Colors.white);
+                                      return coloredButton(
+                                        context,
+                                        "Retry",
+                                        myOrange,
+                                        width: dynamicWidth(context, .4),
+                                        function: () {
+                                          globalRefresh();
+                                        },
+                                      );
                                     } else if (snapshot.data.length == 0) {
                                       return Center(
                                           child: text(context, "no Tables!!",
@@ -347,11 +376,15 @@ Widget tableCardsExtension(
                                         );
                                       } else if (snapshot.data == false) {
                                         return Center(
-                                          child: text(
-                                              context,
-                                              "Server Error or check your internet",
-                                              0.028,
-                                              Colors.white),
+                                          child: coloredButton(
+                                            context,
+                                            "Retry",
+                                            myOrange,
+                                            width: dynamicWidth(context, .4),
+                                            function: () {
+                                              globalRefresh();
+                                            },
+                                          ),
                                         );
                                       } else if (snapshot.data.length == 0) {
                                         return Center(
@@ -566,11 +599,16 @@ class CustomDineInSearchDelegate extends SearchDelegate {
           itemCount: matchQuery.length,
           itemBuilder: (BuildContext context, int index) {
             return tableCardsExtension(
-                context, matchQuery, index, buttonText1, buttonText2,
-                function: setState,
-                function1check: function1check,
-                function2check: function2check,
-                assignTable: assignTable);
+              context,
+              matchQuery,
+              index,
+              buttonText1,
+              buttonText2,
+              function: setState,
+              function1check: function1check,
+              function2check: function2check,
+              assignTable: assignTable,
+            );
           },
         ));
   }
@@ -592,11 +630,16 @@ class CustomDineInSearchDelegate extends SearchDelegate {
           itemCount: matchQuery.length,
           itemBuilder: (BuildContext context, int index) {
             return tableCardsExtension(
-                context, matchQuery, index, buttonText1, buttonText2,
-                function: setState,
-                function1check: function1check,
-                function2check: function2check,
-                assignTable: assignTable);
+              context,
+              matchQuery,
+              index,
+              buttonText1,
+              buttonText2,
+              function: setState,
+              function1check: function1check,
+              function2check: function2check,
+              assignTable: assignTable,
+            );
           },
         )); // ListTile
   }

@@ -36,10 +36,17 @@ class _DineInOrdersState extends State<DineInOrders> {
                 color: myWhite,
               ),
               Expanded(
-                child: tableCards(context, getReservationData("dinein-orders"),
-                    "View detail", "Take Order", setState: () {
-                  setState(() {});
-                }, function2check: true, visible: true),
+                child: tableCards(
+                  context,
+                  getReservationData("dinein-orders"),
+                  "View detail",
+                  "Take Order",
+                  setState: () {
+                    setState(() {});
+                  },
+                  function2check: true,
+                  visible: true,
+                ),
               )
             ],
           ),

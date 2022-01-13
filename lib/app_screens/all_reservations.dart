@@ -7,9 +7,14 @@ import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-class AllReservationsPage extends StatelessWidget {
+class AllReservationsPage extends StatefulWidget {
   const AllReservationsPage({Key? key}) : super(key: key);
 
+  @override
+  State<AllReservationsPage> createState() => _AllReservationsPageState();
+}
+
+class _AllReservationsPageState extends State<AllReservationsPage> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _reservationNumber = TextEditingController();
@@ -43,6 +48,9 @@ class AllReservationsPage extends StatelessWidget {
                   getReservationData("reservelist"),
                   "Guest Arrived",
                   "View Details",
+                  setState: () {
+                    setState(() {});
+                  },
                 ),
               )
             ],

@@ -79,8 +79,15 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                           "  ${snapshot.data[0]["discount"]} % off" +
                                           "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
                                   return (snapshot.data == false)
-                                      ? text(context, "Server Error", 0.04,
-                                          Colors.red)
+                                      ? coloredButton(
+                                          context,
+                                          "Retry",
+                                          myOrange,
+                                          width: dynamicWidth(context, .4),
+                                          function: () {
+                                            globalRefresh();
+                                          },
+                                        )
                                       : StatefulBuilder(
                                           builder: (BuildContext context,
                                               changeSate) {

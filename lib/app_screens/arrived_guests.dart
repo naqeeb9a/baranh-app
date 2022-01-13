@@ -31,10 +31,18 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
                 color: myWhite,
               ),
               Expanded(
-                  child: tableCards(context, getReservationData("arrived"),
-                      "Assign Table", "Assign Waiter", setState: () {
-                setState(() {});
-              }, function1check: true, function2check: true))
+                child: tableCards(
+                  context,
+                  getReservationData("arrived"),
+                  "Assign Table",
+                  "Assign Waiter",
+                  setState: () {
+                    setState(() {});
+                  },
+                  function1check: true,
+                  function2check: true,
+                ),
+              )
             ],
           ),
         ),

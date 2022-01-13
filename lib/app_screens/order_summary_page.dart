@@ -2,6 +2,7 @@ import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +48,15 @@ class OrderSummaryPage extends StatelessWidget {
                     );
                   } else if (snapshot.data == false) {
                     return Center(
-                      child: text(
-                          context,
-                          "Server error or check your internet",
-                          0.04,
-                          Colors.white),
+                      child: coloredButton(
+                        context,
+                        "Retry",
+                        myOrange,
+                        width: dynamicWidth(context, .4),
+                        function: () {
+                          globalRefresh();
+                        },
+                      ),
                     );
                   } else {
                     return orderDetails(context, snapshot.data);

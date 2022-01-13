@@ -14,6 +14,15 @@ Widget drawerItems(context, function, changeState) {
   List drawerItemList = [
     {
       "icon": Icons.calendar_today,
+      "text": "New Reservations",
+      "function": () {
+        pageDecider = "New Reservations";
+        popUntil(customContext);
+        Navigator.pop(context, function());
+      },
+    },
+    {
+      "icon": Icons.calendar_today,
       "text": "All Reservations",
       "function": () {
         pageDecider = "All Reservations";
@@ -44,15 +53,6 @@ Widget drawerItems(context, function, changeState) {
       "text": "Dine In Orders",
       "function": () {
         pageDecider = "Dine In Orders";
-        popUntil(customContext);
-        Navigator.pop(context, function());
-      },
-    },
-    {
-      "icon": Icons.calendar_today,
-      "text": "New Reservations",
-      "function": () {
-        pageDecider = "New Reservations";
         popUntil(customContext);
         Navigator.pop(context, function());
       },
@@ -205,7 +205,8 @@ Widget drawerItems2(context) {
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, 0.01)),
+                    vertical: dynamicHeight(context, 0.01),
+                  ),
                   child: cartCards(context, index, () {
                     changeState(() {});
                   }),

@@ -2,6 +2,7 @@ import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,15 @@ class MenuPage extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == false) {
                       return Center(
-                        child: text(context, "Server Error", 0.04, myWhite),
+                        child: coloredButton(
+                          context,
+                          "Retry",
+                          myOrange,
+                          width: dynamicWidth(context, .4),
+                          function: () {
+                            globalRefresh();
+                          },
+                        ),
                       );
                     } else {
                       if (snapshot.data.length == 0) {
