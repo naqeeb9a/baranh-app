@@ -3,6 +3,7 @@ import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
@@ -29,7 +30,21 @@ class MenuPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: InkWell(
                 onTap: () {
-                  pop(context);
+                  CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.warning,
+                      text:
+                          "if you leave this page your cart items will discard",
+                      confirmBtnText: "Continue",
+                      cancelBtnText: "Cancel",
+                      onCancelBtnTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      onConfirmBtnTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        cartItems.clear();
+                        pop(context);
+                      });
                 },
                 child: const Icon(
                   LineIcons.arrowLeft,
@@ -259,25 +274,25 @@ iconsRow(context, snapshot) {
       StatefulBuilder(builder: (context, changeState) {
         return GestureDetector(
           onTap: () {
-            if (!cartItemsCheck.contains(snapshot['id'])) {
+            if (!cartItems.contains(snapshot)) {
               snapshot["qty"] = quantity;
               snapshot['setState'] = () {
                 changeState(() {});
               };
               cartItems.add(snapshot);
-              cartItemsCheck.add(snapshot['id']);
+
               changeState(() {});
             } else {
               cartItems.remove(snapshot);
-              cartItemsCheck.remove(snapshot['id']);
+
               changeState(() {});
             }
           },
           child: Icon(
-            cartItemsCheck.contains(snapshot['id'])
+            cartItems.contains(snapshot)
                 ? LineIcons.shoppingCart
                 : LineIcons.addToShoppingCart,
-            color: cartItemsCheck.contains(snapshot['id']) ? myOrange : myWhite,
+            color: cartItems.contains(snapshot) ? myOrange : myWhite,
             size: dynamicWidth(context, 0.07),
           ),
         );

@@ -37,9 +37,12 @@ class OrderSummaryPage extends StatelessWidget {
               future: getOrderSummary(saleId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data == null) {
-                    return Center(
-                      child: text(context, "No details", 0.04, Colors.white),
+                  if (snapshot.data == null ||
+                      snapshot.data[0]["message"] == "Nothing found!") {
+                    return Expanded(
+                      child: Center(
+                        child: text(context, "No details", 0.04, Colors.white),
+                      ),
                     );
                   } else if (snapshot.data == false) {
                     return Center(

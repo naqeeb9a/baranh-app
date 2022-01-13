@@ -307,7 +307,6 @@ cartCards(context, index, function) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
-          cartItemsCheck.remove(cartItemsCheck[index]);
           function();
         },
         child: const Icon(
