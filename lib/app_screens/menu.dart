@@ -30,21 +30,25 @@ class MenuPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: InkWell(
                 onTap: () {
-                  CoolAlert.show(
-                      context: context,
-                      type: CoolAlertType.warning,
-                      text:
-                          "if you leave this page your cart items will discard",
-                      confirmBtnText: "Continue",
-                      cancelBtnText: "Cancel",
-                      onCancelBtnTap: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                      },
-                      onConfirmBtnTap: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        cartItems.clear();
-                        pop(context);
-                      });
+                  if (cartItems.isEmpty) {
+                    pop(context);
+                  } else {
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.warning,
+                        text:
+                            "if you leave this page your cart items will discard",
+                        confirmBtnText: "Continue",
+                        cancelBtnText: "Cancel",
+                        onCancelBtnTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        onConfirmBtnTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          cartItems.clear();
+                          pop(context);
+                        });
+                  }
                 },
                 child: const Icon(
                   LineIcons.arrowLeft,
