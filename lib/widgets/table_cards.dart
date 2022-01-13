@@ -191,10 +191,128 @@ Widget tableCardsExtension(
               ],
             ),
             SizedBox(
-              height: dynamicHeight(context, 0.12),
+              height: dynamicHeight(
+                  context, buttonText1 == "View detail" ? 0.16 : 0.12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Visibility(
+                    visible: buttonText1 == "View detail" ? true : false,
+                    child: greenButtons(
+                        context, "Change Table", snapshotTable, indexTable,
+                        function: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: text(
+                                  context, "Assign Table", 0.04, Colors.white,
+                                  bold: true),
+                              backgroundColor: myBlack,
+                              content: Container(
+                                color: myBlack,
+                                height: dynamicHeight(context, 0.6),
+                                width: dynamicWidth(context, 0.8),
+                                child: FutureBuilder(
+                                  future: getTables(
+                                      snapshotTable[indexTable]["sale_id"]),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return LottieBuilder.asset(
+                                        "assets/loader.json",
+                                        width: dynamicWidth(context, 0.1),
+                                      );
+                                    } else if (snapshot.data == false) {
+                                      return coloredButton(
+                                        context,
+                                        "Retry",
+                                        myOrange,
+                                        width: dynamicWidth(context, .4),
+                                        function: () {
+                                          globalRefresh();
+                                        },
+                                      );
+                                    } else if (snapshot.data.length == 0) {
+                                      return Center(
+                                          child: text(context, "no Tables!!",
+                                              0.028, Colors.white));
+                                    } else if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return GridView.builder(
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 4,
+                                                mainAxisSpacing: 5,
+                                                crossAxisSpacing: 5),
+                                        itemCount: snapshot.data.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return InkWell(
+                                            onTap: () async {
+                                              CoolAlert.show(
+                                                  context: context,
+                                                  type: CoolAlertType.loading,
+                                                  barrierDismissible: false,
+                                                  lottieAsset:
+                                                      "assets/loader.json");
+                                              assignTable =
+                                                  snapshot.data[index]["name"];
+
+                                              var response =
+                                                  await assignTableOnline(
+                                                      snapshotTable[indexTable]
+                                                          ["sale_id"],
+                                                      assignTable);
+                                              if (response == false) {
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
+                                                MotionToast.error(
+                                                  description:
+                                                      "Table not assigned Check your internet",
+                                                  dismissable: true,
+                                                ).show(context);
+                                              } else {
+                                                pageDecider = "Dine In Orders";
+                                                Navigator.pop(
+                                                    context, globalRefresh());
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
+                                                MotionToast.success(
+                                                  description: "Table assigned",
+                                                  dismissable: true,
+                                                ).show(context);
+                                              }
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              color: myOrange,
+                                              child: text(
+                                                  context,
+                                                  "Table\n" +
+                                                      snapshot.data[index]
+                                                          ["name"],
+                                                  0.04,
+                                                  Colors.white,
+                                                  alignText: TextAlign.center),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return text(context, "not working", 0.028,
+                                          Colors.white);
+                                    }
+                                  },
+                                ),
+                              ),
+                            );
+                          });
+                    }),
+                  ),
                   greenButtons(context, buttonText1, snapshotTable, indexTable,
                       function: () async {
                     if (buttonText1 == "View detail") {
