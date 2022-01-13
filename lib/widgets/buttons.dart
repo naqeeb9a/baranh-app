@@ -12,10 +12,10 @@ Widget coloredButton(context, text, color,
       height: dynamicHeight(context, .056),
       decoration: color == Colors.transparent
           ? BoxDecoration(
-              color: color, border: Border.all(width: 1, color: myWhite))
+          color: color, border: Border.all(width: 1, color: myWhite))
           : BoxDecoration(
-              color: color,
-            ),
+        color: color,
+      ),
       child: Center(
         child: Text(
           text,

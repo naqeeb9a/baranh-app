@@ -23,4 +23,3 @@ dynamic outletId = 0;
 dynamic waiterId = 0;
 
 var cartItems = [].obs;
-

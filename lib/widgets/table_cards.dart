@@ -1,7 +1,6 @@
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/menu.dart';
 import 'package:baranh/app_screens/order_summary_page.dart';
-
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -493,6 +492,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       buttonText2,
       function1check,
       function2check;
+
   CustomDineInSearchDelegate(
       this.data,
       this.setState,
@@ -501,6 +501,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       this.buttonText2,
       this.function1check,
       this.function2check);
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     return ThemeData(

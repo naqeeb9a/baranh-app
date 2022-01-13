@@ -322,11 +322,12 @@ class CustomSearchDelegate extends SearchDelegate {
           ),
         ),
         textTheme: const TextTheme(
-            headline6: TextStyle(
-                // headline 6 affects the query text
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold)),
+          headline6: TextStyle(
+            color: myWhite,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         appBarTheme: const AppBarTheme(color: myBlack),
         scaffoldBackgroundColor: myBlack);
   }

@@ -24,6 +24,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   String indexValue = "";
   dynamic bigArray = [];
   var timeDropDown = "";
+
   @override
   void dispose() {
     _seats.dispose();
@@ -188,15 +189,16 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                     } else {
                       Navigator.of(context, rootNavigator: true).pop();
                       CoolAlert.show(
-                          title: "Server Error",
-                          text: "please Try again",
-                          context: context,
-                          loopAnimation: true,
-                          backgroundColor: myOrange,
-                          confirmBtnColor: myOrange,
-                          confirmBtnText: "Retry",
-                          type: CoolAlertType.error,
-                          animType: CoolAlertAnimType.slideInRight);
+                        title: "Server Error",
+                        text: "please Try again",
+                        context: context,
+                        loopAnimation: true,
+                        backgroundColor: myOrange,
+                        confirmBtnColor: myOrange,
+                        confirmBtnText: "Retry",
+                        type: CoolAlertType.error,
+                        animType: CoolAlertAnimType.slideInRight,
+                      );
                     }
                   }
                 }),

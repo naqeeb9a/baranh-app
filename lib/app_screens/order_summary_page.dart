@@ -9,6 +9,7 @@ import 'package:line_icons/line_icons.dart';
 
 class OrderSummaryPage extends StatelessWidget {
   final String saleId;
+
   const OrderSummaryPage({Key? key, required this.saleId}) : super(key: key);
 
   @override
@@ -96,7 +97,12 @@ orderDetails(context, snapshot) {
       ),
       heightBox(context, 0.05),
       (snapshot[0]["sale_details"].length == 0)
-          ? text(context, "No items ordered yet!", 0.04, Colors.white)
+          ? text(
+              context,
+              "No items ordered yet!",
+              0.04,
+              myWhite,
+            )
           : SizedBox(
               width: dynamicWidth(context, 1),
               height: dynamicWidth(context, 0.2),
