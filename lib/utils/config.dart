@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 const myWhite = Color(0xffffffff);
 const myBlack = Color(0xff000000);
@@ -10,7 +11,7 @@ const noColor = Colors.transparent;
 
 bool obscureText = true;
 var pageDecider = "All Reservations";
-dynamic hintText = "mm/dd/yyyy";
+dynamic hintText = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 dynamic customContext = "";
 dynamic globalRefresh = "";
 dynamic saleIdGlobal;

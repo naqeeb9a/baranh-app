@@ -25,8 +25,9 @@ class ContactInformation extends StatefulWidget {
 }
 
 class _ContactInformationState extends State<ContactInformation> {
+  static final validCharacters = RegExp(r'^[a-zA-Z0-9]+$');
   final TextEditingController _name = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _email = TextEditingController();
 
@@ -59,7 +60,7 @@ class _ContactInformationState extends State<ContactInformation> {
                   controller: _name),
               heightBox(context, 0.02),
               inputFieldsHome("Phone", "Enter Phone Number", context,
-                  controller: _password, generatePasswordCheck: true),
+                  controller: _phone, generatePasswordCheck: true),
               heightBox(context, 0.02),
               inputFieldsHome("Address", "Enter Address", context,
                   controller: _address),
@@ -68,21 +69,31 @@ class _ContactInformationState extends State<ContactInformation> {
                   controller: _email),
               heightBox(context, 0.04),
               coloredButton(context, "Submit", myOrange, function: () async {
-                if (_name.text.isEmpty ||
-                    _password.text.isEmpty ||
-                    _address.text.isEmpty) {
+                if (_name.text.isEmpty || _phone.text.isEmpty) {
                   MotionToast.info(
                     description: "Fill all fields appropriately",
+                    dismissable: true,
+                  ).show(context);
+                } else if (!validCharacters.hasMatch(_name.text)) {
+                  MotionToast.info(
+                    description: "Special characters not allowed",
+                    dismissable: true,
+                  ).show(context);
+                } else if (_email.text.isNotEmpty &&
+                    !_email.text.contains("@")) {
+                  MotionToast.info(
+                    description: "Enter a Valid Email",
                     dismissable: true,
                   ).show(context);
                 } else {
                   CoolAlert.show(
                       context: context,
                       type: CoolAlertType.loading,
+                      barrierDismissible: false,
                       lottieAsset: "assets/loader.json");
                   var response = await reserveTable(
                       _name.text,
-                      _password.text,
+                      _phone.text,
                       _email.text,
                       widget.seats,
                       widget.date,
@@ -116,7 +127,7 @@ class _ContactInformationState extends State<ContactInformation> {
   @override
   void dispose() {
     _name.dispose();
-    _password.dispose();
+    _phone.dispose();
     _address.dispose();
     _email.dispose();
     super.dispose();

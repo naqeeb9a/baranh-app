@@ -124,11 +124,19 @@ Widget tableCardsExtension(
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
       children: [
-        text(
-            context,
-            "Table: " + snapshotTable[indexTable]["table_id"].toString(),
-            0.04,
-            myWhite),
+        snapshotTable[indexTable]["table_id"] == null
+            ? text(
+                context,
+                snapshotTable[indexTable]["customer_name"]
+                    .toString()
+                    .toString(),
+                0.04,
+                myWhite)
+            : text(
+                context,
+                "Table: " + snapshotTable[indexTable]["table_id"].toString(),
+                0.04,
+                myWhite),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
