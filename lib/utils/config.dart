@@ -21,5 +21,5 @@ dynamic userName = "";
 dynamic userDesignation = "";
 dynamic outletId = 0;
 dynamic waiterId = 0;
-
+dynamic menuRefresh;
 var cartItems = [].obs;

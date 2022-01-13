@@ -104,24 +104,29 @@ class MenuPage extends StatelessWidget {
                                 ),
                               ),
                               heightBox(context, 0.02),
-                              Expanded(
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10,
-                                          childAspectRatio:
-                                              dynamicWidth(context, 0.5) /
-                                                  dynamicWidth(context, 0.5)),
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return menuCards(
-                                        context, snapshot.data, index);
-                                  },
-                                ),
-                              ),
+                              StatefulBuilder(builder: (context, changeState) {
+                                menuRefresh = () {
+                                  changeState(() {});
+                                };
+                                return Expanded(
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10,
+                                            childAspectRatio:
+                                                dynamicWidth(context, 0.5) /
+                                                    dynamicWidth(context, 0.5)),
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return menuCards(
+                                          context, snapshot.data, index);
+                                    },
+                                  ),
+                                );
+                              }),
                             ],
                           );
                         });
