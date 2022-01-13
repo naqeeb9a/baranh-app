@@ -326,7 +326,12 @@ Widget dividerRowWidgets(context, text1, text2, {check = false}) {
       children: [
         text(context, text1, 0.04, myWhite),
         check == true
-            ? text(context, "$text2", 0.04, myWhite)
+            ? text(
+                context,
+                "$text2",
+                0.04,
+                myWhite,
+              )
             : InkWell(
                 onTap: () {
                   pop(context);
