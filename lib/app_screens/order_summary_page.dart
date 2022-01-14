@@ -76,6 +76,10 @@ class OrderSummaryPage extends StatelessWidget {
 billRow(context, text1, text2, size, color) {
   return Column(
     children: [
+      const Divider(
+        thickness: 1,
+        color: myWhite,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -86,7 +90,7 @@ billRow(context, text1, text2, size, color) {
       const Divider(
         thickness: 1,
         color: myWhite,
-      )
+      ),
     ],
   );
 }
@@ -109,65 +113,96 @@ orderDetails(context, snapshot) {
               myWhite,
             )
           : SizedBox(
-              width: dynamicWidth(context, 1),
-              height: dynamicWidth(context, 0.2),
+              width: dynamicWidth(context, .7),
+              height: dynamicHeight(context, .52),
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: snapshot[0]["sale_details"].length,
                 itemBuilder: (BuildContext context, int index) {
                   return viewOrderCard(
-                      context, snapshot[0]["sale_details"], index);
+                    context,
+                    snapshot[0]["sale_details"],
+                    index,
+                  );
                 },
               ),
             ),
       heightBox(context, 0.02),
-      billRow(context, "Product", "Total", 0.03, myWhite),
-      billRow(context, "Subtotal", "PKR " + snapshot[0]["sub_total"], 0.03,
-          myWhite),
-      billRow(context, "Discount", snapshot[0]["sub_total_discount_value"],
-          0.03, myWhite),
-      billRow(context, "GST", "PKR 0.00", 0.03, myWhite),
-      billRow(context, "Total", "PKR " + snapshot[0]["sub_total_with_discount"],
-          0.03, myWhite),
-      billRow(context, "Paid", "PKR " + snapshot[0]["paid_amount"].toString(),
-          0.03, myWhite),
+      billRow(
+        context,
+        "Total",
+        "PKR " + snapshot[0]["sub_total_with_discount"],
+        0.03,
+        myWhite,
+      ),
     ],
   );
 }
 
 viewOrderCard(context, snapshot, index) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.01)),
-    width: dynamicWidth(context, 0.3),
+    margin: EdgeInsets.symmetric(
+      vertical: dynamicHeight(context, 0.01),
+    ),
+    height: dynamicHeight(context, .064),
     decoration: BoxDecoration(
-      color: myOrange,
+      color: noColor,
       borderRadius: BorderRadius.circular(
         dynamicWidth(context, 0.02),
       ),
+      border: Border.all(
+        color: myWhite,
+      ),
     ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    padding: EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context, .02),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.02),
-          ),
-          child: text(
-              context, snapshot[index]["menu_name"].toString(), 0.03, myWhite,
-              alignText: TextAlign.center),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            text(
+              context,
+              "${index + 1}. ",
+              0.03,
+              myWhite,
+              alignText: TextAlign.center,
+            ),
+          ],
         ),
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: text(
-            context,
-            "Rs ." +
-                snapshot[index]["menu_unit_price"] +
-                " x " +
-                snapshot[index]["qty"].toString(),
-            0.03,
-            myWhite,
-          ),
+        widthBox(context, .04),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: dynamicWidth(context, 0.02),
+              ),
+              child: text(
+                context,
+                snapshot[index]["menu_name"].toString(),
+                0.03,
+                myWhite,
+                alignText: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+              child: text(
+                context,
+                "Rs ." +
+                    snapshot[index]["menu_unit_price"] +
+                    " x " +
+                    snapshot[index]["qty"].toString(),
+                0.03,
+                myWhite,
+              ),
+            ),
+          ],
         ),
       ],
     ),
