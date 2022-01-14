@@ -107,7 +107,7 @@ class _ContactInformationState extends State<ContactInformation> {
                   var response = await reserveTable(
                     _name.text,
                     _phone.text,
-                    _email.text == "" ? "dummy@baranh.com" : _email.text,
+                    _email.text == "" ? "" : _email.text,
                     widget.seats,
                     widget.date,
                     widget.dropDownTime,
