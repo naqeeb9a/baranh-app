@@ -5,8 +5,10 @@ import 'package:http/http.dart' as http;
 
 getReservationData(query) async {
   try {
-    var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/$query/1"));
+    var response = await http.get(
+      Uri.parse(
+          "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}"),
+    );
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"]["result"];
@@ -114,7 +116,8 @@ getTimeSlots(date) async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
-        body: json.encode({"outlet_id": userResponse["outlet_id"], "filter_date": date}),
+        body: json.encode(
+            {"outlet_id": userResponse["outlet_id"], "filter_date": date}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -134,7 +137,8 @@ getMenu() async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
-        body: json.encode({"outletid": userResponse["outlet_id"], "term": "all"}),
+        body:
+            json.encode({"outletid": userResponse["outlet_id"], "term": "all"}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
