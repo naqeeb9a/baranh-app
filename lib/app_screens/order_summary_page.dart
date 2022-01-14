@@ -107,26 +107,26 @@ orderDetails(context, snapshot) {
       heightBox(context, 0.05),
       (snapshot[0]["sale_details"].length == 0)
           ? text(
-              context,
-              "No items ordered yet!",
-              0.04,
-              myWhite,
-            )
+        context,
+        "No items ordered yet!",
+        0.04,
+        myWhite,
+      )
           : SizedBox(
-              width: dynamicWidth(context, .7),
-              height: dynamicHeight(context, .52),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot[0]["sale_details"].length,
-                itemBuilder: (BuildContext context, int index) {
-                  return viewOrderCard(
-                    context,
-                    snapshot[0]["sale_details"],
-                    index,
-                  );
-                },
-              ),
-            ),
+        width: dynamicWidth(context, .7),
+        height: dynamicHeight(context, .52),
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: snapshot[0]["sale_details"].length,
+          itemBuilder: (BuildContext context, int index) {
+            return viewOrderCard(
+              context,
+              snapshot[0]["sale_details"],
+              index,
+            );
+          },
+        ),
+      ),
       heightBox(context, 0.02),
       billRow(
         context,
@@ -190,8 +190,9 @@ viewOrderCard(context, snapshot, index) {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+              padding: EdgeInsets.symmetric(
+                horizontal: dynamicWidth(context, 0.02),
+              ),
               child: text(
                 context,
                 "Rs ." +
