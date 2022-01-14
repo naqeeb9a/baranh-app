@@ -149,11 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               SharedPreferences loginUser =
                                   await SharedPreferences.getInstance();
                               loginUser.setString(
-                                  "User", response["full_name"]);
-                              loginUser.setString(
-                                  "userDesignation", response["designation"]);
-                              loginUser.setString(
-                                  "outletId", response["outlet_id"]);
+                                "userResponse",
+                                json.encode(response),
+                              );
                               pushAndRemoveUntil(
                                 context,
                                 const MyApp(),

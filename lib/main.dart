@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/app_screens/login.dart';
 import 'package:baranh/utils/config.dart';
@@ -65,10 +67,10 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
 
   checkLoginStatus(context1) async {
     SharedPreferences loginUser = await SharedPreferences.getInstance();
-    userName = loginUser.getString("User");
-    userDesignation = loginUser.getString("userDesignation");
-    outletId = loginUser.getString("outletId");
-    if (loginUser.getString("User") == null) {
+    dynamic temp = loginUser.getString("userResponse");
+    userResponse = json.decode(temp);
+
+    if (temp == null) {
       Navigator.pushAndRemoveUntil(
           context1,
           MaterialPageRoute(

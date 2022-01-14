@@ -18,9 +18,7 @@ dynamic saleIdGlobal;
 dynamic tableNoGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
-dynamic userName = "";
-dynamic userDesignation = "";
-dynamic outletId = 0;
-dynamic waiterId = 0;
+dynamic userResponse = "";
+
 dynamic menuRefresh;
 var cartItems = [].obs;

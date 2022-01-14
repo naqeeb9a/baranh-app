@@ -92,7 +92,7 @@ reserveTable(name, phone, email, seats, date, dropDownTime) async {
               "seats": "$seats",
               "date": "$date",
               "timedropdown": "$dropDownTime",
-              "outlet_id": outletId
+              "outlet_id": userResponse["outlet_id"],
             }),
             headers: {
           'Content-type': 'application/json',
@@ -114,7 +114,7 @@ getTimeSlots(date) async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
-        body: json.encode({"outlet_id": outletId, "filter_date": date}),
+        body: json.encode({"outlet_id": userResponse["outlet_id"], "filter_date": date}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -134,7 +134,7 @@ getMenu() async {
   try {
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
-        body: json.encode({"outletid": outletId, "term": "all"}),
+        body: json.encode({"outletid": userResponse["outlet_id"], "term": "all"}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -210,7 +210,7 @@ punchOrder(total, cost) async {
   }
 
   dynamic bodyJson = {
-    "outlet_id": "$outletId",
+    "outlet_id": "${userResponse["outlet_id"]}",
     "total_items": "${cartItems.length}",
     "sub_total": "$total",
     "total_payable": "$total",
@@ -245,7 +245,7 @@ checkAvailability(date, timeDropdown, seats) async {
     var response = await http
         .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"),
             body: json.encode({
-              "outlet_id": "$outletId",
+              "outlet_id": "${userResponse["outlet_id"]}",
               "filter_date": "$date",
               "timedropdown": "$timeDropdown",
               "seats": "$seats"

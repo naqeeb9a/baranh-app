@@ -68,7 +68,7 @@ Widget drawerItems(context, function, changeState) {
 
           checkLoginStatus(context1) async {
             SharedPreferences loginUser = await SharedPreferences.getInstance();
-            if (loginUser.getString("User") == null) {
+            if (loginUser.getString("userResponse") == null) {
               Navigator.pushAndRemoveUntil(
                   context1,
                   MaterialPageRoute(builder: (context1) => const LoginScreen()),
@@ -125,8 +125,10 @@ Widget drawerItems(context, function, changeState) {
               children: [
                 text(
                   context,
-                  "Hi $userName\n($userDesignation)",
-                  .054,
+                  "Hi ${userResponse["full_name"]}"
+                  "\n(${userResponse["designation"]})"
+                  "\n\n${userResponse["outlet_name"]}",
+                  .05,
                   myWhite,
                   bold: true,
                 ),
@@ -136,7 +138,7 @@ Widget drawerItems(context, function, changeState) {
           Flexible(
             child: Padding(
               padding: EdgeInsets.only(
-                top: dynamicHeight(context, .04),
+                top: dynamicHeight(context, .036),
                 left: dynamicWidth(context, .02),
               ),
               child: ListView.builder(
