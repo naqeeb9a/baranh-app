@@ -128,7 +128,9 @@ Widget drawerItems(context, function, changeState) {
                   context,
                   userResponse == ""
                       ? ""
-                      : "Hi ${userResponse["full_name"] ?? ""}\n(${userResponse["designation"] ?? ""})\n\n${userResponse["outlet_name"] ?? ""}",
+                      : "Hi ${userResponse["full_name"] ?? ""}"
+                          "\n(${userResponse["designation"] ?? ""})"
+                          "\n\n${userResponse["outlet_name"] ?? ""}",
                   .05,
                   myWhite,
                   bold: true,
