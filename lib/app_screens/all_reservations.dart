@@ -15,6 +15,8 @@ class AllReservationsPage extends StatefulWidget {
 }
 
 class _AllReservationsPageState extends State<AllReservationsPage> {
+  dynamic showData = getReservationData("reservelist");
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController _reservationNumber = TextEditingController();
@@ -40,12 +42,41 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
               heightBox(context, 0.02),
               inputFieldsHome("Select Date:", hintText, context, check: true),
               heightBox(context, 0.04),
-              coloredButton(context, "SEARCH", myOrange, fontSize: 0.042),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  coloredButton(
+                    context,
+                    "SEARCH",
+                    myOrange,
+                    fontSize: 0.042,
+                    width: dynamicWidth(context, .4),
+                    function: () {
+                      setState(() {
+                        showData = searchReservation(
+                            hintText, _reservationNumber.text);
+                      });
+                    },
+                  ),
+                  coloredButton(
+                    context,
+                    "CLEAR",
+                    myOrange,
+                    fontSize: 0.042,
+                    width: dynamicWidth(context, .4),
+                    function: () {
+                      setState(() {
+                        showData = getReservationData("reservelist");
+                      });
+                    },
+                  ),
+                ],
+              ),
               heightBox(context, 0.02),
               Expanded(
                 child: tableCards(
                   context,
-                  getReservationData("reservelist"),
+                  showData,
                   "Guest Arrived",
                   "View Details",
                   setState: () {

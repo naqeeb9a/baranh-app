@@ -20,6 +20,31 @@ getReservationData(query) async {
   }
 }
 
+searchReservation(date, reservationNumber) async {
+  try {
+    var response =
+    await http.post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-reservation"),
+        body: json.encode({
+          "reservation": "$reservationNumber",
+          "filter_date": "$date",
+          "outlet_id": userResponse["outlet_id"],
+        }),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
+    var jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return jsonData["data"]["result"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
 getOrderSummary(id) async {
   try {
     var response = await http
