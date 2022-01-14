@@ -15,16 +15,7 @@ class AllReservationsPage extends StatefulWidget {
 }
 
 class _AllReservationsPageState extends State<AllReservationsPage> {
-  dynamic showData;
-
-  @override
-  void initState() {
-  
-    super.initState();
-    setState(() {
-      showData = getReservationData("reservelist");
-    });
-  }
+  bool searchCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +53,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     width: dynamicWidth(context, .4),
                     function: () {
                       setState(() {
-                        showData = searchReservation(
-                          hintText,
-                          _reservationNumber.text,
-                        );
+                        searchCheck = true;
                       });
                     },
                   ),
@@ -77,7 +65,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     width: dynamicWidth(context, .4),
                     function: () {
                       setState(() {
-                        showData = getReservationData("reservelist");
+                        searchCheck = false;
                       });
                     },
                   ),
@@ -87,7 +75,12 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
               Expanded(
                 child: tableCards(
                   context,
-                  showData,
+                  searchCheck == false
+                      ? getReservationData("reservelist")
+                      : searchReservation(
+                          hintText,
+                          _reservationNumber.text,
+                        ),
                   "Guest Arrived",
                   "View Details",
                   setState: () {

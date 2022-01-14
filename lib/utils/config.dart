@@ -22,3 +22,4 @@ dynamic userResponse = "";
 dynamic menuRefresh;
 dynamic drawerRefresh;
 var cartItems = [].obs;
+var reservedTable = [];

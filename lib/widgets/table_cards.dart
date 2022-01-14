@@ -41,8 +41,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
           ),
         );
       } else if (snapshot.data.length == 0) {
-        return Center(
-            child: text(context, "no Orders Yet!!", 0.028, Colors.white));
+        return Center(child: text(context, "no Orders Yet!!", 0.028, myWhite));
       } else if (snapshot.connectionState == ConnectionState.done) {
         return Column(
           children: [
@@ -104,7 +103,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
           ],
         );
       } else {
-        return text(context, "not working", 0.028, Colors.white);
+        return text(context, "not working", 0.028, myWhite);
       }
     },
   );
@@ -206,7 +205,7 @@ Widget tableCardsExtension(
                           builder: (context) {
                             return AlertDialog(
                               title: text(
-                                  context, "Assign Table", 0.04, Colors.white,
+                                  context, "Assign Table", 0.04, myWhite,
                                   bold: true),
                               backgroundColor: myBlack,
                               content: Container(
@@ -237,7 +236,7 @@ Widget tableCardsExtension(
                                     } else if (snapshot.data.length == 0) {
                                       return Center(
                                           child: text(context, "no Tables!!",
-                                              0.028, Colors.white));
+                                              0.028, myWhite));
                                     } else if (snapshot.connectionState ==
                                         ConnectionState.done) {
                                       return GridView.builder(
@@ -296,7 +295,7 @@ Widget tableCardsExtension(
                                                       snapshot.data[index]
                                                           ["name"],
                                                   0.04,
-                                                  Colors.white,
+                                                  myWhite,
                                                   alignText: TextAlign.center),
                                             ),
                                           );
@@ -304,7 +303,7 @@ Widget tableCardsExtension(
                                       );
                                     } else {
                                       return text(context, "not working", 0.028,
-                                          Colors.white);
+                                          myWhite);
                                     }
                                   },
                                 ),
@@ -328,7 +327,7 @@ Widget tableCardsExtension(
                           builder: (context) {
                             return AlertDialog(
                               title: text(
-                                  context, "Assign Table", 0.04, Colors.white,
+                                  context, "Assign Table", 0.04, myWhite,
                                   bold: true),
                               backgroundColor: myBlack,
                               content: Container(
@@ -358,8 +357,13 @@ Widget tableCardsExtension(
                                       );
                                     } else if (snapshot.data.length == 0) {
                                       return Center(
-                                          child: text(context, "no Tables!!",
-                                              0.028, Colors.white));
+                                        child: text(
+                                          context,
+                                          "no Tables!!",
+                                          0.028,
+                                          myWhite,
+                                        ),
+                                      );
                                     } else if (snapshot.connectionState ==
                                         ConnectionState.done) {
                                       return GridView.builder(
@@ -465,20 +469,21 @@ Widget tableCardsExtension(
                                               alignment: Alignment.center,
                                               color: myOrange,
                                               child: text(
-                                                  context,
-                                                  "Table\n" +
-                                                      snapshot.data[index]
-                                                          ["name"],
-                                                  0.04,
-                                                  Colors.white,
-                                                  alignText: TextAlign.center),
+                                                context,
+                                                "Table\n" +
+                                                    snapshot.data[index]
+                                                        ["name"],
+                                                0.04,
+                                                myWhite,
+                                                alignText: TextAlign.center,
+                                              ),
                                             ),
                                           );
                                         },
                                       );
                                     } else {
                                       return text(context, "not working", 0.028,
-                                          Colors.white);
+                                          myWhite);
                                     }
                                   },
                                 ),
@@ -533,8 +538,8 @@ Widget tableCardsExtension(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: text(context, "Assign Waiter", 0.04,
-                                    Colors.white,
+                                title: text(
+                                    context, "Assign Waiter", 0.04, myWhite,
                                     bold: true),
                                 backgroundColor: myBlack,
                                 content: Container(
@@ -567,7 +572,7 @@ Widget tableCardsExtension(
                                       } else if (snapshot.data.length == 0) {
                                         return Center(
                                             child: text(context, "no Waiters!!",
-                                                0.028, Colors.white));
+                                                0.028, myWhite));
                                       } else if (snapshot.connectionState ==
                                           ConnectionState.done) {
                                         return GridView.builder(
@@ -634,7 +639,7 @@ Widget tableCardsExtension(
                                                             snapshot.data[index]
                                                                 ["id"],
                                                         0.04,
-                                                        Colors.white,
+                                                        myWhite,
                                                         alignText:
                                                             TextAlign.center),
                                                   ),
@@ -645,7 +650,7 @@ Widget tableCardsExtension(
                                         );
                                       } else {
                                         return text(context, "not working",
-                                            0.028, Colors.white);
+                                            0.028, myWhite);
                                       }
                                     },
                                   ),
@@ -731,7 +736,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
         textTheme: const TextTheme(
             headline6: TextStyle(
                 // headline 6 affects the query text
-                color: Colors.white,
+                color: myWhite,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold)),
         appBarTheme: const AppBarTheme(color: myBlack),
