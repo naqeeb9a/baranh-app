@@ -22,14 +22,14 @@ getReservationData(query) async {
 
 searchReservation(date, reservationNumber) async {
   try {
-    var response =
-    await http.post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-reservation"),
-        body: json.encode({
-          "reservation": "$reservationNumber",
-          "filter_date": "$date",
-          "outlet_id": userResponse["outlet_id"],
-        }),
-        headers: {
+    var response = await http
+        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-reservation"),
+            body: json.encode({
+              "reservation": "$reservationNumber",
+              "filter_date": "$date",
+              "outlet_id": userResponse["outlet_id"],
+            }),
+            headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         });
