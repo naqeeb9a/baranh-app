@@ -105,12 +105,13 @@ class _ContactInformationState extends State<ContactInformation> {
                       barrierDismissible: false,
                       lottieAsset: "assets/loader.json");
                   var response = await reserveTable(
-                      _name.text,
-                      _phone.text,
-                      _email.text.isEmpty ? "dummy@baranh.com" : _email.text,
-                      widget.seats,
-                      widget.date,
-                      widget.dropDownTime);
+                    _name.text,
+                    _phone.text,
+                    _email.text == "" ? "dummy@baranh.com" : _email.text,
+                    widget.seats,
+                    widget.date,
+                    widget.dropDownTime,
+                  );
                   if (response == false) {
                     Navigator.of(context, rootNavigator: true).pop();
                     CoolAlert.show(
