@@ -15,7 +15,6 @@ class ArrivedGuest extends StatefulWidget {
 class _ArrivedGuestState extends State<ArrivedGuest> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
