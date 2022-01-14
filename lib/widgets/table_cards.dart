@@ -23,11 +23,73 @@ Widget tableCards(context, function, buttonText1, buttonText2,
   return FutureBuilder(
     future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return LottieBuilder.asset(
-          "assets/loader.json",
-          width: dynamicWidth(context, 0.3),
-        );
+      if (snapshot.hasData) {
+        if (snapshot.data.length == 0) {
+          return Center(
+            child: text(context, "no Orders Yet!!", 0.028, myWhite),
+          );
+        } else if (snapshot.data.length > 0) {
+          return Column(
+            children: [
+              Visibility(
+                  visible: visible,
+                  child: Column(
+                    children: [
+                      heightBox(context, 0.02),
+                      InkWell(
+                        onTap: () {
+                          showSearch(
+                            context: context,
+                            delegate: CustomDineInSearchDelegate(
+                              snapshot.data,
+                              setState,
+                              assignTable,
+                              buttonText1,
+                              buttonText2,
+                              function1check,
+                              function2check,
+                            ),
+                          );
+                        },
+                        child: inputFieldsHome(
+                          "Table Number:",
+                          "Ex:42",
+                          context,
+                          enable: false,
+                          controller: _tableNo,
+                        ),
+                      ),
+                      heightBox(context, 0.03),
+                    ],
+                  )),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    return Future.delayed(const Duration(milliseconds: 0), () {
+                      setState();
+                    });
+                  },
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return tableCardsExtension(
+                        context,
+                        snapshot.data,
+                        index,
+                        buttonText1,
+                        buttonText2,
+                        function: setState,
+                        function1check: function1check,
+                        function2check: function2check,
+                        assignTable: assignTable,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
       } else if (snapshot.data == false) {
         return Center(
           child: coloredButton(
@@ -40,71 +102,11 @@ Widget tableCards(context, function, buttonText1, buttonText2,
             },
           ),
         );
-      } else if (snapshot.data.length == 0) {
-        return Center(child: text(context, "no Orders Yet!!", 0.028, myWhite));
-      } else if (snapshot.connectionState == ConnectionState.done) {
-        return Column(
-          children: [
-            Visibility(
-                visible: visible,
-                child: Column(
-                  children: [
-                    heightBox(context, 0.02),
-                    InkWell(
-                      onTap: () {
-                        showSearch(
-                          context: context,
-                          delegate: CustomDineInSearchDelegate(
-                              snapshot.data,
-                              setState,
-                              assignTable,
-                              buttonText1,
-                              buttonText2,
-                              function1check,
-                              function2check),
-                        );
-                      },
-                      child: inputFieldsHome(
-                        "Table Number:",
-                        "Ex:42",
-                        context,
-                        enable: false,
-                        controller: _tableNo,
-                      ),
-                    ),
-                    heightBox(context, 0.03),
-                  ],
-                )),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () {
-                  return Future.delayed(const Duration(milliseconds: 400), () {
-                    setState();
-                  });
-                },
-                child: ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return tableCardsExtension(
-                      context,
-                      snapshot.data,
-                      index,
-                      buttonText1,
-                      buttonText2,
-                      function: setState,
-                      function1check: function1check,
-                      function2check: function2check,
-                      assignTable: assignTable,
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        );
-      } else {
-        return text(context, "not working", 0.028, myWhite);
       }
+      return LottieBuilder.asset(
+        "assets/loader.json",
+        width: dynamicWidth(context, 0.3),
+      );
     },
   );
 }
