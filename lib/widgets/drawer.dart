@@ -65,6 +65,7 @@ Widget drawerItems(context, function, changeState) {
         Future.delayed(const Duration(milliseconds: 500), () async {
           SharedPreferences loginUser = await SharedPreferences.getInstance();
           loginUser.clear();
+          userResponse = "";
 
           checkLoginStatus(context1) async {
             SharedPreferences loginUser = await SharedPreferences.getInstance();
@@ -125,9 +126,9 @@ Widget drawerItems(context, function, changeState) {
               children: [
                 text(
                   context,
-                  "Hi ${userResponse["full_name"]}"
-                  "\n(${userResponse["designation"]})"
-                  "\n\n${userResponse["outlet_name"]}",
+                  userResponse == ""
+                      ? ""
+                      : "Hi ${userResponse["full_name"] ?? ""}\n(${userResponse["designation"] ?? ""})\n\n${userResponse["outlet_name"] ?? ""}",
                   .05,
                   myWhite,
                   bold: true,
