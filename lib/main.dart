@@ -115,6 +115,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                   ),
                 )
               : Scaffold(
+                  drawerEnableOpenDragGesture: false,
+                  endDrawerEnableOpenDragGesture: false,
                   key: _scaffoldKey,
                   appBar: bar(context, function: () {
                     _scaffoldKey.currentState!.openDrawer();

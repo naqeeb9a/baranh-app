@@ -39,23 +39,24 @@ class OrderSummaryPage extends StatelessWidget {
               future: getOrderSummary(saleId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data == null ||
-                      snapshot.data[0]["message"] == "Nothing found!") {
+                  if (snapshot.data == null) {
                     return Expanded(
                       child: Center(
                         child: text(context, "No details", 0.04, Colors.white),
                       ),
                     );
                   } else if (snapshot.data == false) {
-                    return Center(
-                      child: coloredButton(
-                        context,
-                        "Retry",
-                        myOrange,
-                        width: dynamicWidth(context, .4),
-                        function: () {
-                          globalRefresh();
-                        },
+                    return Expanded(
+                      child: Center(
+                        child: coloredButton(
+                          context,
+                          "Retry",
+                          myOrange,
+                          width: dynamicWidth(context, .4),
+                          function: () {
+                            globalRefresh();
+                          },
+                        ),
                       ),
                     );
                   } else {
@@ -107,26 +108,26 @@ orderDetails(context, snapshot) {
       heightBox(context, 0.05),
       (snapshot[0]["sale_details"].length == 0)
           ? text(
-        context,
-        "No items ordered yet!",
-        0.04,
-        myWhite,
-      )
-          : SizedBox(
-        width: dynamicWidth(context, .7),
-        height: dynamicHeight(context, .52),
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: snapshot[0]["sale_details"].length,
-          itemBuilder: (BuildContext context, int index) {
-            return viewOrderCard(
               context,
-              snapshot[0]["sale_details"],
-              index,
-            );
-          },
-        ),
-      ),
+              "No items ordered yet!",
+              0.04,
+              myWhite,
+            )
+          : SizedBox(
+              width: dynamicWidth(context, .7),
+              height: dynamicHeight(context, .52),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: snapshot[0]["sale_details"].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return viewOrderCard(
+                    context,
+                    snapshot[0]["sale_details"],
+                    index,
+                  );
+                },
+              ),
+            ),
       heightBox(context, 0.02),
       billRow(
         context,
