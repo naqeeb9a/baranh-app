@@ -1,11 +1,9 @@
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ArrivedGuest extends StatefulWidget {
   const ArrivedGuest({Key? key}) : super(key: key);
@@ -19,8 +17,6 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
   }
 
   @override
@@ -39,29 +35,6 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
               const Divider(
                 thickness: 1,
                 color: myWhite,
-              ),
-              coloredButton(
-                context,
-                "text",
-                myOrange,
-                function: () async {
-                  await getReservationData("arrived").then((value) {
-
-                    reservedTable.clear();
-                    for (var i in value) {
-
-                      if ((i["order_status"] == "2" || i["order_status"] == "3") &&
-                          i["apply_date"].toString() ==
-                              "2022-01-13") {
-
-
-                        reservedTable.add(i['table_name']);
-                      }
-                    }
-                  });
-
-                  print("object $reservedTable");
-                },
               ),
               Expanded(
                 child: tableCards(
