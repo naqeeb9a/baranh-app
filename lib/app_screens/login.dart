@@ -132,8 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               description: "Please enter valid email!",
                             ).show(context);
-                          } else if (password.text.isEmpty ||
-                              password.text.length < 8) {
+                          } else if (password.text.isEmpty) {
                             MotionToast.error(
                               title: "Error",
                               dismissable: true,
@@ -145,18 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else {
                             var response = await loginFunction();
 
-                            if (response != null) {
-                              SharedPreferences loginUser =
-                                  await SharedPreferences.getInstance();
-                              loginUser.setString(
-                                "userResponse",
-                                json.encode(response),
-                              );
-                              pushAndRemoveUntil(
-                                context,
-                                const MyApp(),
-                              );
-                            } else {
+                            if (response == false) {
                               setState(() {
                                 loading = false;
                               });
@@ -168,6 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 description: "Invalid Credentials",
                               ).show(context);
+                            } else {
+                              SharedPreferences loginUser =
+                                  await SharedPreferences.getInstance();
+                              loginUser.setString(
+                                "userResponse",
+                                json.encode(response),
+                              );
+                              pushAndRemoveUntil(
+                                context,
+                                const MyApp(),
+                              );
                             }
                           }
                         }),

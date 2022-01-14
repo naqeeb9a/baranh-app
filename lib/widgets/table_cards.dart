@@ -373,40 +373,92 @@ Widget tableCardsExtension(
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () async {
-                                              CoolAlert.show(
-                                                  context: context,
-                                                  type: CoolAlertType.loading,
-                                                  barrierDismissible: false,
-                                                  lottieAsset:
-                                                      "assets/loader.json");
-                                              assignTable =
-                                                  snapshot.data[index]["name"];
-
-                                              var response =
-                                                  await assignTableOnline(
-                                                      snapshotTable[indexTable]
-                                                          ["sale_id"],
-                                                      assignTable);
-                                              if (response == false) {
-                                                Navigator.of(context,
-                                                        rootNavigator: true)
-                                                    .pop();
+                                              if (snapshotTable[indexTable]
+                                                          ["waiter_id"] ==
+                                                      null &&
+                                                  userResponse["designation"] ==
+                                                      "Floor Manager") {
                                                 MotionToast.error(
                                                   description:
-                                                      "Table not assigned Check your internet",
+                                                      "Assign waiter first",
                                                   dismissable: true,
                                                 ).show(context);
                                               } else {
-                                                pageDecider = "Dine In Orders";
-                                                Navigator.pop(
-                                                    context, globalRefresh());
-                                                Navigator.of(context,
-                                                        rootNavigator: true)
-                                                    .pop();
-                                                MotionToast.success(
-                                                  description: "Table assigned",
-                                                  dismissable: true,
-                                                ).show(context);
+                                                CoolAlert.show(
+                                                    context: context,
+                                                    type: CoolAlertType.loading,
+                                                    barrierDismissible: false,
+                                                    lottieAsset:
+                                                        "assets/loader.json");
+                                                if (snapshotTable[indexTable]
+                                                            ["waiter_id"] ==
+                                                        null &&
+                                                    userResponse[
+                                                            "designation"] ==
+                                                        "Waiter") {
+                                                  assignTable =
+                                                      userResponse["id"];
+
+                                                  var response =
+                                                      await assignWaiterOnline(
+                                                          snapshotTable[
+                                                                  indexTable]
+                                                              ["sale_id"],
+                                                          assignTable);
+                                                  if (response == false) {
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pop();
+                                                    MotionToast.error(
+                                                      description:
+                                                          "Waiter not assigned Check your internet",
+                                                      dismissable: true,
+                                                    ).show(context);
+                                                  } else {
+                                                    Navigator.pop(
+                                                        context, function());
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pop();
+                                                    MotionToast.success(
+                                                      description:
+                                                          "Waiter assigned",
+                                                      dismissable: true,
+                                                    ).show(context);
+                                                  }
+                                                }
+                                                assignTable = snapshot
+                                                    .data[index]["name"];
+
+                                                var response =
+                                                    await assignTableOnline(
+                                                        snapshotTable[
+                                                                indexTable]
+                                                            ["sale_id"],
+                                                        assignTable);
+                                                if (response == false) {
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
+                                                  MotionToast.error(
+                                                    description:
+                                                        "Table not assigned Check your internet",
+                                                    dismissable: true,
+                                                  ).show(context);
+                                                } else {
+                                                  pageDecider =
+                                                      "Dine In Orders";
+                                                  Navigator.pop(
+                                                      context, globalRefresh());
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
+                                                  MotionToast.success(
+                                                    description:
+                                                        "Table assigned",
+                                                    dismissable: true,
+                                                  ).show(context);
+                                                }
                                               }
                                             },
                                             child: Container(

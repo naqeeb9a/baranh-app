@@ -65,22 +65,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     },
   );
 
-  checkLoginStatus(context1) async {
-    SharedPreferences loginUser = await SharedPreferences.getInstance();
-    dynamic temp = loginUser.getString("userResponse");
-    userResponse = temp == null ? "" : json.decode(temp);
-
-    if (temp == null) {
-      Navigator.pushAndRemoveUntil(
-          context1,
-          MaterialPageRoute(
-            builder: (context1) => const LoginScreen(),
-          ),
-          (route) => false);
-    } else {
-      drawerRefresh();
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -157,3 +142,19 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     );
   }
 }
+ checkLoginStatus(context1) async {
+    SharedPreferences loginUser = await SharedPreferences.getInstance();
+    dynamic temp = loginUser.getString("userResponse");
+    userResponse = temp == null ? "" : json.decode(temp);
+
+    if (temp == null) {
+      Navigator.pushAndRemoveUntil(
+          context1,
+          MaterialPageRoute(
+            builder: (context1) => const LoginScreen(),
+          ),
+          (route) => false);
+    } else {
+      drawerRefresh();
+    }
+  }

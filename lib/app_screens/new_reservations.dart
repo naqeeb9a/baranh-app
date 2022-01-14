@@ -191,7 +191,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                         description:
                             "Slots are not available try again after some time",
                         dismissable: true,
-                      );
+                      ).show(context);
                     } else if (response == "internet") {
                       Navigator.of(context, rootNavigator: true).pop();
                       MotionToast.warning(
