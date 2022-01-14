@@ -1,5 +1,6 @@
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/config.dart';
 
@@ -12,7 +13,9 @@ Widget inputTextField(context, label, myController,
       validator: (function == "") ? () {} : function,
       controller: myController,
       textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: password == true
+          ? TextInputType.visiblePassword
+          : TextInputType.emailAddress,
       obscureText: password == true ? obscureText : false,
       cursorColor: myBlack,
       cursorWidth: 2.0,
@@ -22,16 +25,6 @@ Widget inputTextField(context, label, myController,
         fontSize: dynamicWidth(context, .04),
       ),
       decoration: InputDecoration(
-        // suffixIcon: password == false
-        //     ? null
-        //     : InkWell(
-        //         onTap: function2 == "" ? () {} : function2,
-        //         child: Icon(
-        //           Icons.remove_red_eye_rounded,
-        //           color: myBlack,
-        //           size: dynamicWidth(context, .05),
-        //         ),
-        //       ),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: myBlack),
         ),
