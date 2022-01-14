@@ -15,7 +15,16 @@ class AllReservationsPage extends StatefulWidget {
 }
 
 class _AllReservationsPageState extends State<AllReservationsPage> {
-  dynamic showData = getReservationData("reservelist");
+  dynamic showData;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      showData = getReservationData("reservelist");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,9 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     function: () {
                       setState(() {
                         showData = searchReservation(
-                            hintText, _reservationNumber.text);
+                          hintText,
+                          _reservationNumber.text,
+                        );
                       });
                     },
                   ),
