@@ -4,6 +4,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 Widget inputFieldsHome(text1, hintText1, context,
@@ -40,7 +41,8 @@ Widget inputFieldsHome(text1, hintText1, context,
                             colorScheme:
                                 const ColorScheme.light(primary: myOrange),
                             buttonTheme: const ButtonThemeData(
-                                textTheme: ButtonTextTheme.primary),
+                              textTheme: ButtonTextTheme.primary,
+                            ),
                           ),
                           child: child!,
                         );
@@ -62,10 +64,11 @@ Widget inputFieldsHome(text1, hintText1, context,
                         child: TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: hintText.toString(),
-                              fillColor: myWhite),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintText: hintText.toString(),
+                            fillColor: myWhite,
+                          ),
                         ),
                       ),
                       const Icon(Icons.calendar_today_outlined)
@@ -80,6 +83,15 @@ Widget inputFieldsHome(text1, hintText1, context,
                           child: TextFormField(
                             controller: controller,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp("[0-9]"),
+                              ),
+                              FilteringTextInputFormatter.deny(
+                                RegExp('[\\.|\\,]'),
+                              ),
+                              LengthLimitingTextInputFormatter(11),
+                            ],
                             decoration: InputDecoration(
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
@@ -88,21 +100,43 @@ Widget inputFieldsHome(text1, hintText1, context,
                           ),
                         ),
                         InkWell(
-                            onTap: () {
-                              var rng = Random();
-                              controller.text = rng.nextInt(9999999).toString();
-                            },
-                            child: const Icon(Icons.rotate_left))
+                          onTap: () {
+                            var rng = Random();
+                            controller.text = rng.nextInt(9999999).toString();
+                          },
+                          child: const Icon(Icons.rotate_left),
+                        )
                       ],
                     )
                   : TextFormField(
                       controller: controller,
                       keyboardType: keyBoardType,
+                      inputFormatters: [
+                        keyBoardType == TextInputType.number
+                            ? FilteringTextInputFormatter.allow(
+                                RegExp("[0-9]"),
+                              )
+                            : keyBoardType == TextInputType.emailAddress
+                                ? FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9a-zA-Z \\- @ _ .]"),
+                                  )
+                                : FilteringTextInputFormatter.allow(
+                                    RegExp("[a-zA-Z]"),
+                                  ),
+                        keyBoardType == TextInputType.number
+                            ? FilteringTextInputFormatter.deny(
+                                RegExp('[\\.|\\,]'),
+                              )
+                            : FilteringTextInputFormatter.deny(
+                                RegExp('[\\#]'),
+                              ),
+                      ],
                       decoration: InputDecoration(
-                          enabled: enable,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: hintText1),
+                        enabled: enable,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        hintText: hintText1,
+                      ),
                     ),
         )
       ],
