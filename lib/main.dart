@@ -77,6 +77,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
             builder: (context1) => const LoginScreen(),
           ),
           (route) => false);
+    } else {
+      drawerRefresh();
     }
   }
 
@@ -105,42 +107,47 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           ),
         ),
         builder: (context, child) {
-          checkLoginStatus(context);
-          return loader == true
-              ? Scaffold(
-                  backgroundColor: myBlack,
-                  body: Center(
-                    child: LottieBuilder.asset(
-                      "assets/loader.json",
-                      width: dynamicWidth(context, 0.3),
+          return StatefulBuilder(builder: (context, changeState) {
+            drawerRefresh = () {
+              changeState(() {});
+            };
+            checkLoginStatus(context);
+            return loader == true
+                ? Scaffold(
+                    backgroundColor: myBlack,
+                    body: Center(
+                      child: LottieBuilder.asset(
+                        "assets/loader.json",
+                        width: dynamicWidth(context, 0.3),
+                      ),
                     ),
-                  ),
-                )
-              : Scaffold(
-                  drawerEnableOpenDragGesture: false,
-                  endDrawerEnableOpenDragGesture: false,
-                  key: _scaffoldKey,
-                  appBar: bar(context, function: () {
-                    _scaffoldKey.currentState!.openDrawer();
-                  }, function1: () {
-                    _scaffoldKey.currentState!.openEndDrawer();
-                  }),
-                  drawer: SafeArea(
-                    child: Drawer(
-                      child: drawerItems(context, () {
-                        setState(() {});
-                      }, () {
-                        setState(() {
-                          loader = true;
-                        });
-                      }),
+                  )
+                : Scaffold(
+                    drawerEnableOpenDragGesture: false,
+                    endDrawerEnableOpenDragGesture: false,
+                    key: _scaffoldKey,
+                    appBar: bar(context, function: () {
+                      _scaffoldKey.currentState!.openDrawer();
+                    }, function1: () {
+                      _scaffoldKey.currentState!.openEndDrawer();
+                    }),
+                    drawer: SafeArea(
+                      child: Drawer(
+                        child: drawerItems(context, () {
+                          setState(() {});
+                        }, () {
+                          setState(() {
+                            loader = true;
+                          });
+                        }),
+                      ),
                     ),
-                  ),
-                  endDrawer: SafeArea(
-                    child: Drawer(child: drawerItems2(context)),
-                  ),
-                  body: child,
-                );
+                    endDrawer: SafeArea(
+                      child: Drawer(child: drawerItems2(context)),
+                    ),
+                    body: child,
+                  );
+          });
         },
         home: Scaffold(
             backgroundColor: myBlack,

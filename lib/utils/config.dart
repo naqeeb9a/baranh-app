@@ -19,6 +19,6 @@ dynamic tableNoGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
 dynamic userResponse = "";
-
 dynamic menuRefresh;
+dynamic drawerRefresh;
 var cartItems = [].obs;
