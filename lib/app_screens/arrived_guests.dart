@@ -41,6 +41,7 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
                   },
                   function1check: true,
                   function2check: true,
+                  visible: true
                 ),
               )
             ],

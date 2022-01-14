@@ -32,14 +32,12 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
               ),
               Expanded(
                 child: tableCards(
-                  context,
-                  getReservationData("waiting-for-arrival"),
-                  "Guest Arrived",
-                  "View Details",
-                  setState: () {
-                    setState(() {});
-                  },
-                ),
+                    context,
+                    getReservationData("waiting-for-arrival"),
+                    "Guest Arrived",
+                    "View Details", setState: () {
+                  setState(() {});
+                }, visible: true),
               )
             ],
           ),

@@ -713,9 +713,17 @@ class CustomDineInSearchDelegate extends SearchDelegate {
     dynamic matchQuery = [];
     for (var item in data) {
       if (item["table_id"]
-          .toString()
-          .toLowerCase()
-          .contains(query.toLowerCase())) {
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()) ||
+          item["customer_name"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()) ||
+          item["customer_phone"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
@@ -744,9 +752,17 @@ class CustomDineInSearchDelegate extends SearchDelegate {
     dynamic matchQuery = [];
     for (var item in data) {
       if (item["table_id"]
-          .toString()
-          .toLowerCase()
-          .contains(query.toLowerCase())) {
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()) ||
+          item["customer_name"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()) ||
+          item["customer_phone"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
