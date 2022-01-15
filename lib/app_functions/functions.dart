@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:baranh/utils/config.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 getReservationData(query) async {
   var response = await http.get(
@@ -131,6 +132,9 @@ reserveTable(name, phone, email, seats, date, dropDownTime) async {
 
 getTimeSlots(date) async {
   try {
+    SharedPreferences loginUser = await SharedPreferences.getInstance();
+    dynamic temp = loginUser.getString("userResponse");
+    userResponse = temp == null ? "" : await json.decode(temp);
     var response = await http.post(
         Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
         body: json.encode(
