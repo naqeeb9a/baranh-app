@@ -10,7 +10,7 @@ const myRed = Color(0xFFff0000);
 const noColor = Colors.transparent;
 
 bool obscureText = true;
-var pageDecider = "All Reservations";
+var pageDecider = "New Reservations";
 dynamic hintText = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 dynamic customContext = "";
 dynamic globalRefresh = "";
