@@ -1,25 +1,16 @@
-import 'package:baranh/app_screens/menu.dart';
-import 'package:baranh/app_screens/order_summary_page.dart';
-import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
+import 'package:baranh/widgets/buttons_column.dart';
 import 'package:baranh/widgets/custom_search.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
-import 'package:baranh/widgets/green_buttons.dart';
-import 'package:baranh/widgets/guest_arrived_function.dart';
-import 'package:baranh/widgets/show_alert.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 import 'input_field_home.dart';
 
 Widget tableCards(context, function, buttonText1, buttonText2,
-    {setState = "",
-    function1check = false,
-    function2check = false,
-    visible = false}) {
+    {setState = "", visible = false}) {
   final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
   return FutureBuilder(
@@ -48,14 +39,18 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                               assignTable,
                               buttonText1,
                               buttonText2,
-                              function1check,
-                              function2check,
                             ),
                           );
                         },
                         child: inputFieldsHome(
-                          "Search:",
-                          "Ex: table no, name, phone",
+                          pageDecider == "Waiting For Arrival" ||
+                                  pageDecider == "Arrived Guests"
+                              ? "Search"
+                              : "Table no:",
+                          pageDecider == "Waiting For Arrival" ||
+                                  pageDecider == "Arrived Guests"
+                              ? "Ex: Name / phone"
+                              : "Ex: table no",
                           context,
                           enable: false,
                           controller: _tableNo,
@@ -81,8 +76,6 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                         buttonText1,
                         buttonText2,
                         function: setState,
-                        function1check: function1check,
-                        function2check: function2check,
                         assignTable: assignTable,
                       );
                     },
@@ -180,82 +173,8 @@ Widget tableCardsExtension(
                     myWhite),
               ],
             ),
-            SizedBox(
-              height: dynamicHeight(
-                  context, buttonText1 == "View detail" ? 0.16 : 0.12),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visibility(
-                    visible: buttonText1 == "View detail" ? true : false,
-                    child: greenButtons(
-                        context, "Change Table", snapshotTable, indexTable,
-                        function: () {
-                      dailoageCustom(context, snapshotTable, indexTable,
-                          assignTable, function);
-                    }),
-                  ),
-                  greenButtons(context, buttonText1, snapshotTable, indexTable,
-                      function: () async {
-                    if (buttonText1 == "View detail") {
-                      push(
-                          context,
-                          OrderSummaryPage(
-                            saleId:
-                                snapshotTable[indexTable]["sale_id"].toString(),
-                          ));
-                    } else if (buttonText1 == "Assign Table") {
-                      dailoageCustom(context, snapshotTable, indexTable,
-                          assignTable, function);
-                    } else if (buttonText1 == "Assign Waiter") {
-                      dailogCustomWaiter(context, snapshotTable, indexTable,
-                          assignTable, function);
-                    } else if (buttonText1 == "Guest Arrived") {
-                      guestArrivedNow(context, snapshotTable, indexTable);
-                    } else {
-                      MotionToast.info(
-                        description: "Something Went wrong",
-                        dismissable: true,
-                      ).show(context);
-                    }
-                  }),
-                  greenButtons(
-                    context,
-                    buttonText2,
-                    snapshotTable,
-                    indexTable,
-                    function: () {
-                      if (buttonText2 == "Assign Waiter") {
-                        dailogCustomWaiter(context, snapshotTable, indexTable,
-                            assignTable, function);
-                      } else if (buttonText2 == "Assign Table") {
-                        dailoageCustom(context, snapshotTable, indexTable,
-                            assignTable, function);
-                      } else if (buttonText2 == "Take Order") {
-                        push(
-                            context,
-                            MenuPage(
-                              saleId: snapshotTable[indexTable]["sale_id"]
-                                  .toString(),
-                              tableNo: snapshotTable[indexTable]["table_id"]
-                                  .toString(),
-                            ));
-                      } else if (buttonText2 == "View detail") {
-                        push(
-                          context,
-                          OrderSummaryPage(
-                            saleId:
-                                snapshotTable[indexTable]["sale_id"].toString(),
-                          ),
-                        );
-                      } else {
-                        MotionToast.error(description: "Something went Wrong");
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
+            buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
+                indexTable, assignTable, function)
           ],
         )
       ],

@@ -44,7 +44,6 @@ class _DineInOrdersState extends State<DineInOrders> {
                   setState: () {
                     setState(() {});
                   },
-                  function2check: true,
                   visible: true,
                 ),
               )

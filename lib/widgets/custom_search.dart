@@ -19,8 +19,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       this.assignTable,
       this.buttonText1,
       this.buttonText2,
-      this.function1check,
-      this.function2check);
+      );
 
   @override
   ThemeData appBarTheme(BuildContext context) {

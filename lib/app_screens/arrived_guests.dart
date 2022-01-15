@@ -44,8 +44,6 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
                   setState: () {
                     setState(() {});
                   },
-                  function1check: true,
-                  function2check: true,
                   visible: true,
                 ),
               )
