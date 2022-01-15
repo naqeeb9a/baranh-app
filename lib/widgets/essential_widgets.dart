@@ -38,10 +38,17 @@ bar(
             return Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Badge(
-                  position: BadgePosition.topEnd(),
-                  badgeContent: text(
-                      context, cartItems.length.toString(), 0.02, Colors.white),
-                  child: const Icon(Icons.shopping_cart_outlined)),
+                position: BadgePosition.topEnd(),
+                badgeContent: text(
+                  context,
+                  cartItems.length.toString(),
+                  0.02,
+                  myWhite,
+                ),
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
+                ),
+              ),
             );
           }),
         ),
@@ -49,11 +56,12 @@ bar(
       widthBox(context, 0.01)
     ],
     bottom: PreferredSize(
-        child: Container(
-          color: myWhite.withOpacity(0.5),
-          height: 1,
-        ),
-        preferredSize: const Size.fromHeight(4.0)),
+      child: Container(
+        color: myWhite.withOpacity(0.5),
+        height: 1,
+      ),
+      preferredSize: const Size.fromHeight(4.0),
+    ),
   );
 }
 

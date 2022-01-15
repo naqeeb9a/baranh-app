@@ -42,7 +42,12 @@ class OrderSummaryPage extends StatelessWidget {
                   if (snapshot.data == null) {
                     return Expanded(
                       child: Center(
-                        child: text(context, "No details", 0.04, Colors.white),
+                        child: text(
+                          context,
+                          "No details",
+                          0.04,
+                          myWhite,
+                        ),
                       ),
                     );
                   } else if (snapshot.data == false) {

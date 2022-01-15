@@ -63,7 +63,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text(context, "Time", 0.04, Colors.white),
+                            text(
+                              context,
+                              "Time",
+                              0.04,
+                              myWhite,
+                            ),
                             FutureBuilder(
                               future: getTimeSlots(hintText),
                               builder: (BuildContext context,
@@ -93,11 +98,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                               changeSate) {
                                             return DropdownButton<String>(
                                               hint: text(
-                                                  context,
-                                                  indexValue.substring(0,
-                                                      indexValue.indexOf("#")),
-                                                  0.04,
-                                                  Colors.white),
+                                                context,
+                                                indexValue.substring(
+                                                    0, indexValue.indexOf("#")),
+                                                0.04,
+                                                myWhite,
+                                              ),
                                               items: snapshot.data
                                                   .map<
                                                       DropdownMenuItem<

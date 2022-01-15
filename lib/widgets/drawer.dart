@@ -212,7 +212,7 @@ Widget drawerItems2(context) {
             coloredButton(
               context,
               "Place Order",
-              const Color(0xFF008000),
+              myGreen,
               fontSize: 0.035,
               function: () async {
                 CoolAlert.show(
@@ -247,7 +247,7 @@ Widget drawerItems2(context) {
             coloredButton(
               context,
               "CONTINUE ORDERING",
-              Colors.transparent,
+              noColor,
               fontSize: 0.035,
               function: () {
                 pop(context);

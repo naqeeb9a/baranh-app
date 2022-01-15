@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ),
       ),
       home: MaterialApp(
-        title: 'Baranh',
+        title: 'Baranh Team',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: primaryColor,
@@ -133,9 +133,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
           });
         },
         home: Scaffold(
-            backgroundColor: myBlack,
-            body:
-                FadeTransition(opacity: _animation, child: const BasicPage())),
+          backgroundColor: myBlack,
+          body: FadeTransition(
+            opacity: _animation,
+            child: const BasicPage(),
+          ),
+        ),
       ),
     );
   }

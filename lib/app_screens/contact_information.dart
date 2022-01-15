@@ -53,7 +53,12 @@ class _ContactInformationState extends State<ContactInformation> {
                 ),
               ),
               heightBox(context, 0.05),
-              text(context, "CONTACT INFORMATION", 0.05, Colors.white),
+              text(
+                context,
+                "CONTACT INFORMATION",
+                0.05,
+                myWhite,
+              ),
               heightBox(context, 0.02),
               inputFieldsHome(
                 "Your Name",

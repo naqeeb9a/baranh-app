@@ -9,11 +9,21 @@ Widget greenButtons(context, text1, snapshot, index, {function = ""}) {
     child: Container(
       alignment: Alignment.center,
       width: dynamicWidth(context, 0.3),
-      padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
+      padding: EdgeInsets.all(
+        dynamicWidth(context, 0.03),
+      ),
       decoration: BoxDecoration(
-          color: myGreen,
-          borderRadius: BorderRadius.circular(dynamicWidth(context, 0.01))),
-      child: text(context, text1, 0.035, myWhite),
+        color: myGreen,
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, 0.01),
+        ),
+      ),
+      child: text(
+        context,
+        text1,
+        0.035,
+        myWhite,
+      ),
     ),
   );
 }

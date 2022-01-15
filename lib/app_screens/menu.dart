@@ -242,7 +242,7 @@ iconsRow(context, snapshot) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor: noColor,
                   onTap: () {
                     if (quantity > 1) {
                       changeState(() {
@@ -268,7 +268,7 @@ iconsRow(context, snapshot) {
                   ),
                 ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor: noColor,
                   onTap: () {
                     if (quantity < 30) {
                       changeState(() {

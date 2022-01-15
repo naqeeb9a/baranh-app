@@ -1,4 +1,3 @@
-
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/table_cards.dart';
@@ -14,12 +13,12 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       function2check;
 
   CustomDineInSearchDelegate(
-      this.data,
-      this.setState,
-      this.assignTable,
-      this.buttonText1,
-      this.buttonText2,
-      );
+    this.data,
+    this.setState,
+    this.assignTable,
+    this.buttonText1,
+    this.buttonText2,
+  );
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -127,22 +126,23 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       }
     }
     return Padding(
-        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-        child: ListView.builder(
-          itemCount: matchQuery.length,
-          itemBuilder: (BuildContext context, int index) {
-            return tableCardsExtension(
-              context,
-              matchQuery,
-              index,
-              buttonText1,
-              buttonText2,
-              function: setState,
-              function1check: function1check,
-              function2check: function2check,
-              assignTable: assignTable,
-            );
-          },
-        )); // ListTile
+      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+      child: ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (BuildContext context, int index) {
+          return tableCardsExtension(
+            context,
+            matchQuery,
+            index,
+            buttonText1,
+            buttonText2,
+            function: setState,
+            function1check: function1check,
+            function2check: function2check,
+            assignTable: assignTable,
+          );
+        },
+      ),
+    ); // ListTile
   }
 }

@@ -104,22 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                         ),
-                        heightBox(context, .01),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: dynamicHeight(context, .01),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                text(context, "Reset Your Password", .04,
-                                    myWhite),
-                              ],
-                            ),
-                          ),
-                        ),
                         heightBox(context, .04),
                         coloredButton(context, "SIGN IN", myOrange,
                             function: () async {
@@ -163,6 +147,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "userResponse",
                                 json.encode(response),
                               );
+                              setState(() {
+                                pageDecider = "New Reservations";
+                              });
                               pushAndRemoveUntil(
                                 context,
                                 const MyApp(),

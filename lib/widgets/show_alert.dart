@@ -10,7 +10,7 @@ import 'package:motion_toast/motion_toast.dart';
 
 import 'essential_widgets.dart';
 
-dailoageCustom(context, snapshotTable, indexTable, assignTable, function) {
+dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
   showDialog(
       context: context,
       builder: (context) {
@@ -70,12 +70,12 @@ dailoageCustom(context, snapshotTable, indexTable, assignTable, function) {
                                       snapshot.data[index]["name"] ==
                                           (snapshot2.data as List)[i]
                                               ["table_id"]) {
-                                    customColor = Colors.grey;
+                                    customColor = myGrey;
                                   }
                                 }
                                 return InkWell(
                                   onTap: () async {
-                                    if (customColor == Colors.grey) {
+                                    if (customColor == myGrey) {
                                       MotionToast.error(
                                         description: "Table Already reserved",
                                         dismissable: true,
@@ -174,7 +174,12 @@ dailoageCustom(context, snapshotTable, indexTable, assignTable, function) {
                         },
                       );
                     } else {
-                      return text(context, "retry", 0.04, Colors.white);
+                      return text(
+                        context,
+                        "retry",
+                        0.04,
+                        myWhite,
+                      );
                     }
                   } else {
                     return loader(context);
@@ -185,7 +190,7 @@ dailoageCustom(context, snapshotTable, indexTable, assignTable, function) {
       });
 }
 
-dailogCustomWaiter(context, snapshotTable, indexTable, assignTable, function) {
+dialogueCustomWaiter(context, snapshotTable, indexTable, assignTable, function) {
   showDialog(
       context: context,
       builder: (context) {

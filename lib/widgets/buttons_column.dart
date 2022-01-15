@@ -20,7 +20,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
           visible: buttonText1 == "View detail" ? true : false,
           child: greenButtons(
               context, "Change Table", snapshotTable, indexTable, function: () {
-            dailoageCustom(
+            dialogueCustom(
                 context, snapshotTable, indexTable, assignTable, function);
           }),
         ),
@@ -33,10 +33,10 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                   saleId: snapshotTable[indexTable]["sale_id"].toString(),
                 ));
           } else if (buttonText1 == "Assign Table") {
-            dailoageCustom(
+            dialogueCustom(
                 context, snapshotTable, indexTable, assignTable, function);
           } else if (buttonText1 == "Assign Waiter") {
-            dailogCustomWaiter(
+            dialogueCustomWaiter(
                 context, snapshotTable, indexTable, assignTable, function);
           } else if (buttonText1 == "Guest Arrived") {
             guestArrivedNow(context, snapshotTable, indexTable);
@@ -54,10 +54,10 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
           indexTable,
           function: () {
             if (buttonText2 == "Assign Waiter") {
-              dailogCustomWaiter(
+              dialogueCustomWaiter(
                   context, snapshotTable, indexTable, assignTable, function);
             } else if (buttonText2 == "Assign Table") {
-              dailoageCustom(
+              dialogueCustom(
                   context, snapshotTable, indexTable, assignTable, function);
             } else if (buttonText2 == "Take Order") {
               push(
