@@ -1,16 +1,16 @@
-import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/menu.dart';
 import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
+import 'package:baranh/widgets/custom_search.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
+import 'package:baranh/widgets/green_buttons.dart';
+import 'package:baranh/widgets/guest_arrived_function.dart';
+import 'package:baranh/widgets/show_alert.dart';
 import 'package:baranh/widgets/text_widget.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 import 'input_field_home.dart';
@@ -54,8 +54,8 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           );
                         },
                         child: inputFieldsHome(
-                          "Table Number:",
-                          "Ex:42",
+                          "Search:",
+                          "Ex: table no, name, phone",
                           context,
                           enable: false,
                           controller: _tableNo,
@@ -93,22 +93,9 @@ Widget tableCards(context, function, buttonText1, buttonText2,
           );
         }
       } else if (snapshot.data == false) {
-        return Center(
-          child: coloredButton(
-            context,
-            "Retry",
-            myOrange,
-            width: dynamicWidth(context, .4),
-            function: () {
-              globalRefresh();
-            },
-          ),
-        );
+        return retry(context);
       }
-      return LottieBuilder.asset(
-        "assets/loader.json",
-        width: dynamicWidth(context, 0.3),
-      );
+      return loader(context);
     },
   );
 }
@@ -204,263 +191,8 @@ Widget tableCardsExtension(
                     child: greenButtons(
                         context, "Change Table", snapshotTable, indexTable,
                         function: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: text(
-                                  context, "Assign Table", 0.04, myWhite,
-                                  bold: true),
-                              backgroundColor: myBlack,
-                              content: Container(
-                                color: myBlack,
-                                height: dynamicHeight(context, 0.6),
-                                width: dynamicWidth(context, 0.8),
-                                child: FutureBuilder(
-                                    future: getReservationData("dinein-orders"),
-                                    builder: (context, snapshot2) {
-                                      if (snapshot2.connectionState ==
-                                          ConnectionState.done) {
-                                        if (snapshot2.hasData) {
-                                          return FutureBuilder(
-                                            future: getTables(
-                                                snapshotTable[indexTable]
-                                                    ["sale_id"]),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return loader(context);
-                                              } else if (snapshot.data ==
-                                                  false) {
-                                                return coloredButton(
-                                                  context,
-                                                  "Retry",
-                                                  myOrange,
-                                                  width:
-                                                      dynamicWidth(context, .4),
-                                                  function: () {
-                                                    globalRefresh();
-                                                  },
-                                                );
-                                              } else if (snapshot.data.length ==
-                                                  0) {
-                                                return Center(
-                                                  child: text(
-                                                    context,
-                                                    "no Tables!!",
-                                                    0.028,
-                                                    myWhite,
-                                                  ),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.done) {
-                                                return GridView.builder(
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 4,
-                                                          mainAxisSpacing: 5,
-                                                          crossAxisSpacing: 5),
-                                                  itemCount:
-                                                      snapshot.data.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    var customColor = myOrange;
-
-                                                    for (var i = 0;
-                                                        i <
-                                                            (snapshot2.data
-                                                                    as List)
-                                                                .length;
-                                                        i++) {
-                                                      if ((snapshot2.data
-                                                                      as List)[i]
-                                                                  [
-                                                                  "booking_date"] ==
-                                                              DateFormat('yyyy-MM-dd')
-                                                                  .format(
-                                                                      DateTime
-                                                                          .now())
-                                                                  .toString() &&
-                                                          (snapshot2.data
-                                                                      as List)[i]
-                                                                  [
-                                                                  "order_status"] ==
-                                                              "1" &&
-                                                          snapshot.data[index]
-                                                                  ["name"] ==
-                                                              (snapshot2.data
-                                                                      as List)[i]
-                                                                  ["table_id"]) {
-                                                        customColor =
-                                                            Colors.grey;
-                                                      }
-                                                    }
-                                                    return InkWell(
-                                                      onTap: () async {
-                                                        if (customColor ==
-                                                            Colors.grey) {
-                                                          MotionToast.error(
-                                                            description:
-                                                                "Table Already reserved",
-                                                            dismissable: true,
-                                                          ).show(context);
-                                                        } else if (snapshotTable[
-                                                                        indexTable]
-                                                                    [
-                                                                    "waiter_id"] ==
-                                                                null &&
-                                                            userResponse[
-                                                                    "designation"] ==
-                                                                "Floor Manager") {
-                                                          MotionToast.error(
-                                                            description:
-                                                                "Assign waiter first",
-                                                            dismissable: true,
-                                                          ).show(context);
-                                                        } else {
-                                                          CoolAlert.show(
-                                                              context: context,
-                                                              type:
-                                                                  CoolAlertType
-                                                                      .loading,
-                                                              barrierDismissible:
-                                                                  false,
-                                                              lottieAsset:
-                                                                  "assets/loader.json");
-                                                          if (snapshotTable[
-                                                                          indexTable]
-                                                                      [
-                                                                      "waiter_id"] ==
-                                                                  null &&
-                                                              userResponse[
-                                                                      "designation"] ==
-                                                                  "Waiter") {
-                                                            assignTable =
-                                                                userResponse[
-                                                                    "id"];
-
-                                                            var response =
-                                                                await assignWaiterOnline(
-                                                                    snapshotTable[
-                                                                            indexTable]
-                                                                        [
-                                                                        "sale_id"],
-                                                                    assignTable);
-                                                            if (response ==
-                                                                false) {
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .pop();
-                                                              MotionToast.error(
-                                                                description:
-                                                                    "Waiter not assigned Check your internet",
-                                                                dismissable:
-                                                                    true,
-                                                              ).show(context);
-                                                            } else {
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  function());
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .pop();
-                                                              MotionToast
-                                                                  .success(
-                                                                description:
-                                                                    "Waiter assigned",
-                                                                dismissable:
-                                                                    true,
-                                                              ).show(context);
-                                                            }
-                                                          }
-                                                          assignTable = snapshot
-                                                                  .data[index]
-                                                              ["name"];
-
-                                                          var response =
-                                                              await assignTableOnline(
-                                                                  snapshotTable[
-                                                                          indexTable]
-                                                                      [
-                                                                      "sale_id"],
-                                                                  assignTable);
-                                                          if (response ==
-                                                              false) {
-                                                            Navigator.of(
-                                                                    context,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
-                                                            MotionToast.error(
-                                                              description:
-                                                                  "Table not assigned Check your internet",
-                                                              dismissable: true,
-                                                            ).show(context);
-                                                          } else {
-                                                            pageDecider =
-                                                                "Dine In Orders";
-                                                            Navigator.pop(
-                                                                context,
-                                                                globalRefresh());
-                                                            Navigator.of(
-                                                                    context,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
-                                                            MotionToast.success(
-                                                              description:
-                                                                  "Table assigned",
-                                                              dismissable: true,
-                                                            ).show(context);
-                                                          }
-                                                        }
-                                                      },
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        color: customColor,
-                                                        child: text(
-                                                          context,
-                                                          "Table\n" +
-                                                              snapshot.data[
-                                                                      index]
-                                                                  ["name"],
-                                                          0.04,
-                                                          myWhite,
-                                                          alignText:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                return text(
-                                                    context,
-                                                    "not working",
-                                                    0.028,
-                                                    myWhite);
-                                              }
-                                            },
-                                          );
-                                        } else {
-                                          return text(context, "retry", 0.04,
-                                              Colors.white);
-                                        }
-                                      } else {
-                                        return loader(context);
-                                      }
-                                    }),
-                              ),
-                            );
-                          });
+                      dailoageCustom(context, snapshotTable, indexTable,
+                          assignTable, function);
                     }),
                   ),
                   greenButtons(context, buttonText1, snapshotTable, indexTable,
@@ -473,298 +205,18 @@ Widget tableCardsExtension(
                                 snapshotTable[indexTable]["sale_id"].toString(),
                           ));
                     } else if (buttonText1 == "Assign Table") {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: text(
-                                  context, "Assign Table", 0.04, myWhite,
-                                  bold: true),
-                              backgroundColor: myBlack,
-                              content: Container(
-                                color: myBlack,
-                                height: dynamicHeight(context, 0.6),
-                                width: dynamicWidth(context, 0.8),
-                                child: FutureBuilder(
-                                    future: getReservationData("dinein-orders"),
-                                    builder: (context, snapshot2) {
-                                      if (snapshot2.connectionState ==
-                                          ConnectionState.done) {
-                                        if (snapshot2.hasData) {
-                                          return FutureBuilder(
-                                            future: getTables(
-                                                snapshotTable[indexTable]
-                                                    ["sale_id"]),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return loader(context);
-                                              } else if (snapshot.data ==
-                                                  false) {
-                                                return coloredButton(
-                                                  context,
-                                                  "Retry",
-                                                  myOrange,
-                                                  width:
-                                                      dynamicWidth(context, .4),
-                                                  function: () {
-                                                    globalRefresh();
-                                                  },
-                                                );
-                                              } else if (snapshot.data.length ==
-                                                  0) {
-                                                return Center(
-                                                  child: text(
-                                                    context,
-                                                    "no Tables!!",
-                                                    0.028,
-                                                    myWhite,
-                                                  ),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.done) {
-                                                return GridView.builder(
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 4,
-                                                          mainAxisSpacing: 5,
-                                                          crossAxisSpacing: 5),
-                                                  itemCount:
-                                                      snapshot.data.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    var customColor = myOrange;
-
-                                                    for (var i = 0;
-                                                        i <
-                                                            (snapshot2.data
-                                                                    as List)
-                                                                .length;
-                                                        i++) {
-                                                      if ((snapshot2.data
-                                                                      as List)[i]
-                                                                  [
-                                                                  "booking_date"] ==
-                                                              DateFormat('yyyy-MM-dd')
-                                                                  .format(
-                                                                      DateTime
-                                                                          .now())
-                                                                  .toString() &&
-                                                          (snapshot2.data
-                                                                      as List)[i]
-                                                                  [
-                                                                  "order_status"] ==
-                                                              "1" &&
-                                                          snapshot.data[index]
-                                                                  ["name"] ==
-                                                              (snapshot2.data
-                                                                      as List)[i]
-                                                                  ["table_id"]) {
-                                                        customColor =
-                                                            Colors.grey;
-                                                      }
-                                                    }
-                                                    return InkWell(
-                                                      onTap: () async {
-                                                        if (customColor ==
-                                                            Colors.grey) {
-                                                          MotionToast.error(
-                                                            description:
-                                                                "Table Already reserved",
-                                                            dismissable: true,
-                                                          ).show(context);
-                                                        } else if (snapshotTable[
-                                                                        indexTable]
-                                                                    [
-                                                                    "waiter_id"] ==
-                                                                null &&
-                                                            userResponse[
-                                                                    "designation"] ==
-                                                                "Floor Manager") {
-                                                          MotionToast.error(
-                                                            description:
-                                                                "Assign waiter first",
-                                                            dismissable: true,
-                                                          ).show(context);
-                                                        } else {
-                                                          CoolAlert.show(
-                                                              context: context,
-                                                              type:
-                                                                  CoolAlertType
-                                                                      .loading,
-                                                              barrierDismissible:
-                                                                  false,
-                                                              lottieAsset:
-                                                                  "assets/loader.json");
-                                                          if (snapshotTable[
-                                                                          indexTable]
-                                                                      [
-                                                                      "waiter_id"] ==
-                                                                  null &&
-                                                              userResponse[
-                                                                      "designation"] ==
-                                                                  "Waiter") {
-                                                            assignTable =
-                                                                userResponse[
-                                                                    "id"];
-
-                                                            var response =
-                                                                await assignWaiterOnline(
-                                                                    snapshotTable[
-                                                                            indexTable]
-                                                                        [
-                                                                        "sale_id"],
-                                                                    assignTable);
-                                                            if (response ==
-                                                                false) {
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .pop();
-                                                              MotionToast.error(
-                                                                description:
-                                                                    "Waiter not assigned Check your internet",
-                                                                dismissable:
-                                                                    true,
-                                                              ).show(context);
-                                                            } else {
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  function());
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .pop();
-                                                              MotionToast
-                                                                  .success(
-                                                                description:
-                                                                    "Waiter assigned",
-                                                                dismissable:
-                                                                    true,
-                                                              ).show(context);
-                                                            }
-                                                          }
-                                                          assignTable = snapshot
-                                                                  .data[index]
-                                                              ["name"];
-
-                                                          var response =
-                                                              await assignTableOnline(
-                                                                  snapshotTable[
-                                                                          indexTable]
-                                                                      [
-                                                                      "sale_id"],
-                                                                  assignTable);
-                                                          if (response ==
-                                                              false) {
-                                                            Navigator.of(
-                                                                    context,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
-                                                            MotionToast.error(
-                                                              description:
-                                                                  "Table not assigned Check your internet",
-                                                              dismissable: true,
-                                                            ).show(context);
-                                                          } else {
-                                                            pageDecider =
-                                                                "Dine In Orders";
-                                                            Navigator.pop(
-                                                                context,
-                                                                globalRefresh());
-                                                            Navigator.of(
-                                                                    context,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .pop();
-                                                            MotionToast.success(
-                                                              description:
-                                                                  "Table assigned",
-                                                              dismissable: true,
-                                                            ).show(context);
-                                                          }
-                                                        }
-                                                      },
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        color: customColor,
-                                                        child: text(
-                                                          context,
-                                                          "Table\n" +
-                                                              snapshot.data[
-                                                                      index]
-                                                                  ["name"],
-                                                          0.04,
-                                                          myWhite,
-                                                          alignText:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                return text(
-                                                    context,
-                                                    "not working",
-                                                    0.028,
-                                                    myWhite);
-                                              }
-                                            },
-                                          );
-                                        } else {
-                                          return text(context, "retry", 0.04,
-                                              Colors.white);
-                                        }
-                                      } else {
-                                        return loader(context);
-                                      }
-                                    }),
-                              ),
-                            );
-                          });
+                      dailoageCustom(context, snapshotTable, indexTable,
+                          assignTable, function);
+                    } else if (buttonText1 == "Assign Waiter") {
+                      dailogCustomWaiter(context, snapshotTable, indexTable,
+                          assignTable, function);
+                    } else if (buttonText1 == "Guest Arrived") {
+                      guestArrivedNow(context, snapshotTable, indexTable);
                     } else {
-                      CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.loading,
-                          barrierDismissible: false,
-                          lottieAsset: "assets/loader.json");
-                      var response = await arrivedGuests(
-                          snapshotTable[indexTable]["sale_id"]);
-                      if (response == false) {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        CoolAlert.show(
-                            context: context,
-                            text:
-                                "There is some problem in Internet or the Server",
-                            confirmBtnText: "Retry",
-                            type: CoolAlertType.error,
-                            backgroundColor: myOrange,
-                            confirmBtnColor: myOrange);
-                      } else {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        CoolAlert.show(
-                          context: context,
-                          text: "Guest Arrived Successfully",
-                          confirmBtnText: "continue",
-                          cancelBtnText: "Cancel",
-                          type: CoolAlertType.success,
-                          onConfirmBtnTap: () {
-                            pageDecider = "Arrived Guests";
-                            globalRefresh();
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                          backgroundColor: myOrange,
-                          confirmBtnColor: myOrange,
-                        );
-                      }
+                      MotionToast.info(
+                        description: "Something Went wrong",
+                        dismissable: true,
+                      ).show(context);
                     }
                   }),
                   greenButtons(
@@ -774,144 +226,30 @@ Widget tableCardsExtension(
                     indexTable,
                     function: () {
                       if (buttonText2 == "Assign Waiter") {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: text(
-                                    context, "Assign Waiter", 0.04, myWhite,
-                                    bold: true),
-                                backgroundColor: myBlack,
-                                content: Container(
-                                  color: myBlack,
-                                  height: dynamicHeight(context, 0.6),
-                                  width: dynamicWidth(context, 0.8),
-                                  child: FutureBuilder(
-                                    future: getWaiters(
-                                        snapshotTable[indexTable]["sale_id"]),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return LottieBuilder.asset(
-                                          "assets/loader.json",
-                                          width: dynamicWidth(context, 0.1),
-                                        );
-                                      } else if (snapshot.data == false) {
-                                        return Center(
-                                          child: coloredButton(
-                                            context,
-                                            "Retry",
-                                            myOrange,
-                                            width: dynamicWidth(context, .4),
-                                            function: () {
-                                              globalRefresh();
-                                            },
-                                          ),
-                                        );
-                                      } else if (snapshot.data.length == 0) {
-                                        return Center(
-                                            child: text(context, "no Waiters!!",
-                                                0.028, myWhite));
-                                      } else if (snapshot.connectionState ==
-                                          ConnectionState.done) {
-                                        return GridView.builder(
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 4,
-                                                  mainAxisSpacing: 5,
-                                                  crossAxisSpacing: 5),
-                                          itemCount: snapshot.data.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return InkWell(
-                                              onTap: () async {
-                                                CoolAlert.show(
-                                                    context: context,
-                                                    type: CoolAlertType.loading,
-                                                    barrierDismissible: false,
-                                                    lottieAsset:
-                                                        "assets/loader.json");
-                                                assignTable =
-                                                    snapshot.data[index]["id"];
-
-                                                var response =
-                                                    await assignWaiterOnline(
-                                                        snapshotTable[
-                                                                indexTable]
-                                                            ["sale_id"],
-                                                        assignTable);
-                                                if (response == false) {
-                                                  Navigator.of(context,
-                                                          rootNavigator: true)
-                                                      .pop();
-                                                  MotionToast.error(
-                                                    description:
-                                                        "Waiter not assigned Check your internet",
-                                                    dismissable: true,
-                                                  ).show(context);
-                                                } else {
-                                                  Navigator.pop(
-                                                      context, function());
-                                                  Navigator.of(context,
-                                                          rootNavigator: true)
-                                                      .pop();
-                                                  MotionToast.success(
-                                                    description:
-                                                        "Waiter assigned",
-                                                    dismissable: true,
-                                                  ).show(context);
-                                                }
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                color: myOrange,
-                                                child: FittedBox(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(
-                                                        dynamicWidth(
-                                                            context, 0.01)),
-                                                    child: text(
-                                                        context,
-                                                        snapshot.data[index]
-                                                                ["full_name"] +
-                                                            "\n" +
-                                                            snapshot.data[index]
-                                                                ["id"],
-                                                        0.04,
-                                                        myWhite,
-                                                        alignText:
-                                                            TextAlign.center),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        return text(context, "not working",
-                                            0.028, myWhite);
-                                      }
-                                    },
-                                  ),
-                                ),
-                              );
-                            });
-                      } else {
+                        dailogCustomWaiter(context, snapshotTable, indexTable,
+                            assignTable, function);
+                      } else if (buttonText2 == "Assign Table") {
+                        dailoageCustom(context, snapshotTable, indexTable,
+                            assignTable, function);
+                      } else if (buttonText2 == "Take Order") {
+                        push(
+                            context,
+                            MenuPage(
+                              saleId: snapshotTable[indexTable]["sale_id"]
+                                  .toString(),
+                              tableNo: snapshotTable[indexTable]["table_id"]
+                                  .toString(),
+                            ));
+                      } else if (buttonText2 == "View detail") {
                         push(
                           context,
-                          function2check == true
-                              ? MenuPage(
-                                  saleId: snapshotTable[indexTable]["sale_id"]
-                                      .toString(),
-                                  tableNo: snapshotTable[indexTable]["table_id"]
-                                      .toString(),
-                                )
-                              : OrderSummaryPage(
-                                  saleId: snapshotTable[indexTable]["sale_id"]
-                                      .toString(),
-                                ),
+                          OrderSummaryPage(
+                            saleId:
+                                snapshotTable[indexTable]["sale_id"].toString(),
+                          ),
                         );
+                      } else {
+                        MotionToast.error(description: "Something went Wrong");
                       }
                     },
                   ),
@@ -923,163 +261,4 @@ Widget tableCardsExtension(
       ],
     ),
   );
-}
-
-Widget greenButtons(context, text1, snapshot, index, {function = ""}) {
-  return InkWell(
-    onTap: function == "" ? () {} : function,
-    child: Container(
-      alignment: Alignment.center,
-      width: dynamicWidth(context, 0.3),
-      padding: EdgeInsets.all(dynamicWidth(context, 0.03)),
-      decoration: BoxDecoration(
-          color: myGreen,
-          borderRadius: BorderRadius.circular(dynamicWidth(context, 0.01))),
-      child: text(context, text1, 0.035, myWhite),
-    ),
-  );
-}
-
-class CustomDineInSearchDelegate extends SearchDelegate {
-  dynamic data,
-      setState,
-      assignTable,
-      buttonText1,
-      buttonText2,
-      function1check,
-      function2check;
-
-  CustomDineInSearchDelegate(
-      this.data,
-      this.setState,
-      this.assignTable,
-      this.buttonText1,
-      this.buttonText2,
-      this.function1check,
-      this.function2check);
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    return ThemeData(
-        textSelectionTheme: const TextSelectionThemeData(cursorColor: myWhite),
-        inputDecorationTheme: const InputDecorationTheme(
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: myBlack),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: myBlack),
-          ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: myBlack),
-          ),
-        ),
-        textTheme: const TextTheme(
-            headline6: TextStyle(
-                // headline 6 affects the query text
-                color: myWhite,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold)),
-        appBarTheme: const AppBarTheme(color: myBlack),
-        scaffoldBackgroundColor: myBlack);
-  }
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: const Icon(Icons.clear),
-        onPressed: () {
-          query = "";
-        },
-      ) // IconButton
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    ); // IconButton
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    dynamic matchQuery = [];
-    for (var item in data) {
-      if (item["table_id"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_name"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_phone"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase())) {
-        matchQuery.add(item);
-      }
-    }
-    return Padding(
-        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-        child: ListView.builder(
-          itemCount: matchQuery.length,
-          itemBuilder: (BuildContext context, int index) {
-            return tableCardsExtension(
-              context,
-              matchQuery,
-              index,
-              buttonText1,
-              buttonText2,
-              function: setState,
-              function1check: function1check,
-              function2check: function2check,
-              assignTable: assignTable,
-            );
-          },
-        ));
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    dynamic matchQuery = [];
-    for (var item in data) {
-      if (item["table_id"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_name"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_phone"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase())) {
-        matchQuery.add(item);
-      }
-    }
-    return Padding(
-        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-        child: ListView.builder(
-          itemCount: matchQuery.length,
-          itemBuilder: (BuildContext context, int index) {
-            return tableCardsExtension(
-              context,
-              matchQuery,
-              index,
-              buttonText1,
-              buttonText2,
-              function: setState,
-              function1check: function1check,
-              function2check: function2check,
-              assignTable: assignTable,
-            );
-          },
-        )); // ListTile
-  }
 }

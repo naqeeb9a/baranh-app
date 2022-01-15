@@ -29,3 +29,17 @@ Widget coloredButton(context, text, color,
     ),
   );
 }
+Widget retry(context)
+{
+  return Center(
+          child: coloredButton(
+            context,
+            "Retry",
+            myOrange,
+            width: dynamicWidth(context, .4),
+            function: () {
+              globalRefresh();
+            },
+          ),
+        );
+}

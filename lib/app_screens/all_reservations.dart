@@ -16,10 +16,9 @@ class AllReservationsPage extends StatefulWidget {
 
 class _AllReservationsPageState extends State<AllReservationsPage> {
   bool searchCheck = false;
-
+  final TextEditingController _reservationNumber = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _reservationNumber = TextEditingController();
     return Scaffold(
       backgroundColor: myBlack,
       body: SafeArea(
@@ -93,5 +92,11 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _reservationNumber.dispose();
+    super.dispose();
   }
 }
