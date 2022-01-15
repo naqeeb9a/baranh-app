@@ -6,6 +6,7 @@ import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 class AllReservationsPage extends StatefulWidget {
   const AllReservationsPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class AllReservationsPage extends StatefulWidget {
 class _AllReservationsPageState extends State<AllReservationsPage> {
   bool searchCheck = false;
   final TextEditingController _reservationNumber = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +53,20 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     fontSize: 0.042,
                     width: dynamicWidth(context, .4),
                     function: () {
-                      setState(() {
-                        searchCheck = true;
-                      });
+                      if (_reservationNumber.text != "") {
+                        setState(() {
+                          searchCheck = true;
+                        });
+                      } else {
+                        MotionToast.error(
+                          title: "Error",
+                          dismissable: true,
+                          titleStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          description: "Empty Fields",
+                        ).show(context);
+                      }
                     },
                   ),
                   coloredButton(
