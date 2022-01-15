@@ -1,6 +1,5 @@
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/buttons_column.dart';
 import 'package:baranh/widgets/custom_search.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
@@ -16,12 +15,10 @@ Widget tableCards(context, function, buttonText1, buttonText2,
   return FutureBuilder(
     future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
-      if (snapshot.hasData) {
+      if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data.length == 0) {
-          return Center(
-            child: text(context, "no Orders Yet!!", 0.028, myWhite),
-          );
-        } else if (snapshot.data.length > 0) {
+          return Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
+        } else {
           return Column(
             children: [
               Visibility(
@@ -85,10 +82,9 @@ Widget tableCards(context, function, buttonText1, buttonText2,
             ],
           );
         }
-      } else if (snapshot.data == false) {
-        return retry(context);
+      } else {
+        return loader(context);
       }
-      return loader(context);
     },
   );
 }

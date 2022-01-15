@@ -77,6 +77,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     width: dynamicWidth(context, .4),
                     function: () {
                       setState(() {
+                        _reservationNumber.clear();
                         searchCheck = false;
                       });
                     },
