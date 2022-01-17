@@ -84,14 +84,24 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                           "  ${snapshot.data[0]["discount"]} % off" +
                                           "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
                                   return (snapshot.data == false)
-                                      ? coloredButton(
-                                          context,
-                                          "Retry",
-                                          myOrange,
-                                          width: dynamicWidth(context, .4),
-                                          function: () {
+                                      ? InkWell(
+                                          onTap: () {
                                             globalRefresh();
                                           },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.rotate_right_outlined,
+                                                color: myOrange,
+                                                size:
+                                                    dynamicWidth(context, 0.08),
+                                              ),
+                                              text(context, "Retry", 0.04,
+                                                  myWhite)
+                                            ],
+                                          ),
                                         )
                                       : StatefulBuilder(
                                           builder: (BuildContext context,

@@ -131,6 +131,10 @@ class _ContactInformationState extends State<ContactInformation> {
                         animType: CoolAlertAnimType.slideInRight);
                   } else {
                     Navigator.of(context, rootNavigator: true).pop();
+                    MotionToast.info(
+                      description: "Reserved successfully",
+                      dismissable: true,
+                    ).show(context);
                     pageDecider = "All Reservations";
                     popUntil(customContext);
                   }

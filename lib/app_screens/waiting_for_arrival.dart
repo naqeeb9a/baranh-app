@@ -35,7 +35,7 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
                   context,
                   getReservationData("waiting-for-arrival"),
                   "Guest Arrived",
-                  "View Details",
+                  "View details",
                   setState: () {
                     setState(() {});
                   },

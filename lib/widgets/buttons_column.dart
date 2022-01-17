@@ -12,12 +12,12 @@ import 'green_buttons.dart';
 buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
     assignTable, function) {
   return SizedBox(
-    height: dynamicHeight(context, buttonText1 == "View detail" ? 0.16 : 0.12),
+    height: dynamicHeight(context, buttonText1 == "View details" ? 0.16 : 0.12),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: buttonText1 == "View detail" ? true : false,
+          visible: buttonText1 == "View details" ? true : false,
           child: greenButtons(
               context, "Change Table", snapshotTable, indexTable, function: () {
             dialogueCustom(
@@ -26,7 +26,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
         ),
         greenButtons(context, buttonText1, snapshotTable, indexTable,
             function: () async {
-          if (buttonText1 == "View detail") {
+          if (buttonText1 == "View details") {
             push(
                 context,
                 OrderSummaryPage(
@@ -66,7 +66,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     saleId: snapshotTable[indexTable]["sale_id"].toString(),
                     tableNo: snapshotTable[indexTable]["table_id"].toString(),
                   ));
-            } else if (buttonText2 == "View detail") {
+            } else if (buttonText2 == "View details") {
               push(
                 context,
                 OrderSummaryPage(

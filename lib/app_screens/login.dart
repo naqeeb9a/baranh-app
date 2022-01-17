@@ -30,17 +30,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final password = TextEditingController();
 
   loginFunction() async {
-    setState(() {
-      loading = true;
-    });
-    var response = await http.post(
-        Uri.parse("https://baranhweb.cmcmtech.com/api/signin-waiter"),
-        body: {"email": email.text, "password": password.text});
-    if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
+    try {
+      setState(() {
+        loading = true;
+      });
+      var response = await http.post(
+          Uri.parse("https://baranhweb.cmcmtech.com/api/signin-waiter"),
+          body: {"email": email.text, "password": password.text});
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
 
-      return jsonData["data"];
-    } else {
+        return jsonData["data"];
+      } else {
+        return "Error";
+      }
+    } catch (e) {
       return false;
     }
   }
@@ -128,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else {
                             var response = await loginFunction();
 
-                            if (response == false) {
+                            if (response == "Error") {
                               setState(() {
                                 loading = false;
                               });
@@ -139,6 +143,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 description: "Invalid Credentials",
+                              ).show(context);
+                            } else if (response == false) {
+                              setState(() {
+                                loading = false;
+                              });
+                              MotionToast.error(
+                                title: "Error",
+                                dismissable: true,
+                                titleStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                description:
+                                    "Check your Internet or try again later",
                               ).show(context);
                             } else {
                               SharedPreferences loginUser =

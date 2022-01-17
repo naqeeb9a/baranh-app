@@ -8,11 +8,16 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-class OrderSummaryPage extends StatelessWidget {
+class OrderSummaryPage extends StatefulWidget {
   final String saleId;
 
   const OrderSummaryPage({Key? key, required this.saleId}) : super(key: key);
 
+  @override
+  State<OrderSummaryPage> createState() => _OrderSummaryPageState();
+}
+
+class _OrderSummaryPageState extends State<OrderSummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +41,7 @@ class OrderSummaryPage extends StatelessWidget {
             ),
             heightBox(context, 0.02),
             FutureBuilder(
-              future: getOrderSummary(saleId),
+              future: getOrderSummary(widget.saleId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.data == null) {
@@ -52,18 +57,7 @@ class OrderSummaryPage extends StatelessWidget {
                     );
                   } else if (snapshot.data == false) {
                     return Expanded(
-                      child: Center(
-                        child: coloredButton(
-                          context,
-                          "Retry",
-                          myOrange,
-                          width: dynamicWidth(context, .4),
-                          function: () {
-                            globalRefresh();
-                          },
-                        ),
-                      ),
-                    );
+                        child: retry(context, ));
                   } else {
                     return orderDetails(context, snapshot.data);
                   }

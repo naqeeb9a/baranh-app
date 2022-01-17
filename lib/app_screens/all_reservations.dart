@@ -95,7 +95,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                           _reservationNumber.text,
                         ),
                   "Guest Arrived",
-                  "View Details",
+                  "View details",
                   setState: () {
                     setState(() {});
                   },

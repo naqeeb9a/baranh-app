@@ -39,7 +39,7 @@ class _DineInOrdersState extends State<DineInOrders> {
                 child: tableCards(
                   context,
                   getReservationData("dinein-orders"),
-                  "View detail",
+                  "View details",
                   "Take Order",
                   setState: () {
                     setState(() {});

@@ -284,15 +284,73 @@ cartCards(context, index, function) {
                 0.04,
                 myWhite,
               ),
-              text(
-                context,
-                "Rs. " +
-                    cartItems[index]["sale_price"].toString() +
-                    " x " +
-                    cartItems[index]["qty"].toString(),
-                0.04,
-                myWhite,
-              ),
+              heightBox(context, 0.01),
+              Container(
+                  width: dynamicWidth(context, 0.25),
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(dynamicWidth(context, 0.02)),
+                      border: Border.all(color: myWhite, width: 1)),
+                  child: StatefulBuilder(builder: (context, changeState) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          splashColor: noColor,
+                          onTap: () {
+                            if (int.parse(cartItems[index]["qty"].toString()) >
+                                1) {
+                              changeState(() {
+                                var value = int.parse(
+                                    cartItems[index]["qty"].toString());
+                                value--;
+                                cartItems[index]["qty"] = value;
+                              });
+                            }
+                          },
+                          child: SizedBox(
+                            width: dynamicWidth(context, .1),
+                            height: dynamicWidth(context, .07),
+                            child: Icon(
+                              Icons.remove,
+                              size: dynamicWidth(context, .03),
+                              color: myOrange,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          cartItems[index]["qty"].toString(),
+                          style: TextStyle(
+                            color: myOrange,
+                            fontSize: dynamicWidth(context, .03),
+                          ),
+                        ),
+                        InkWell(
+                          splashColor: noColor,
+                          onTap: () {
+                            if (int.parse(cartItems[index]["qty"].toString()) <
+                                30) {
+                              changeState(() {
+                                var value = int.parse(
+                                    cartItems[index]["qty"].toString());
+                                value++;
+                                cartItems[index]["qty"] = value;
+                              });
+                            }
+                          },
+                          child: SizedBox(
+                            width: dynamicWidth(context, .1),
+                            height: dynamicWidth(context, .07),
+                            child: Icon(
+                              Icons.add,
+                              size: dynamicWidth(context, .03),
+                              color: myOrange,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  })),
             ],
           ),
         ),

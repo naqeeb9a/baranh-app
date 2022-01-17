@@ -9,16 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends StatefulWidget {
   final String saleId, tableNo;
 
   const MenuPage({Key? key, required this.saleId, required this.tableNo})
       : super(key: key);
 
   @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  @override
   Widget build(BuildContext context) {
-    saleIdGlobal = saleId;
-    tableNoGlobal = tableNo;
+    saleIdGlobal = widget.saleId;
+    tableNoGlobal = widget.tableNo;
 
     return Scaffold(
       backgroundColor: myBlack,
@@ -27,38 +32,43 @@ class MenuPage extends StatelessWidget {
         child: Column(
           children: [
             heightBox(context, 0.02),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () {
-                  if (cartItems.isEmpty) {
-                    pop(context);
-                  } else {
-                    CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.warning,
-                        text:
-                            "if you leave this page your cart items will discard",
-                        confirmBtnText: "Continue",
-                        cancelBtnText: "Cancel",
-                        onCancelBtnTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        onConfirmBtnTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          cartItems.clear();
-                          pop(context);
-                        });
-                  }
-                },
-                child: const Icon(
-                  LineIcons.arrowLeft,
-                  color: myWhite,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    if (cartItems.isEmpty) {
+                      pop(context);
+                    } else {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.warning,
+                          text:
+                              "if you leave this page your cart items will discard",
+                          confirmBtnText: "Continue",
+                          cancelBtnText: "Cancel",
+                          onCancelBtnTap: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                          onConfirmBtnTap: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            cartItems.clear();
+                            pop(context);
+                          });
+                    }
+                  },
+                  child: const Icon(
+                    LineIcons.arrowLeft,
+                    color: myWhite,
+                  ),
                 ),
-              ),
+                text(context, "Menu", 0.05, myWhite),
+                const Icon(
+                  LineIcons.arrowLeft,
+                  color: myBlack,
+                ),
+              ],
             ),
-            heightBox(context, 0.02),
-            text(context, "Menu", 0.05, myWhite),
             const Divider(
               thickness: 1,
               color: myWhite,
@@ -70,17 +80,7 @@ class MenuPage extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == false) {
-                      return Center(
-                        child: coloredButton(
-                          context,
-                          "Retry",
-                          myOrange,
-                          width: dynamicWidth(context, .4),
-                          function: () {
-                            globalRefresh();
-                          },
-                        ),
-                      );
+                      return retry(context,);
                     } else {
                       if (snapshot.data.length == 0) {
                         return Center(
@@ -230,93 +230,46 @@ menuCards(context, snapshot, index) {
 
 iconsRow(context, snapshot) {
   var quantity = 1;
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
-              border: Border.all(color: myWhite, width: 1)),
-          child: StatefulBuilder(builder: (context, changeState) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  splashColor: noColor,
-                  onTap: () {
-                    if (quantity > 1) {
-                      changeState(() {
-                        quantity--;
-                      });
-                    }
-                  },
-                  child: SizedBox(
-                    width: dynamicWidth(context, .1),
-                    height: dynamicWidth(context, .07),
-                    child: Icon(
-                      Icons.remove,
-                      size: dynamicWidth(context, .03),
-                      color: myOrange,
-                    ),
-                  ),
-                ),
-                Text(
-                  quantity.toString(),
-                  style: TextStyle(
-                    color: myOrange,
-                    fontSize: dynamicWidth(context, .03),
-                  ),
-                ),
-                InkWell(
-                  splashColor: noColor,
-                  onTap: () {
-                    if (quantity < 30) {
-                      changeState(() {
-                        quantity++;
-                      });
-                    }
-                  },
-                  child: SizedBox(
-                    width: dynamicWidth(context, .1),
-                    height: dynamicWidth(context, .07),
-                    child: Icon(
-                      Icons.add,
-                      size: dynamicWidth(context, .03),
-                      color: myOrange,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          })),
-      StatefulBuilder(builder: (context, changeState) {
-        return GestureDetector(
-          onTap: () {
-            if (!cartItems.contains(snapshot)) {
-              snapshot["qty"] = quantity;
-              snapshot['setState'] = () {
-                changeState(() {});
-              };
-              cartItems.add(snapshot);
+  return StatefulBuilder(builder: (context, changeState) {
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+              onTap: () {
+                if (!cartItems.contains(snapshot)) {
+                  snapshot["qty"] = quantity;
+                  snapshot['setState'] = () {
+                    changeState(() {});
+                  };
+                  cartItems.add(snapshot);
 
-              changeState(() {});
-            } else {
-              cartItems.remove(snapshot);
+                  changeState(() {});
+                } else {
+                  cartItems.remove(snapshot);
 
-              changeState(() {});
-            }
-          },
-          child: Icon(
-            cartItems.contains(snapshot)
-                ? LineIcons.shoppingCart
-                : LineIcons.addToShoppingCart,
-            color: cartItems.contains(snapshot) ? myOrange : myWhite,
-            size: dynamicWidth(context, 0.07),
-          ),
-        );
-      })
-    ],
-  );
+                  changeState(() {});
+                }
+              },
+              child: Container(
+                height: dynamicWidth(context, 0.08),
+                child: Center(
+                  child: text(
+                      context,
+                      cartItems.contains(snapshot) ? "Added" : "Add to Cart",
+                      0.04,
+                      cartItems.contains(snapshot) ? myBlack : myWhite,
+                      alignText: TextAlign.center),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(dynamicWidth(context, 0.02)),
+                  color: cartItems.contains(snapshot) ? myGrey : myOrange,
+                ),
+              )),
+        ),
+      ],
+    );
+  });
 }
 
 class CustomSearchDelegate extends SearchDelegate {

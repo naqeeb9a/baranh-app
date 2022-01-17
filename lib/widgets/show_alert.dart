@@ -34,7 +34,9 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                               ConnectionState.waiting) {
                             return loader(context);
                           } else if (snapshot.data == false) {
-                            return retry(context);
+                            return retry(
+                              context,
+                            );
                           } else if (snapshot.data.length == 0) {
                             return Center(
                               child: text(
@@ -115,16 +117,7 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                                 "Waiter not assigned Check your internet",
                                             dismissable: true,
                                           ).show(context);
-                                        } else {
-                                          Navigator.pop(context, function());
-                                          Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop();
-                                          MotionToast.success(
-                                            description: "Waiter assigned",
-                                            dismissable: true,
-                                          ).show(context);
-                                        }
+                                        } else {}
                                       }
                                       assignTable =
                                           snapshot.data[index]["name"];
@@ -148,7 +141,17 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                                 rootNavigator: true)
                                             .pop();
                                         MotionToast.success(
-                                          description: "Table assigned",
+                                          description: snapshotTable[indexTable]
+                                                          ["waiter_id"] ==
+                                                      null &&
+                                                  userResponse["designation"] ==
+                                                      "Waiter"
+                                              ? "Table and Waiter both Assigned"
+                                              : snapshotTable[indexTable]
+                                                          ["table_id"] ==
+                                                      null
+                                                  ? "Table assigned"
+                                                  : "Table changed",
                                           dismissable: true,
                                         ).show(context);
                                       }
@@ -190,7 +193,8 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
       });
 }
 
-dialogueCustomWaiter(context, snapshotTable, indexTable, assignTable, function) {
+dialogueCustomWaiter(
+    context, snapshotTable, indexTable, assignTable, function) {
   showDialog(
       context: context,
       builder: (context) {
@@ -207,16 +211,8 @@ dialogueCustomWaiter(context, snapshotTable, indexTable, assignTable, function) 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return loader(context);
                 } else if (snapshot.data == false) {
-                  return Center(
-                    child: coloredButton(
-                      context,
-                      "Retry",
-                      myOrange,
-                      width: dynamicWidth(context, .4),
-                      function: () {
-                        globalRefresh();
-                      },
-                    ),
+                  return retry(
+                    context,
                   );
                 } else if (snapshot.data.length == 0) {
                   return Center(
