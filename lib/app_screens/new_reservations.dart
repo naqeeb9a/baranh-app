@@ -245,7 +245,9 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
 getCovertedTime(String time) {
   var parsedTime = int.parse(time.substring(0, time.length - 3));
   if (parsedTime > 12) {
-    return (parsedTime - 12).toString() + time.substring(2) + " pm";
+    return (parsedTime - 12) >= 10
+        ? (parsedTime - 12).toString() + time.substring(2) + " pm"
+        : "0" + (parsedTime - 12).toString() + time.substring(2) + " pm";
   } else {
     return time + " am";
   }
