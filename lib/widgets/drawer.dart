@@ -215,31 +215,44 @@ Widget drawerItems2(context) {
               myGreen,
               fontSize: 0.035,
               function: () async {
-                CoolAlert.show(
-                    context: context,
-                    type: CoolAlertType.loading,
-                    barrierDismissible: false,
-                    lottieAsset: "assets/loader.json");
-                var response = await punchOrder(total, cost);
-                if (response == false) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                  MotionToast.error(
-                    description: "Server Error or check your internet",
+                if (cartItems.isEmpty) {
+                  MotionToast.info(
+                    description: "Cart is empty",
                     dismissable: true,
                   ).show(context);
                 } else {
-                  Navigator.of(context, rootNavigator: true).pop();
-                  cartItems.clear();
-                  saleIdGlobal = "";
-                  tableNoGlobal = "";
+                  CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.loading,
+                      barrierDismissible: false,
+                      lottieAsset: "assets/loader.json");
+                  var response = await punchOrder(total, cost);
+                  if (response == false) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    MotionToast.error(
+                      description: "Server Error or check your internet",
+                      dismissable: true,
+                    ).show(context);
+                  } else {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    cartItems.clear();
+                    saleIdGlobal = "";
+                    tableNoGlobal = "";
 
-                  pop(context);
-                  popUntil(globalDineInContext);
-                  globalDineInRefresh();
-                  MotionToast.success(
-                    description: "Order Placed",
-                    dismissable: true,
-                  ).show(context);
+                    pop(context);
+                    popUntil(globalDineInContext);
+                    globalDineInRefresh();
+                    CoolAlert.show(
+                        title: "Order Placed",
+                        text: "Do you wish to proceed?",
+                        context: context,
+                        loopAnimation: true,
+                        backgroundColor: myOrange,
+                        confirmBtnColor: myOrange,
+                        confirmBtnText: "Continue",
+                        type: CoolAlertType.success,
+                        animType: CoolAlertAnimType.slideInRight);
+                  }
                 }
               },
             ),
