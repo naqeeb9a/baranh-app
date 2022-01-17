@@ -77,10 +77,11 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                     ConnectionState.done) {
                                   (snapshot.data == false)
                                       ? ""
-                                      : indexValue = snapshot.data[0]
-                                              ["opening_time"] +
+                                      : indexValue = getCovertedTime(snapshot
+                                              .data[0]["opening_time"]) +
                                           " - " +
-                                          snapshot.data[0]["closing_time"] +
+                                          getCovertedTime(snapshot.data[0]
+                                              ["closing_time"]) +
                                           "  ${snapshot.data[0]["discount"]} % off" +
                                           "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
                                   return (snapshot.data == false)
@@ -119,18 +120,20 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                                       DropdownMenuItem<
                                                           String>>((value) =>
                                                       DropdownMenuItem<String>(
-                                                        value: value[
-                                                                "opening_time"] +
+                                                        value: getCovertedTime(
+                                                                value[
+                                                                    "opening_time"]) +
                                                             " - " +
-                                                            value[
-                                                                "closing_time"] +
+                                                            getCovertedTime(value[
+                                                                "closing_time"]) +
                                                             "  ${value["discount"]} % off" +
                                                             "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                        child: Text(value[
-                                                                "opening_time"] +
+                                                        child: Text(getCovertedTime(
+                                                                value[
+                                                                    "opening_time"]) +
                                                             " - " +
-                                                            value[
-                                                                "closing_time"] +
+                                                            getCovertedTime(value[
+                                                                "closing_time"]) +
                                                             "  ${value["discount"]} % off"),
                                                       ))
                                                   .toList(),
@@ -236,5 +239,14 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
         ),
       ),
     );
+  }
+}
+
+getCovertedTime(String time) {
+  var parsedTime = int.parse(time.substring(0, time.length - 3));
+  if (parsedTime > 12) {
+    return (parsedTime - 12).toString() + time.substring(2) + " pm";
+  } else {
+    return time + " am";
   }
 }
