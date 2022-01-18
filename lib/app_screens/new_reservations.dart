@@ -248,7 +248,14 @@ getConvertedTime(String time) {
     return (parsedTime - 12) >= 10
         ? (parsedTime - 12).toString() + time.substring(2) + " pm"
         : "0" + (parsedTime - 12).toString() + time.substring(2) + " pm";
-  } else {
+  }
+  else if(parsedTime==12){
+    return "12"+time.substring(2)+" pm";
+  }
+  else if(parsedTime==00){
+    return "12"+time.substring(2)+" am";
+  }
+  else {
     return time + " am";
   }
 }
