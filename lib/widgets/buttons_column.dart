@@ -29,27 +29,27 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
         ),
         greenButtons(context, buttonText1, snapshotTable, indexTable,
             function: () async {
-          if (buttonText1 == "View details") {
-            push(
-                context,
-                OrderSummaryPage(
-                  saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                ));
-          } else if (buttonText1 == "Assign Table") {
-            dialogueCustom(
-                context, snapshotTable, indexTable, assignTable, function);
-          } else if (buttonText1 == "Assign Waiter") {
-            dialogueCustomWaiter(
-                context, snapshotTable, indexTable, assignTable, function);
-          } else if (buttonText1 == "Guest Arrived") {
-            guestArrivedNow(context, snapshotTable, indexTable);
-          } else {
-            MotionToast.info(
-              description: "Something Went wrong",
-              dismissable: true,
-            ).show(context);
-          }
-        }),
+              if (buttonText1 == "View details") {
+                push(
+                    context,
+                    OrderSummaryPage(
+                      saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                    ));
+              } else if (buttonText1 == "Assign Table") {
+                dialogueCustom(
+                    context, snapshotTable, indexTable, assignTable, function);
+              } else if (buttonText1 == "Assign Waiter") {
+                dialogueCustomWaiter(
+                    context, snapshotTable, indexTable, assignTable, function);
+              } else if (buttonText1 == "Guest Arrived") {
+                guestArrivedNow(context, snapshotTable, indexTable);
+              } else {
+                MotionToast.info(
+                  description: "Something Went wrong",
+                  dismissable: true,
+                ).show(context);
+              }
+            }),
         Visibility(
           visible: visibleButton,
           child: greenButtons(
