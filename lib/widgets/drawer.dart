@@ -172,7 +172,7 @@ Widget drawerItems2(context) {
 
     getCost() {
       for (var item in cartItems) {
-        cost += num.parse(item["cost"]) * item["qty"];
+        cost += num.parse(item["cost"] ?? "0") * item["qty"];
       }
       return cost;
     }

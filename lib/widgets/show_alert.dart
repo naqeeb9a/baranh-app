@@ -69,7 +69,7 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                       (snapshot2.data as List)[i]
                                               ["order_status"] ==
                                           "1" &&
-                                      snapshot.data[index]["name"] ==
+                                      snapshot.data[index]["id"] ==
                                           (snapshot2.data as List)[i]
                                               ["table_id"]) {
                                     customColor = myGrey;

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'input_field_home.dart';
 
 Widget tableCards(context, function, buttonText1, buttonText2,
-    {setState = "", visible = false,visibleButton=true}) {
+    {setState = "", visible = false, visibleButton = true}) {
   final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
   return FutureBuilder(
@@ -18,7 +18,9 @@ Widget tableCards(context, function, buttonText1, buttonText2,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data == false) {
-          return retry(context, );
+          return retry(
+            context,
+          );
         } else if (snapshot.data.length == 0) {
           return Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
         } else {
@@ -69,16 +71,11 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                   child: ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return tableCardsExtension(
-                        context,
-                        snapshot.data,
-                        index,
-                        buttonText1,
-                        buttonText2,
-                        function: setState,
-                        assignTable: assignTable,
-                          visibleButton:visibleButton
-                      );
+                      return tableCardsExtension(context, snapshot.data, index,
+                          buttonText1, buttonText2,
+                          function: setState,
+                          assignTable: assignTable,
+                          visibleButton: visibleButton);
                     },
                   ),
                 ),
@@ -95,9 +92,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
 
 Widget tableCardsExtension(
     context, snapshotTable, indexTable, buttonText1, buttonText2,
-    {function = "",
-
-    assignTable,visibleButton=true}) {
+    {function = "", assignTable, visibleButton = true}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -116,7 +111,7 @@ Widget tableCardsExtension(
                 myWhite)
             : text(
                 context,
-                "Table: " + snapshotTable[indexTable]["table_id"].toString(),
+                "Table: " + snapshotTable[indexTable]["table_name"].toString(),
                 0.04,
                 myWhite),
         Divider(
@@ -173,7 +168,7 @@ Widget tableCardsExtension(
               ],
             ),
             buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
-                indexTable, assignTable, function,visibleButton)
+                indexTable, assignTable, function, visibleButton)
           ],
         )
       ],

@@ -9,7 +9,11 @@ Widget inputTextField(context, label, myController,
     color: myWhite,
     child: TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (function == "") ? () {} : function,
+      validator: (function == "")
+          ? () {
+              return null;
+            }
+          : function,
       controller: myController,
       textInputAction: TextInputAction.next,
       keyboardType: password == true
