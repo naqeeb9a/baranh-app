@@ -119,8 +119,7 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                           ).show(context);
                                         } else {}
                                       }
-                                      assignTable =
-                                          snapshot.data[index]["name"];
+                                      assignTable = snapshot.data[index]["id"];
 
                                       var response = await assignTableOnline(
                                           snapshotTable[indexTable]["sale_id"],
