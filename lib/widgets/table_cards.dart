@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'input_field_home.dart';
 
 Widget tableCards(context, function, buttonText1, buttonText2,
-    {setState = "", visible = false}) {
+    {setState = "", visible = false,visibleButton=true}) {
   final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
   return FutureBuilder(
@@ -77,6 +77,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                         buttonText2,
                         function: setState,
                         assignTable: assignTable,
+                          visibleButton:visibleButton
                       );
                     },
                   ),
@@ -95,9 +96,8 @@ Widget tableCards(context, function, buttonText1, buttonText2,
 Widget tableCardsExtension(
     context, snapshotTable, indexTable, buttonText1, buttonText2,
     {function = "",
-    function1check = false,
-    function2check = false,
-    assignTable}) {
+
+    assignTable,visibleButton=true}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -173,7 +173,7 @@ Widget tableCardsExtension(
               ],
             ),
             buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
-                indexTable, assignTable, function)
+                indexTable, assignTable, function,visibleButton)
           ],
         )
       ],

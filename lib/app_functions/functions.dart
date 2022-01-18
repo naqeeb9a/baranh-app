@@ -252,6 +252,7 @@ punchOrder(total, cost) async {
     "table_no": "$tableNoGlobal",
     "saleid": "$saleIdGlobal"
   };
+  print(cost);
   try {
     var response = await http.post(
       Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
@@ -263,12 +264,19 @@ punchOrder(total, cost) async {
     );
     var jsonData = jsonDecode(response.body);
 
+    print("\n\nobject\n\n");
+
+    print(response.body);
+    print("\n\nobject 2\n\n");
+    print(jsonData);
+
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
       return false;
     }
   } catch (e) {
+    print(e);
     return false;
   }
 }

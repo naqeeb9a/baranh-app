@@ -10,14 +10,17 @@ import 'package:motion_toast/motion_toast.dart';
 import 'green_buttons.dart';
 
 buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
-    assignTable, function) {
+    assignTable, function, visibleButton) {
   return SizedBox(
-    height: dynamicHeight(context, buttonText1 == "View details" ? 0.16 : 0.12),
+    height: dynamicHeight(context,
+        buttonText1 == "View details" && visibleButton == true ? 0.16 : 0.12),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: buttonText1 == "View details" ? true : false,
+          visible: buttonText1 == "View details" && visibleButton == true
+              ? true
+              : false,
           child: greenButtons(
               context, "Change Table", snapshotTable, indexTable, function: () {
             dialogueCustom(
@@ -47,36 +50,39 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
             ).show(context);
           }
         }),
-        greenButtons(
-          context,
-          buttonText2,
-          snapshotTable,
-          indexTable,
-          function: () {
-            if (buttonText2 == "Assign Waiter") {
-              dialogueCustomWaiter(
-                  context, snapshotTable, indexTable, assignTable, function);
-            } else if (buttonText2 == "Assign Table") {
-              dialogueCustom(
-                  context, snapshotTable, indexTable, assignTable, function);
-            } else if (buttonText2 == "Take Order") {
-              push(
+        Visibility(
+          visible: visibleButton,
+          child: greenButtons(
+            context,
+            buttonText2,
+            snapshotTable,
+            indexTable,
+            function: () {
+              if (buttonText2 == "Assign Waiter") {
+                dialogueCustomWaiter(
+                    context, snapshotTable, indexTable, assignTable, function);
+              } else if (buttonText2 == "Assign Table") {
+                dialogueCustom(
+                    context, snapshotTable, indexTable, assignTable, function);
+              } else if (buttonText2 == "Take Order") {
+                push(
+                    context,
+                    MenuPage(
+                      saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                      tableNo: snapshotTable[indexTable]["table_id"].toString(),
+                    ));
+              } else if (buttonText2 == "View details") {
+                push(
                   context,
-                  MenuPage(
+                  OrderSummaryPage(
                     saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                    tableNo: snapshotTable[indexTable]["table_id"].toString(),
-                  ));
-            } else if (buttonText2 == "View details") {
-              push(
-                context,
-                OrderSummaryPage(
-                  saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                ),
-              );
-            } else {
-              MotionToast.error(description: "Something went Wrong");
-            }
-          },
+                  ),
+                );
+              } else {
+                MotionToast.error(description: "Something went Wrong");
+              }
+            },
+          ),
         ),
       ],
     ),

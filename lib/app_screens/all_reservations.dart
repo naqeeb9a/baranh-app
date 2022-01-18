@@ -87,19 +87,17 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
               heightBox(context, 0.02),
               Expanded(
                 child: tableCards(
-                  context,
-                  searchCheck == false
-                      ? getReservationData("reservelist")
-                      : searchReservation(
-                          hintText,
-                          _reservationNumber.text,
-                        ),
-                  "Guest Arrived",
-                  "View details",
-                  setState: () {
-                    setState(() {});
-                  },
-                ),
+                    context,
+                    searchCheck == false
+                        ? getReservationData("reservelist")
+                        : searchReservation(
+                            hintText,
+                            _reservationNumber.text,
+                          ),
+                    "View details",
+                    "View details", setState: () {
+                  setState(() {});
+                }, visibleButton: false),
               )
             ],
           ),

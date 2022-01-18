@@ -70,20 +70,28 @@ class CustomDineInSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     dynamic matchQuery = [];
-    for (var item in data) {
+    if(pageDecider=="Dine In Orders")
+    {for (var item in data) {
       if (item["table_id"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_name"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_phone"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase())) {
+          .toString()
+          .toLowerCase()
+          .contains(query.toLowerCase())) {
         matchQuery.add(item);
+      }
+    }}
+    else
+    {
+      for (var item in data) {
+        if (item["customer_name"]
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            item["customer_phone"]
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
+          matchQuery.add(item);
+        }
       }
     }
     return Padding(
@@ -98,8 +106,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
               buttonText1,
               buttonText2,
               function: setState,
-              function1check: function1check,
-              function2check: function2check,
+
               assignTable: assignTable,
             );
           },
@@ -109,22 +116,30 @@ class CustomDineInSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     dynamic matchQuery = [];
-    for (var item in data) {
-      if (item["table_id"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_name"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()) ||
-          item["customer_phone"]
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase())) {
-        matchQuery.add(item);
+    if(pageDecider=="Dine In Orders")
+      {for (var item in data) {
+        if (item["table_id"]
+            .toString()
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
+          matchQuery.add(item);
+        }
+      }}
+    else
+      {
+        for (var item in data) {
+          if (item["customer_name"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
+              item["customer_phone"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(query.toLowerCase())) {
+            matchQuery.add(item);
+          }
+        }
       }
-    }
     return Padding(
       padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
       child: ListView.builder(
@@ -137,8 +152,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
             buttonText1,
             buttonText2,
             function: setState,
-            function1check: function1check,
-            function2check: function2check,
+
             assignTable: assignTable,
           );
         },
