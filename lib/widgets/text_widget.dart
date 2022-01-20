@@ -6,6 +6,8 @@ Widget text(context, text, size, color,
   return Text(
     text,
     textAlign: alignText,
+    maxLines: 2,
+    overflow: TextOverflow.ellipsis,
     style: TextStyle(
       color: color,
       fontSize: dynamicWidth(context, size),

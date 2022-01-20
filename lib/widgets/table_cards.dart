@@ -118,6 +118,7 @@ Widget tableCardsExtension(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
         ),
+        heightBox(context, 0.02),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -18,11 +18,13 @@ Widget greenButtons(context, text1, snapshot, index, {function = ""}) {
           dynamicWidth(context, 0.01),
         ),
       ),
-      child: text(
-        context,
-        text1,
-        0.035,
-        myWhite,
+      child: FittedBox(
+        child: text(
+          context,
+          text1,
+          0.035,
+          myWhite,
+        ),
       ),
     ),
   );

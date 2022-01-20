@@ -17,6 +17,8 @@ bar(
       child: Image.asset(
         "assets/logo.png",
         width: dynamicWidth(context, 0.2),
+        fit: BoxFit.contain,
+        height: dynamicHeight(context, 0.05),
       ),
     ),
     leading: GestureDetector(
@@ -36,9 +38,10 @@ bar(
           ),
           child: Obx(() {
             return Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(
+                  top: dynamicHeight(context, 0.02),
+                  right: dynamicWidth(context, 0.02)),
               child: Badge(
-                position: BadgePosition.topEnd(),
                 badgeContent: text(
                   context,
                   cartItems.length.toString(),

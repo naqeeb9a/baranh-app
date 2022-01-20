@@ -139,7 +139,8 @@ class _ContactInformationState extends State<ContactInformation> {
                     popUntil(customContext);
                   }
                 }
-              })
+              }),
+              heightBox(context, 0.04),
             ],
           ),
         ),

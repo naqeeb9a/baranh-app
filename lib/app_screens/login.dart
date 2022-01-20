@@ -60,122 +60,115 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: dynamicWidth(context, 0.3),
               ),
             )
-          : SafeArea(
-              child: Center(
-                child: SizedBox(
-                  width: dynamicWidth(context, .9),
-                  height: dynamicHeight(context, .6),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        text(
-                          context,
-                          "TEAM LOGIN",
-                          .08,
-                          myWhite,
-                          bold: true,
-                        ),
-                        heightBox(context, .08),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            text(context, "Email", .05, myWhite),
-                          ],
-                        ),
-                        heightBox(context, .01),
-                        inputTextField(
-                          context,
-                          "Email",
-                          email,
-                        ),
-                        heightBox(context, .02),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            text(context, "Password", .05, myWhite),
-                          ],
-                        ),
-                        heightBox(context, .01),
-                        inputTextField(
-                          context,
-                          "Password",
-                          password,
-                          password: true,
-                          function2: () {
+          : Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
+              child: SafeArea(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      text(
+                        context,
+                        "TEAM LOGIN",
+                        .08,
+                        myWhite,
+                        bold: true,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          text(context, "Email", .05, myWhite),
+                          heightBox(context, .01),
+                          inputTextField(
+                            context,
+                            "Email",
+                            email,
+                          ),
+                          heightBox(context, .02),
+                          text(context, "Password", .05, myWhite),
+                          heightBox(context, .01),
+                          inputTextField(
+                            context,
+                            "Password",
+                            password,
+                            password: true,
+                            function2: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      coloredButton(context, "SIGN IN", myOrange,
+                          function: () async {
+                        if (!EmailValidator.validate(email.text)) {
+                          MotionToast.error(
+                            title: "Error",
+                            dismissable: true,
+                            titleStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            description: "Please enter valid email!",
+                          ).show(context);
+                        } else if (password.text.isEmpty) {
+                          MotionToast.error(
+                            title: "Error",
+                            dismissable: true,
+                            titleStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            description: "Please enter valid password!",
+                          ).show(context);
+                        } else {
+                          var response = await loginFunction();
+
+                          if (response == "Error") {
                             setState(() {
-                              obscureText = !obscureText;
+                              loading = false;
                             });
-                          },
-                        ),
-                        heightBox(context, .04),
-                        coloredButton(context, "SIGN IN", myOrange,
-                            function: () async {
-                          if (!EmailValidator.validate(email.text)) {
                             MotionToast.error(
                               title: "Error",
                               dismissable: true,
                               titleStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
-                              description: "Please enter valid email!",
+                              description: "Invalid Credentials",
                             ).show(context);
-                          } else if (password.text.isEmpty) {
+                          } else if (response == false) {
+                            setState(() {
+                              loading = false;
+                            });
                             MotionToast.error(
                               title: "Error",
                               dismissable: true,
                               titleStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
-                              description: "Please enter valid password!",
+                              description:
+                                  "Check your Internet or try again later",
                             ).show(context);
                           } else {
-                            var response = await loginFunction();
-
-                            if (response == "Error") {
-                              setState(() {
-                                loading = false;
-                              });
-                              MotionToast.error(
-                                title: "Error",
-                                dismissable: true,
-                                titleStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                description: "Invalid Credentials",
-                              ).show(context);
-                            } else if (response == false) {
-                              setState(() {
-                                loading = false;
-                              });
-                              MotionToast.error(
-                                title: "Error",
-                                dismissable: true,
-                                titleStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                description:
-                                    "Check your Internet or try again later",
-                              ).show(context);
-                            } else {
-                              SharedPreferences loginUser =
-                                  await SharedPreferences.getInstance();
-                              loginUser.setString(
-                                "userResponse",
-                                json.encode(response),
-                              );
-                              setState(() {
-                                pageDecider = "New Reservations";
-                              });
-                              pushAndRemoveUntil(
-                                context,
-                                const MyApp(),
-                              );
-                            }
+                            SharedPreferences loginUser =
+                                await SharedPreferences.getInstance();
+                            loginUser.setString(
+                              "userResponse",
+                              json.encode(response),
+                            );
+                            setState(() {
+                              pageDecider = "New Reservations";
+                            });
+                            pushAndRemoveUntil(
+                              context,
+                              const MyApp(),
+                            );
                           }
-                        }),
-                      ],
-                    ),
+                        }
+                      }),
+                      heightBox(context, .04),
+                    ],
                   ),
                 ),
               ),

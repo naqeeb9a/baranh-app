@@ -57,7 +57,9 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                     );
                   } else if (snapshot.data == false) {
                     return Expanded(
-                        child: retry(context, ));
+                        child: retry(
+                      context,
+                    ));
                   } else {
                     return orderDetails(context, snapshot.data);
                   }
@@ -135,6 +137,7 @@ orderDetails(context, snapshot) {
         0.03,
         myWhite,
       ),
+      heightBox(context, 0.02),
     ],
   );
 }

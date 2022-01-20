@@ -12,8 +12,8 @@ import 'green_buttons.dart';
 buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
     assignTable, function, visibleButton) {
   return SizedBox(
-    height: dynamicHeight(context,
-        buttonText1 == "View details" && visibleButton == true ? 0.16 : 0.12),
+    height: dynamicWidth(context,
+        buttonText1 == "View details" && visibleButton == true ? 0.37 : 0.26),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -29,27 +29,27 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
         ),
         greenButtons(context, buttonText1, snapshotTable, indexTable,
             function: () async {
-              if (buttonText1 == "View details") {
-                push(
-                    context,
-                    OrderSummaryPage(
-                      saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                    ));
-              } else if (buttonText1 == "Assign Table") {
-                dialogueCustom(
-                    context, snapshotTable, indexTable, assignTable, function);
-              } else if (buttonText1 == "Assign Waiter") {
-                dialogueCustomWaiter(
-                    context, snapshotTable, indexTable, assignTable, function);
-              } else if (buttonText1 == "Guest Arrived") {
-                guestArrivedNow(context, snapshotTable, indexTable);
-              } else {
-                MotionToast.info(
-                  description: "Something Went wrong",
-                  dismissable: true,
-                ).show(context);
-              }
-            }),
+          if (buttonText1 == "View details") {
+            push(
+                context,
+                OrderSummaryPage(
+                  saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                ));
+          } else if (buttonText1 == "Assign Table") {
+            dialogueCustom(
+                context, snapshotTable, indexTable, assignTable, function);
+          } else if (buttonText1 == "Assign Waiter") {
+            dialogueCustomWaiter(
+                context, snapshotTable, indexTable, assignTable, function);
+          } else if (buttonText1 == "Guest Arrived") {
+            guestArrivedNow(context, snapshotTable, indexTable);
+          } else {
+            MotionToast.info(
+              description: "Something Went wrong",
+              dismissable: true,
+            ).show(context);
+          }
+        }),
         Visibility(
           visible: visibleButton,
           child: greenButtons(
@@ -79,7 +79,10 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                   ),
                 );
               } else {
-                MotionToast.error(description: "Something went Wrong");
+                MotionToast.error(
+                  description: "Something went Wrong",
+                  width: dynamicWidth(context, 0.8),
+                );
               }
             },
           ),

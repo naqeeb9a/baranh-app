@@ -80,7 +80,9 @@ class _MenuPageState extends State<MenuPage> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == false) {
-                      return retry(context,);
+                      return retry(
+                        context,
+                      );
                     } else {
                       if (snapshot.data.length == 0) {
                         return Center(
@@ -190,6 +192,12 @@ menuCards(context, snapshot, index) {
               height: dynamicWidth(context, 0.2),
               width: dynamicWidth(context, 0.5),
               fit: BoxFit.cover,
+              errorBuilder: (context, yrl, error) {
+                return const Icon(
+                  Icons.error,
+                  color: myWhite,
+                );
+              },
             ),
           ),
         ),
@@ -197,11 +205,14 @@ menuCards(context, snapshot, index) {
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, 0.02),
           ),
-          child: text(
-            context,
-            snapshot[index]["name"],
-            0.03,
-            myWhite,
+          child: FittedBox(
+            clipBehavior: Clip.antiAlias,
+            child: text(
+              context,
+              snapshot[index]["name"],
+              0.03,
+              myWhite,
+            ),
           ),
         ),
         Padding(

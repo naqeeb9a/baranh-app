@@ -106,23 +106,20 @@ Widget drawerItems(context, function, changeState) {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .04),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                text(
-                  context,
-                  userResponse == ""
-                      ? ""
-                      : "Hi ${userResponse["full_name"] ?? ""}"
-                          "\n(${userResponse["designation"] ?? ""})"
-                          "\n\n${userResponse["outlet_name"] ?? ""}",
-                  .05,
-                  myWhite,
-                  bold: true,
-                ),
-              ],
+                vertical: dynamicHeight(context, .04),
+                horizontal: dynamicWidth(context, 0.02)),
+            child: FittedBox(
+              child: text(
+                context,
+                userResponse == ""
+                    ? ""
+                    : "Hi ${userResponse["full_name"] ?? ""}"
+                        "\n(${userResponse["designation"] ?? ""})"
+                        "\n\n${userResponse["outlet_name"] ?? ""}",
+                .05,
+                myWhite,
+                bold: true,
+              ),
             ),
           ),
           Flexible(
@@ -140,12 +137,16 @@ Widget drawerItems(context, function, changeState) {
                       drawerItemList[index]["icon"],
                       color: myWhite,
                     ),
-                    title: Text(
-                      drawerItemList[index]["text"].toString().toUpperCase(),
-                      style: TextStyle(
-                        color: myWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .044),
+                    title: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        drawerItemList[index]["text"].toString().toUpperCase(),
+                        style: TextStyle(
+                          color: myWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
                       ),
                     ),
                   );
@@ -265,7 +266,8 @@ Widget drawerItems2(context) {
               function: () {
                 pop(context);
               },
-            )
+            ),
+            heightBox(context, 0.02),
           ],
         ),
       ),
@@ -283,6 +285,12 @@ cartCards(context, index, function) {
         height: dynamicWidth(context, 0.2),
         width: dynamicWidth(context, 0.15),
         fit: BoxFit.cover,
+        errorBuilder: (context, yrl, error) {
+          return const Icon(
+            Icons.error,
+            color: myWhite,
+          );
+        },
       ),
       FittedBox(
         child: SizedBox(
