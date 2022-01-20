@@ -94,27 +94,26 @@ class CustomDineInSearchDelegate extends SearchDelegate {
         }
       }
     }
-    return Padding(
-        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-        child: matchQuery.length == 0
-            ? Expanded(
-                child: Center(
-                    child: text(context, "No Orders found", 0.04, myWhite,
-                        alignText: TextAlign.center)))
-            : ListView.builder(
-                itemCount: matchQuery.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return tableCardsExtension(
-                    context,
-                    matchQuery,
-                    index,
-                    buttonText1,
-                    buttonText2,
-                    function: setState,
-                    assignTable: assignTable,
-                  );
-                },
-              ));
+    return matchQuery.length == 0
+        ? Center(
+            child: text(context, "No Orders found", 0.04, myWhite,
+                alignText: TextAlign.center))
+        : Padding(
+            padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+            child: ListView.builder(
+              itemCount: matchQuery.length,
+              itemBuilder: (BuildContext context, int index) {
+                return tableCardsExtension(
+                  context,
+                  matchQuery,
+                  index,
+                  buttonText1,
+                  buttonText2,
+                  function: setState,
+                  assignTable: assignTable,
+                );
+              },
+            ));
   }
 
   @override
@@ -143,14 +142,13 @@ class CustomDineInSearchDelegate extends SearchDelegate {
         }
       }
     }
-    return Padding(
-      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: matchQuery.length == 0
-          ? Expanded(
-              child: Center(
-                  child: text(context, "No Orders found", 0.04, myWhite,
-                      alignText: TextAlign.center)))
-          : ListView.builder(
+    return matchQuery.length == 0
+        ? Center(
+            child: text(context, "No Orders found", 0.04, myWhite,
+                alignText: TextAlign.center))
+        : Padding(
+            padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+            child: ListView.builder(
               itemCount: matchQuery.length,
               itemBuilder: (BuildContext context, int index) {
                 return tableCardsExtension(
@@ -164,6 +162,6 @@ class CustomDineInSearchDelegate extends SearchDelegate {
                 );
               },
             ),
-    ); // ListTile
+          ); // ListTile
   }
 }

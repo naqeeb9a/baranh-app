@@ -392,14 +392,13 @@ class CustomSearchDelegate extends SearchDelegate {
       }
     }
 
-    return Padding(
-      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: matchQuery.length == 0
-          ? Expanded(
-              child: Center(
-                  child: text(context, "No Items found", 0.04, myWhite,
-                      alignText: TextAlign.center)))
-          : GridView.builder(
+    return matchQuery.length == 0
+        ? Center(
+            child: text(context, "No Items found", 0.04, myWhite,
+                alignText: TextAlign.center))
+        : Padding(
+            padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+            child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
@@ -411,7 +410,7 @@ class CustomSearchDelegate extends SearchDelegate {
                 return menuCards(context, matchQuery, index);
               },
             ),
-    );
+          );
   }
 
   @override
@@ -422,14 +421,13 @@ class CustomSearchDelegate extends SearchDelegate {
         matchQuery.add(item);
       }
     }
-    return Padding(
-      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: matchQuery.length == 0
-          ? Expanded(
-              child: Center(
-                  child: text(context, "No Items found", 0.04, myWhite,
-                      alignText: TextAlign.center)))
-          : GridView.builder(
+    return matchQuery.length == 0
+        ? Center(
+            child: text(context, "No Items found", 0.04, myWhite,
+                alignText: TextAlign.center))
+        : Padding(
+            padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+            child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
@@ -441,6 +439,6 @@ class CustomSearchDelegate extends SearchDelegate {
                 return menuCards(context, matchQuery, index);
               },
             ),
-    ); // ListTile
+          ); // ListTile
   }
 }
