@@ -206,7 +206,7 @@ Widget drawerItems2(context) {
                 );
               },
             )),
-            dividerRowWidgets(context, "TOTAL: 5% GST: ",
+            dividerRowWidgets(context, "TOTAL 5% GST: ",
                 "PKR " + ((getTotal() * 0.05) + getTotal()).toStringAsFixed(2),
                 check: true),
             dividerRowWidgets(context, "TOTAL 16% GST: ",
@@ -421,13 +421,20 @@ Widget dividerRowWidgets(context, text1, text2, {check = false}) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        text(context, text1, 0.04, myWhite),
+        SizedBox(
+            width: dynamicWidth(context, 0.2),
+            child: FittedBox(child: text(context, text1, 0.04, myWhite))),
         check == true
-            ? text(
-                context,
-                "$text2",
-                0.04,
-                myWhite,
+            ? SizedBox(
+                width: dynamicWidth(context, 0.2),
+                child: FittedBox(
+                  child: text(
+                    context,
+                    "$text2",
+                    0.04,
+                    myWhite,
+                  ),
+                ),
               )
             : InkWell(
                 onTap: () {

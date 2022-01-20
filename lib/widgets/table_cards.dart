@@ -37,6 +37,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                       child: text(context, "No orders Yet!!", 0.04, myWhite)))
               : Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
         } else {
+          int count = 0;
           return Column(
             children: [
               Visibility(
@@ -113,25 +114,39 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           shrinkWrap: shrinkWrap,
                           physics: physics,
                           itemBuilder: (BuildContext context, int index) {
-                            return pageDecider == "Dine In Orders" &&
-                                    userResponse["designation"] == "Waiter"
-                                ? snapshot.data[index]["waiter_id"] ==
-                                        userResponse["id"]
-                                    ? tableCardsExtension(
-                                        context,
-                                        snapshot.data,
-                                        index,
-                                        buttonText1,
-                                        buttonText2,
-                                        function: setState,
-                                        assignTable: assignTable,
-                                        visibleButton: visibleButton)
-                                    : Container()
-                                : tableCardsExtension(context, snapshot.data,
-                                    index, buttonText1, buttonText2,
+                            if (pageDecider == "Dine In Orders" &&
+                                userResponse["designation"] == "Waiter") {
+                              if (snapshot.data[index]["waiter_id"] ==
+                                  userResponse["id"]) {
+                                count++;
+                                return tableCardsExtension(
+                                    context,
+                                    snapshot.data,
+                                    index,
+                                    buttonText1,
+                                    buttonText2,
                                     function: setState,
                                     assignTable: assignTable,
                                     visibleButton: visibleButton);
+                              } else {
+                                return count == 0 &&
+                                        index == snapshot.data.length - 1
+                                    ? SizedBox(
+                                        height: dynamicHeight(context, 0.5),
+                                        child: Center(
+                                          child: text(context,
+                                              "no Orders Yet!!", 0.04, myWhite),
+                                        ),
+                                      )
+                                    : Container();
+                              }
+                            } else {
+                              return tableCardsExtension(context, snapshot.data,
+                                  index, buttonText1, buttonText2,
+                                  function: setState,
+                                  assignTable: assignTable,
+                                  visibleButton: visibleButton);
+                            }
                           },
                         ),
                       ),
