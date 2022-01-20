@@ -27,136 +27,164 @@ class _MenuPageState extends State<MenuPage> {
 
     return Scaffold(
       backgroundColor: myBlack,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
-        child: Column(
-          children: [
-            heightBox(context, 0.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if (cartItems.isEmpty) {
-                      pop(context);
-                    } else {
-                      CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.warning,
-                          text:
-                              "if you leave this page your cart items will discard",
-                          confirmBtnText: "Continue",
-                          cancelBtnText: "Cancel",
-                          onCancelBtnTap: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                          onConfirmBtnTap: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                            cartItems.clear();
-                            pop(context);
-                          });
-                    }
-                  },
-                  child: const Icon(
-                    LineIcons.arrowLeft,
-                    color: myWhite,
+      body: WillPopScope(
+        onWillPop: () async {
+          if (cartItems.isEmpty) {
+            return true;
+          } else {
+            CoolAlert.show(
+                context: context,
+                type: CoolAlertType.warning,
+                text: "if you leave this page your cart items will discard",
+                confirmBtnText: "Continue",
+                cancelBtnText: "Cancel",
+                showCancelBtn: true,
+                onCancelBtnTap: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+                onConfirmBtnTap: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  cartItems.clear();
+                  pop(context);
+                });
+          }
+          return false;
+        },
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
+          child: Column(
+            children: [
+              heightBox(context, 0.02),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (cartItems.isEmpty) {
+                        pop(context);
+                      } else {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text:
+                                "if you leave this page your cart items will discard",
+                            confirmBtnText: "Continue",
+                            cancelBtnText: "Cancel",
+                            showCancelBtn: true,
+                            onCancelBtnTap: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            onConfirmBtnTap: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              cartItems.clear();
+                              pop(context);
+                            });
+                      }
+                    },
+                    child: const Icon(
+                      LineIcons.arrowLeft,
+                      color: myWhite,
+                    ),
                   ),
-                ),
-                text(context, "Menu", 0.05, myWhite),
-                const Icon(
-                  LineIcons.arrowLeft,
-                  color: myBlack,
-                ),
-              ],
-            ),
-            const Divider(
-              thickness: 1,
-              color: myWhite,
-            ),
-            heightBox(context, 0.02),
-            Expanded(
-              child: FutureBuilder(
-                future: getMenu(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data == false) {
-                      return retry(
-                        context,
-                      );
-                    } else {
-                      if (snapshot.data.length == 0) {
-                        return Center(
-                          child:
-                              text(context, "No Items in Menu", 0.04, myWhite),
+                  text(context, "Menu", 0.05, myWhite),
+                  const Icon(
+                    LineIcons.arrowLeft,
+                    color: myBlack,
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1,
+                color: myWhite,
+              ),
+              heightBox(context, 0.02),
+              Expanded(
+                child: FutureBuilder(
+                  future: getMenu(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.data == false) {
+                        return retry(
+                          context,
                         );
                       } else {
-                        return StatefulBuilder(builder: (context, changeState) {
-                          return Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showSearch(
-                                    context: context,
-                                    delegate:
-                                        CustomSearchDelegate(snapshot.data),
-                                  ).then((value) => changeState(() {}));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: myWhite,
-                                      borderRadius: BorderRadius.circular(
-                                          dynamicWidth(context, 0.1))),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                        border: const UnderlineInputBorder(
-                                            borderSide: BorderSide.none),
-                                        hintText: "Search",
-                                        enabled: false,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                dynamicWidth(context, 0.05))),
+                        if (snapshot.data.length == 0) {
+                          return Center(
+                            child: text(
+                                context, "No Items in Menu", 0.04, myWhite),
+                          );
+                        } else {
+                          return StatefulBuilder(
+                              builder: (context, changeState) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    showSearch(
+                                      context: context,
+                                      delegate:
+                                          CustomSearchDelegate(snapshot.data),
+                                    ).then((value) => changeState(() {}));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: myWhite,
+                                        borderRadius: BorderRadius.circular(
+                                            dynamicWidth(context, 0.1))),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          border: const UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                          hintText: "Search",
+                                          enabled: false,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  dynamicWidth(context, 0.05))),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              heightBox(context, 0.02),
-                              StatefulBuilder(builder: (context, changeState) {
-                                menuRefresh = () {
-                                  changeState(() {});
-                                };
-                                return Expanded(
-                                  child: GridView.builder(
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 10,
-                                            childAspectRatio:
-                                                dynamicWidth(context, 0.5) /
-                                                    dynamicWidth(context, 0.5)),
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return menuCards(
-                                          context, snapshot.data, index);
-                                    },
-                                  ),
-                                );
-                              }),
-                            ],
-                          );
-                        });
+                                heightBox(context, 0.02),
+                                StatefulBuilder(
+                                    builder: (context, changeState) {
+                                  menuRefresh = () {
+                                    changeState(() {});
+                                  };
+                                  return Expanded(
+                                    child: GridView.builder(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 10,
+                                              childAspectRatio: dynamicWidth(
+                                                      context, 0.5) /
+                                                  dynamicWidth(context, 0.5)),
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return menuCards(
+                                            context, snapshot.data, index);
+                                      },
+                                    ),
+                                  );
+                                }),
+                              ],
+                            );
+                          });
+                        }
                       }
+                    } else {
+                      return LottieBuilder.asset(
+                        "assets/loader.json",
+                        width: dynamicWidth(context, 0.3),
+                      );
                     }
-                  } else {
-                    return LottieBuilder.asset(
-                      "assets/loader.json",
-                      width: dynamicWidth(context, 0.3),
-                    );
-                  }
-                },
-              ),
-            )
-          ],
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -269,7 +297,8 @@ iconsRow(context, snapshot) {
                       cartItems.contains(snapshot) ? "Added" : "Add to Cart",
                       0.04,
                       cartItems.contains(snapshot) ? myBlack : myWhite,
-                      alignText: TextAlign.center),
+                      alignText: TextAlign.center,
+                      bold: true),
                 ),
                 decoration: BoxDecoration(
                   borderRadius:

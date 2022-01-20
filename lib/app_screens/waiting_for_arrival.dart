@@ -25,7 +25,10 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
           child: Column(
             children: [
               heightBox(context, 0.05),
-              text(context, "WAITING FOR ARRIVAL GUESTS", 0.05, myWhite),
+              FittedBox(
+                child: text(context, "WAITING FOR ARRIVAL", 0.05, myWhite,
+                    alignText: TextAlign.center),
+              ),
               const Divider(
                 thickness: 1,
                 color: myWhite,

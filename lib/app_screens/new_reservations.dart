@@ -69,6 +69,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                               0.04,
                               myWhite,
                             ),
+                            widthBox(context, 0.1),
                             FutureBuilder(
                               future: getTimeSlots(hintText),
                               builder: (BuildContext context,
@@ -107,41 +108,54 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                       : StatefulBuilder(
                                           builder: (BuildContext context,
                                               changeSate) {
-                                            return DropdownButton<String>(
-                                              hint: text(
-                                                context,
-                                                indexValue.substring(
-                                                    0, indexValue.indexOf("#")),
-                                                0.04,
-                                                myWhite,
+                                            return SizedBox(
+                                              width: dynamicWidth(context, 0.6),
+                                              child: DropdownButton<String>(
+                                                isExpanded: true,
+                                                hint: FittedBox(
+                                                  child: text(
+                                                    context,
+                                                    indexValue.substring(
+                                                        0,
+                                                        indexValue
+                                                            .indexOf("#")),
+                                                    0.04,
+                                                    myWhite,
+                                                  ),
+                                                ),
+                                                items: snapshot.data
+                                                    .map<
+                                                        DropdownMenuItem<
+                                                            String>>((value) =>
+                                                        DropdownMenuItem<
+                                                            String>(
+                                                          value: getConvertedTime(
+                                                                  value[
+                                                                      "opening_time"]) +
+                                                              " - " +
+                                                              getConvertedTime(
+                                                                  value[
+                                                                      "closing_time"]) +
+                                                              "  ${value["discount"]} % off" +
+                                                              "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                          child: FittedBox(
+                                                            child: Text(getConvertedTime(
+                                                                    value[
+                                                                        "opening_time"]) +
+                                                                " - " +
+                                                                getConvertedTime(
+                                                                    value[
+                                                                        "closing_time"]) +
+                                                                "  ${value["discount"]} % off"),
+                                                          ),
+                                                        ))
+                                                    .toList(),
+                                                onChanged: (value) {
+                                                  changeSate(() {
+                                                    indexValue = value!;
+                                                  });
+                                                },
                                               ),
-                                              items: snapshot.data
-                                                  .map<
-                                                      DropdownMenuItem<
-                                                          String>>((value) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: getConvertedTime(
-                                                                value[
-                                                                    "opening_time"]) +
-                                                            " - " +
-                                                            getConvertedTime(value[
-                                                                "closing_time"]) +
-                                                            "  ${value["discount"]} % off" +
-                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                        child: Text(getConvertedTime(
-                                                                value[
-                                                                    "opening_time"]) +
-                                                            " - " +
-                                                            getConvertedTime(value[
-                                                                "closing_time"]) +
-                                                            "  ${value["discount"]} % off"),
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (value) {
-                                                changeSate(() {
-                                                  indexValue = value!;
-                                                });
-                                              },
                                             );
                                           },
                                         );
@@ -202,6 +216,8 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                           backgroundColor: myOrange,
                           confirmBtnColor: myOrange,
                           confirmBtnText: "Continue",
+                          confirmBtnTextStyle:
+                              TextStyle(fontSize: dynamicWidth(context, 0.04)),
                           type: CoolAlertType.confirm,
                           animType: CoolAlertAnimType.slideInRight);
                     } else if (response == false) {

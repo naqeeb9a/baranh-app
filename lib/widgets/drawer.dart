@@ -86,7 +86,8 @@ Widget drawerItems(context, function, changeState) {
                   "assets/menu.png",
                   scale: 30,
                 ),
-                text(context, "MENU", .05, myWhite, bold: true),
+                FittedBox(
+                    child: text(context, "MENU", .04, myWhite, bold: true)),
                 InkWell(
                   onTap: () {
                     pop(context);
@@ -110,16 +111,16 @@ Widget drawerItems(context, function, changeState) {
                 horizontal: dynamicWidth(context, 0.02)),
             child: FittedBox(
               child: text(
-                context,
-                userResponse == ""
-                    ? ""
-                    : "Hi ${userResponse["full_name"] ?? ""}"
-                        "\n(${userResponse["designation"] ?? ""})"
-                        "\n\n${userResponse["outlet_name"] ?? ""}",
-                .05,
-                myWhite,
-                bold: true,
-              ),
+                  context,
+                  userResponse == ""
+                      ? ""
+                      : "Hi ${userResponse["full_name"] ?? ""}"
+                          "\n(${userResponse["designation"] ?? ""})"
+                          "\n\n${userResponse["outlet_name"] ?? ""}",
+                  .05,
+                  myWhite,
+                  bold: true,
+                  maxLines: 4),
             ),
           ),
           Flexible(
@@ -343,6 +344,7 @@ cartCards(context, index, function) {
                           cartItems[index]["qty"].toString(),
                           style: TextStyle(
                             color: myOrange,
+                            fontWeight: FontWeight.bold,
                             fontSize: dynamicWidth(context, .03),
                           ),
                         ),

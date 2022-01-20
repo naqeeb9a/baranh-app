@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'input_field_home.dart';
 
 Widget tableCards(context, function, buttonText1, buttonText2,
-    {setState = "", visible = false, visibleButton = true}) {
+    {setState = "",
+    visible = false,
+    visibleButton = true,
+    shinkWrap = false,
+    physics = const AlwaysScrollableScrollPhysics()}) {
   final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
   return FutureBuilder(
@@ -18,9 +22,13 @@ Widget tableCards(context, function, buttonText1, buttonText2,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data == false) {
-          return retry(
-            context,
-          );
+          return shinkWrap == true
+              ? Column(
+                  children: [retry(context), heightBox(context, 0.02)],
+                )
+              : retry(
+                  context,
+                );
         } else if (snapshot.data.length == 0) {
           return Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
         } else {
@@ -61,30 +69,58 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                       heightBox(context, 0.03),
                     ],
                   )),
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () {
-                    return Future.delayed(const Duration(milliseconds: 0), () {
-                      setState();
-                    });
-                  },
-                  child: ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return tableCardsExtension(context, snapshot.data, index,
-                          buttonText1, buttonText2,
-                          function: setState,
-                          assignTable: assignTable,
-                          visibleButton: visibleButton);
-                    },
-                  ),
-                ),
-              ),
+              shinkWrap == true
+                  ? RefreshIndicator(
+                      onRefresh: () {
+                        return Future.delayed(const Duration(milliseconds: 0),
+                            () {
+                          setState();
+                        });
+                      },
+                      child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        shrinkWrap: shinkWrap,
+                        physics: physics,
+                        itemBuilder: (BuildContext context, int index) {
+                          return tableCardsExtension(context, snapshot.data,
+                              index, buttonText1, buttonText2,
+                              function: setState,
+                              assignTable: assignTable,
+                              visibleButton: visibleButton);
+                        },
+                      ),
+                    )
+                  : Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return Future.delayed(const Duration(milliseconds: 0),
+                              () {
+                            setState();
+                          });
+                        },
+                        child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: shinkWrap,
+                          physics: physics,
+                          itemBuilder: (BuildContext context, int index) {
+                            return tableCardsExtension(context, snapshot.data,
+                                index, buttonText1, buttonText2,
+                                function: setState,
+                                assignTable: assignTable,
+                                visibleButton: visibleButton);
+                          },
+                        ),
+                      ),
+                    ),
             ],
           );
         }
       } else {
-        return loader(context);
+        return shinkWrap == true
+            ? Center(
+                child: loader(context),
+              )
+            : loader(context);
       }
     },
   );
@@ -122,51 +158,56 @@ Widget tableCardsExtension(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text(
-                    context,
-                    "Order: " + snapshotTable[indexTable]["sale_no"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Name: " +
-                        snapshotTable[indexTable]["customer_name"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Phone: " +
-                        snapshotTable[indexTable]["customer_phone"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Date: " +
-                        snapshotTable[indexTable]["booking_date"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Time: " +
-                        snapshotTable[indexTable]["opening_time"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Seats: " +
-                        snapshotTable[indexTable]["booked_seats"].toString(),
-                    0.035,
-                    myWhite),
-                text(
-                    context,
-                    "Status: " +
-                        snapshotTable[indexTable]["usage_status"].toString(),
-                    0.035,
-                    myWhite),
-              ],
+            SizedBox(
+              width: dynamicWidth(context, 0.5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  text(
+                      context,
+                      "Order: " +
+                          snapshotTable[indexTable]["sale_no"].toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Name: " +
+                          snapshotTable[indexTable]["customer_name"].toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Phone: " +
+                          snapshotTable[indexTable]["customer_phone"]
+                              .toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Date: " +
+                          snapshotTable[indexTable]["booking_date"].toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Time: " +
+                          snapshotTable[indexTable]["opening_time"].toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Seats: " +
+                          snapshotTable[indexTable]["booked_seats"].toString(),
+                      0.035,
+                      myWhite),
+                  text(
+                      context,
+                      "Status: " +
+                          snapshotTable[indexTable]["usage_status"].toString(),
+                      0.035,
+                      myWhite),
+                ],
+              ),
             ),
             buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
                 indexTable, assignTable, function, visibleButton)

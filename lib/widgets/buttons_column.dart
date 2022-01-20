@@ -4,6 +4,7 @@ import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/guest_arrived_function.dart';
 import 'package:baranh/widgets/show_alert.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 
@@ -42,7 +43,14 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
             dialogueCustomWaiter(
                 context, snapshotTable, indexTable, assignTable, function);
           } else if (buttonText1 == "Guest Arrived") {
-            guestArrivedNow(context, snapshotTable, indexTable);
+            CoolAlert.show(
+                context: context,
+                type: CoolAlertType.confirm,
+                showCancelBtn: true,
+                onConfirmBtnTap: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  guestArrivedNow(context, snapshotTable, indexTable);
+                });
           } else {
             MotionToast.info(
               description: "Something Went wrong",
