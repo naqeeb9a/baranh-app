@@ -13,7 +13,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
     {setState = "",
     visible = false,
     visibleButton = true,
-    shinkWrap = false,
+    shrinkWrap = false,
     physics = const AlwaysScrollableScrollPhysics()}) {
   final TextEditingController _tableNo = TextEditingController();
   var assignTable = 0;
@@ -22,7 +22,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data == false) {
-          return shinkWrap == true
+          return shrinkWrap == true
               ? Column(
                   children: [retry(context), heightBox(context, 0.02)],
                 )
@@ -74,7 +74,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                       heightBox(context, 0.03),
                     ],
                   )),
-              shinkWrap == true
+              shrinkWrap == true
                   ? RefreshIndicator(
                       onRefresh: () {
                         return Future.delayed(const Duration(milliseconds: 0),
@@ -84,14 +84,19 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                       },
                       child: ListView.builder(
                         itemCount: snapshot.data.length,
-                        shrinkWrap: shinkWrap,
+                        shrinkWrap: shrinkWrap,
                         physics: physics,
                         itemBuilder: (BuildContext context, int index) {
-                          return tableCardsExtension(context, snapshot.data,
-                              index, buttonText1, buttonText2,
-                              function: setState,
-                              assignTable: assignTable,
-                              visibleButton: visibleButton);
+                          return tableCardsExtension(
+                            context,
+                            snapshot.data,
+                            index,
+                            buttonText1,
+                            buttonText2,
+                            function: setState,
+                            assignTable: assignTable,
+                            visibleButton: visibleButton,
+                          );
                         },
                       ),
                     )
@@ -105,7 +110,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                         },
                         child: ListView.builder(
                           itemCount: snapshot.data.length,
-                          shrinkWrap: shinkWrap,
+                          shrinkWrap: shrinkWrap,
                           physics: physics,
                           itemBuilder: (BuildContext context, int index) {
                             return pageDecider == "Dine In Orders" &&
@@ -135,7 +140,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
           );
         }
       } else {
-        return shinkWrap == true
+        return shrinkWrap == true
             ? SizedBox(
                 height: dynamicHeight(context, 0.4),
                 child: Center(

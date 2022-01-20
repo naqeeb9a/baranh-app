@@ -48,6 +48,8 @@ dependencies:
   get: ^4.6.1
   badges: ^2.0.2
   dio: ^4.0.4
+  native_updater: ^0.1.1
+  upgrader: ^3.12.1
 
 dev_dependencies:
   flutter_test:

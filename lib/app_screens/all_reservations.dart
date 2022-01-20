@@ -103,7 +103,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                     setState(() {});
                   },
                       visibleButton: false,
-                      shinkWrap: true,
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics())
                 ],
               ),
