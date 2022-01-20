@@ -99,7 +99,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
         child: matchQuery.length == 0
             ? Expanded(
                 child: Center(
-                    child: text(context, "Not found", 0.04, myWhite,
+                    child: text(context, "No Orders found", 0.04, myWhite,
                         alignText: TextAlign.center)))
             : ListView.builder(
                 itemCount: matchQuery.length,
@@ -148,7 +148,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       child: matchQuery.length == 0
           ? Expanded(
               child: Center(
-                  child: text(context, "Not found", 0.04, myWhite,
+                  child: text(context, "No Orders found", 0.04, myWhite,
                       alignText: TextAlign.center)))
           : ListView.builder(
               itemCount: matchQuery.length,

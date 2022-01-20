@@ -30,7 +30,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                   context,
                 );
         } else if (snapshot.data.length == 0) {
-          return shinkWrap == true
+          return shrinkWrap == true
               ? SizedBox(
                   height: dynamicHeight(context, 0.4),
                   child: Center(

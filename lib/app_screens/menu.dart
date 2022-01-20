@@ -397,7 +397,7 @@ class CustomSearchDelegate extends SearchDelegate {
       child: matchQuery.length == 0
           ? Expanded(
               child: Center(
-                  child: text(context, "Not found", 0.04, myWhite,
+                  child: text(context, "No Items found", 0.04, myWhite,
                       alignText: TextAlign.center)))
           : GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -427,7 +427,7 @@ class CustomSearchDelegate extends SearchDelegate {
       child: matchQuery.length == 0
           ? Expanded(
               child: Center(
-                  child: text(context, "Not found", 0.04, myWhite,
+                  child: text(context, "No Items found", 0.04, myWhite,
                       alignText: TextAlign.center)))
           : GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
