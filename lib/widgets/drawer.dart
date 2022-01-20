@@ -163,9 +163,8 @@ Widget drawerItems(context, function, changeState) {
 
 Widget drawerItems2(context) {
   return StatefulBuilder(builder: (context, changeState) {
-    num total = 0;
-    num cost = 0;
     getTotal() {
+      num total = 0;
       for (var item in cartItems) {
         total += num.parse(item["sale_price"]) * item["qty"];
       }
@@ -173,13 +172,13 @@ Widget drawerItems2(context) {
     }
 
     getCost() {
+      num cost = 0;
       for (var item in cartItems) {
         cost += num.parse(item["cost"] ?? "0") * item["qty"];
       }
       return cost;
     }
 
-    cost = getCost();
     return ColoredBox(
       color: myBlack.withOpacity(.9),
       child: Padding(
@@ -207,8 +206,11 @@ Widget drawerItems2(context) {
                 );
               },
             )),
-            dividerRowWidgets(
-                context, "TOTAL: ", "PKR " + getTotal().toString(),
+            dividerRowWidgets(context, "TOTAL: 5% GST: ",
+                "PKR " + ((getTotal() * 0.05) + getTotal()).toStringAsFixed(2),
+                check: true),
+            dividerRowWidgets(context, "TOTAL 16% GST: ",
+                "PKR " + ((getTotal() * 0.16) + getTotal()).toStringAsFixed(2),
                 check: true),
             heightBox(context, 0.02),
             coloredButton(
@@ -225,36 +227,51 @@ Widget drawerItems2(context) {
                 } else {
                   CoolAlert.show(
                       context: context,
-                      type: CoolAlertType.loading,
-                      barrierDismissible: false,
-                      lottieAsset: "assets/loader.json");
-                  var response = await punchOrder(total, cost);
-                  if (response == false) {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    MotionToast.error(
-                      description: "Server Error or check your internet",
-                      dismissable: true,
-                    ).show(context);
-                  } else {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    cartItems.clear();
-                    saleIdGlobal = "";
-                    tableNoGlobal = "";
+                      type: CoolAlertType.confirm,
+                      confirmBtnText: "Yes",
+                      backgroundColor: myOrange,
+                      confirmBtnColor: myOrange,
+                      confirmBtnTextStyle: TextStyle(
+                          fontSize: dynamicWidth(context, 0.04),
+                          color: myWhite),
+                      text:
+                          "Order against Table no: $tableNameGlobal with assigned waiter ${userResponse["full_name"].toString().toUpperCase()}",
+                      showCancelBtn: true,
+                      onConfirmBtnTap: () async {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            barrierDismissible: false,
+                            lottieAsset: "assets/loader.json");
+                        var response = await punchOrder(getTotal(), getCost());
+                        if (response == false) {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          MotionToast.error(
+                            description: "Server Error or check your internet",
+                            dismissable: true,
+                          ).show(context);
+                        } else {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          cartItems.clear();
+                          saleIdGlobal = "";
+                          tableNoGlobal = "";
 
-                    pop(context);
-                    popUntil(globalDineInContext);
-                    globalDineInRefresh();
-                    CoolAlert.show(
-                        title: "Order Placed",
-                        text: "Do you wish to proceed?",
-                        context: context,
-                        loopAnimation: true,
-                        backgroundColor: myOrange,
-                        confirmBtnColor: myOrange,
-                        confirmBtnText: "Continue",
-                        type: CoolAlertType.success,
-                        animType: CoolAlertAnimType.slideInRight);
-                  }
+                          pop(context);
+                          popUntil(globalDineInContext);
+                          globalDineInRefresh();
+                          CoolAlert.show(
+                              title: "Order Placed",
+                              text: "Do you wish to proceed?",
+                              context: context,
+                              loopAnimation: true,
+                              backgroundColor: myOrange,
+                              confirmBtnColor: myOrange,
+                              confirmBtnText: "Continue",
+                              type: CoolAlertType.success,
+                              animType: CoolAlertAnimType.slideInRight);
+                        }
+                      });
                 }
               },
             ),
@@ -280,103 +297,108 @@ cartCards(context, index, function) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Image.network(
-        cartItems[index]["photo"] ??
-            "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
-        height: dynamicWidth(context, 0.2),
-        width: dynamicWidth(context, 0.15),
-        fit: BoxFit.cover,
-        errorBuilder: (context, yrl, error) {
-          return const Icon(
-            Icons.error,
-            color: myWhite,
-          );
-        },
-      ),
-      FittedBox(
-        child: SizedBox(
-          width: dynamicWidth(context, 0.4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              text(
-                context,
-                cartItems[index]["name"].toString(),
-                0.04,
-                myWhite,
-              ),
-              heightBox(context, 0.01),
-              Container(
-                  width: dynamicWidth(context, 0.25),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(dynamicWidth(context, 0.02)),
-                      border: Border.all(color: myWhite, width: 1)),
-                  child: StatefulBuilder(builder: (context, changeState) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          splashColor: noColor,
-                          onTap: () {
-                            if (int.parse(cartItems[index]["qty"].toString()) >
-                                1) {
-                              changeState(() {
-                                var value = int.parse(
-                                    cartItems[index]["qty"].toString());
-                                value--;
-                                cartItems[index]["qty"] = value;
-                              });
-                            }
-                          },
-                          child: SizedBox(
-                            width: dynamicWidth(context, .1),
-                            height: dynamicWidth(context, .07),
-                            child: Icon(
-                              Icons.remove,
-                              size: dynamicWidth(context, .03),
-                              color: myOrange,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          cartItems[index]["qty"].toString(),
-                          style: TextStyle(
-                            color: myOrange,
-                            fontWeight: FontWeight.bold,
-                            fontSize: dynamicWidth(context, .03),
-                          ),
-                        ),
-                        InkWell(
-                          splashColor: noColor,
-                          onTap: () {
-                            if (int.parse(cartItems[index]["qty"].toString()) <
-                                30) {
-                              changeState(() {
-                                var value = int.parse(
-                                    cartItems[index]["qty"].toString());
-                                value++;
-                                cartItems[index]["qty"] = value;
-                              });
-                            }
-                          },
-                          child: SizedBox(
-                            width: dynamicWidth(context, .1),
-                            height: dynamicWidth(context, .07),
-                            child: Icon(
-                              Icons.add,
-                              size: dynamicWidth(context, .03),
-                              color: myOrange,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  })),
-            ],
+      Row(
+        children: [
+          Image.network(
+            cartItems[index]["photo"] ??
+                "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
+            height: dynamicWidth(context, 0.2),
+            width: dynamicWidth(context, 0.15),
+            fit: BoxFit.cover,
+            errorBuilder: (context, yrl, error) {
+              return const Icon(
+                Icons.error,
+                color: myWhite,
+              );
+            },
           ),
-        ),
+          widthBox(context, 0.02),
+          FittedBox(
+            child: SizedBox(
+              width: dynamicWidth(context, 0.3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  text(
+                    context,
+                    cartItems[index]["name"].toString(),
+                    0.04,
+                    myWhite,
+                  ),
+                  heightBox(context, 0.01),
+                  Container(
+                      width: dynamicWidth(context, 0.25),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              dynamicWidth(context, 0.02)),
+                          border: Border.all(color: myWhite, width: 1)),
+                      child: StatefulBuilder(builder: (context, changeState) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              splashColor: noColor,
+                              onTap: () {
+                                if (int.parse(
+                                        cartItems[index]["qty"].toString()) >
+                                    1) {
+                                  changeState(() {
+                                    var value = int.parse(
+                                        cartItems[index]["qty"].toString());
+                                    value--;
+                                    cartItems[index]["qty"] = value;
+                                  });
+                                }
+                              },
+                              child: SizedBox(
+                                  width: dynamicWidth(context, .1),
+                                  height: dynamicWidth(context, .07),
+                                  child: Center(
+                                    child: text(context, "-", 0.04, myOrange,
+                                        bold: true,
+                                        alignText: TextAlign.center),
+                                  )),
+                            ),
+                            Text(
+                              cartItems[index]["qty"].toString(),
+                              style: TextStyle(
+                                color: myOrange,
+                                fontWeight: FontWeight.bold,
+                                fontSize: dynamicWidth(context, .03),
+                              ),
+                            ),
+                            InkWell(
+                              splashColor: noColor,
+                              onTap: () {
+                                if (int.parse(
+                                        cartItems[index]["qty"].toString()) <
+                                    30) {
+                                  changeState(() {
+                                    var value = int.parse(
+                                        cartItems[index]["qty"].toString());
+                                    value++;
+                                    cartItems[index]["qty"] = value;
+                                  });
+                                }
+                              },
+                              child: SizedBox(
+                                  width: dynamicWidth(context, .1),
+                                  height: dynamicWidth(context, .07),
+                                  child: Center(
+                                    child: text(context, "+", 0.04, myOrange,
+                                        bold: true,
+                                        alignText: TextAlign.center),
+                                  )),
+                            ),
+                          ],
+                        );
+                      })),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       InkWell(
         onTap: () {

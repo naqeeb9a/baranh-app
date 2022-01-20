@@ -17,6 +17,7 @@ dynamic customContext = "";
 dynamic globalRefresh = "";
 dynamic saleIdGlobal;
 dynamic tableNoGlobal;
+dynamic tableNameGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
 dynamic userResponse = "";

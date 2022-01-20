@@ -61,7 +61,8 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                       context,
                     ));
                   } else {
-                    return orderDetails(context, snapshot.data);
+                    return Expanded(
+                        child: orderDetails(context, snapshot.data));
                   }
                 } else {
                   return Expanded(child: loader(context));
@@ -114,9 +115,7 @@ orderDetails(context, snapshot) {
               0.04,
               myWhite,
             )
-          : SizedBox(
-              width: dynamicWidth(context, .7),
-              height: dynamicHeight(context, .52),
+          : Flexible(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot[0]["sale_details"].length,
@@ -132,8 +131,21 @@ orderDetails(context, snapshot) {
       heightBox(context, 0.02),
       billRow(
         context,
-        "Total",
-        "PKR " + snapshot[0]["sub_total_with_discount"],
+        "Total 5% GST: ",
+        "PKR " +
+            ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.05) +
+                    int.parse(snapshot[0]["sub_total_with_discount"]))
+                .toString(),
+        0.03,
+        myWhite,
+      ),
+      billRow(
+        context,
+        "Total 16% GST: ",
+        "PKR " +
+            ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.16) +
+                    int.parse(snapshot[0]["sub_total_with_discount"]))
+                .toString(),
         0.03,
         myWhite,
       ),

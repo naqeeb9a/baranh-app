@@ -10,10 +10,14 @@ import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 
 class MenuPage extends StatefulWidget {
-  final String saleId, tableNo;
+  final String saleId, tableNo, tableName;
 
-  const MenuPage({Key? key, required this.saleId, required this.tableNo})
-      : super(key: key);
+  const MenuPage({
+    Key? key,
+    required this.saleId,
+    required this.tableNo,
+    required this.tableName,
+  }) : super(key: key);
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -24,7 +28,7 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     saleIdGlobal = widget.saleId;
     tableNoGlobal = widget.tableNo;
-
+    tableNameGlobal = widget.tableName;
     return Scaffold(
       backgroundColor: myBlack,
       body: WillPopScope(
@@ -36,8 +40,12 @@ class _MenuPageState extends State<MenuPage> {
                 context: context,
                 type: CoolAlertType.warning,
                 text: "if you leave this page your cart items will discard",
-                confirmBtnText: "Continue",
                 cancelBtnText: "Cancel",
+                confirmBtnText: "Yes",
+                backgroundColor: myOrange,
+                confirmBtnColor: myOrange,
+                confirmBtnTextStyle: TextStyle(
+                    fontSize: dynamicWidth(context, 0.04), color: myWhite),
                 showCancelBtn: true,
                 onCancelBtnTap: () {
                   Navigator.of(context, rootNavigator: true).pop();
@@ -69,7 +77,12 @@ class _MenuPageState extends State<MenuPage> {
                             type: CoolAlertType.warning,
                             text:
                                 "if you leave this page your cart items will discard",
-                            confirmBtnText: "Continue",
+                            confirmBtnText: "Yes",
+                            backgroundColor: myOrange,
+                            confirmBtnColor: myOrange,
+                            confirmBtnTextStyle: TextStyle(
+                                fontSize: dynamicWidth(context, 0.04),
+                                color: myWhite),
                             cancelBtnText: "Cancel",
                             showCancelBtn: true,
                             onCancelBtnTap: () {
@@ -98,6 +111,11 @@ class _MenuPageState extends State<MenuPage> {
                 thickness: 1,
                 color: myWhite,
               ),
+              heightBox(context, 0.01),
+              Center(
+                  child: text(
+                      context, "Table no: " + widget.tableName, 0.05, myWhite,
+                      bold: true)),
               heightBox(context, 0.02),
               Expanded(
                 child: FutureBuilder(
@@ -376,18 +394,23 @@ class CustomSearchDelegate extends SearchDelegate {
 
     return Padding(
       padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio:
-                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
-        itemCount: matchQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return menuCards(context, matchQuery, index);
-        },
-      ),
+      child: matchQuery.length == 0
+          ? Expanded(
+              child: Center(
+                  child: text(context, "Not found", 0.04, myWhite,
+                      alignText: TextAlign.center)))
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio:
+                      dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
+              itemCount: matchQuery.length,
+              itemBuilder: (BuildContext context, int index) {
+                return menuCards(context, matchQuery, index);
+              },
+            ),
     );
   }
 
@@ -401,18 +424,23 @@ class CustomSearchDelegate extends SearchDelegate {
     }
     return Padding(
       padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio:
-                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
-        itemCount: matchQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return menuCards(context, matchQuery, index);
-        },
-      ),
+      child: matchQuery.length == 0
+          ? Expanded(
+              child: Center(
+                  child: text(context, "Not found", 0.04, myWhite,
+                      alignText: TextAlign.center)))
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio:
+                      dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
+              itemCount: matchQuery.length,
+              itemBuilder: (BuildContext context, int index) {
+                return menuCards(context, matchQuery, index);
+              },
+            ),
     ); // ListTile
   }
 }

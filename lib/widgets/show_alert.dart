@@ -262,9 +262,7 @@ dialogueCustomWaiter(
                                   EdgeInsets.all(dynamicWidth(context, 0.01)),
                               child: text(
                                   context,
-                                  snapshot.data[index]["full_name"] +
-                                      "\n" +
-                                      snapshot.data[index]["id"],
+                                  snapshot.data[index]["full_name"],
                                   0.04,
                                   myWhite,
                                   alignText: TextAlign.center),

@@ -1,6 +1,7 @@
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/table_cards.dart';
+import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class CustomDineInSearchDelegate extends SearchDelegate {
@@ -95,20 +96,25 @@ class CustomDineInSearchDelegate extends SearchDelegate {
     }
     return Padding(
         padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-        child: ListView.builder(
-          itemCount: matchQuery.length,
-          itemBuilder: (BuildContext context, int index) {
-            return tableCardsExtension(
-              context,
-              matchQuery,
-              index,
-              buttonText1,
-              buttonText2,
-              function: setState,
-              assignTable: assignTable,
-            );
-          },
-        ));
+        child: matchQuery.length == 0
+            ? Expanded(
+                child: Center(
+                    child: text(context, "Not found", 0.04, myWhite,
+                        alignText: TextAlign.center)))
+            : ListView.builder(
+                itemCount: matchQuery.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return tableCardsExtension(
+                    context,
+                    matchQuery,
+                    index,
+                    buttonText1,
+                    buttonText2,
+                    function: setState,
+                    assignTable: assignTable,
+                  );
+                },
+              ));
   }
 
   @override
@@ -139,20 +145,25 @@ class CustomDineInSearchDelegate extends SearchDelegate {
     }
     return Padding(
       padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: ListView.builder(
-        itemCount: matchQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return tableCardsExtension(
-            context,
-            matchQuery,
-            index,
-            buttonText1,
-            buttonText2,
-            function: setState,
-            assignTable: assignTable,
-          );
-        },
-      ),
+      child: matchQuery.length == 0
+          ? Expanded(
+              child: Center(
+                  child: text(context, "Not found", 0.04, myWhite,
+                      alignText: TextAlign.center)))
+          : ListView.builder(
+              itemCount: matchQuery.length,
+              itemBuilder: (BuildContext context, int index) {
+                return tableCardsExtension(
+                  context,
+                  matchQuery,
+                  index,
+                  buttonText1,
+                  buttonText2,
+                  function: setState,
+                  assignTable: assignTable,
+                );
+              },
+            ),
     ); // ListTile
   }
 }

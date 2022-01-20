@@ -30,7 +30,12 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                   context,
                 );
         } else if (snapshot.data.length == 0) {
-          return Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
+          return shinkWrap == true
+              ? SizedBox(
+                  height: dynamicHeight(context, 0.4),
+                  child: Center(
+                      child: text(context, "No orders Yet!!", 0.04, myWhite)))
+              : Center(child: text(context, "No orders Yet!!", 0.04, myWhite));
         } else {
           return Column(
             children: [
@@ -103,11 +108,25 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           shrinkWrap: shinkWrap,
                           physics: physics,
                           itemBuilder: (BuildContext context, int index) {
-                            return tableCardsExtension(context, snapshot.data,
-                                index, buttonText1, buttonText2,
-                                function: setState,
-                                assignTable: assignTable,
-                                visibleButton: visibleButton);
+                            return pageDecider == "Dine In Orders" &&
+                                    userResponse["designation"] == "Waiter"
+                                ? snapshot.data[index]["waiter_id"] ==
+                                        userResponse["id"]
+                                    ? tableCardsExtension(
+                                        context,
+                                        snapshot.data,
+                                        index,
+                                        buttonText1,
+                                        buttonText2,
+                                        function: setState,
+                                        assignTable: assignTable,
+                                        visibleButton: visibleButton)
+                                    : Container()
+                                : tableCardsExtension(context, snapshot.data,
+                                    index, buttonText1, buttonText2,
+                                    function: setState,
+                                    assignTable: assignTable,
+                                    visibleButton: visibleButton);
                           },
                         ),
                       ),
@@ -117,8 +136,11 @@ Widget tableCards(context, function, buttonText1, buttonText2,
         }
       } else {
         return shinkWrap == true
-            ? Center(
-                child: loader(context),
+            ? SizedBox(
+                height: dynamicHeight(context, 0.4),
+                child: Center(
+                  child: loader(context),
+                ),
               )
             : loader(context);
       }

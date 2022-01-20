@@ -216,8 +216,9 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                           backgroundColor: myOrange,
                           confirmBtnColor: myOrange,
                           confirmBtnText: "Continue",
-                          confirmBtnTextStyle:
-                              TextStyle(fontSize: dynamicWidth(context, 0.04)),
+                          confirmBtnTextStyle: TextStyle(
+                              fontSize: dynamicWidth(context, 0.04),
+                              color: myWhite),
                           type: CoolAlertType.confirm,
                           animType: CoolAlertAnimType.slideInRight);
                     } else if (response == false) {

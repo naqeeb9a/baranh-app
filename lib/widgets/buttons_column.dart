@@ -1,6 +1,7 @@
 import 'package:baranh/app_screens/menu.dart';
 import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/utils/app_routes.dart';
+import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/guest_arrived_function.dart';
 import 'package:baranh/widgets/show_alert.dart';
@@ -47,6 +48,11 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                 context: context,
                 type: CoolAlertType.confirm,
                 showCancelBtn: true,
+                confirmBtnText: "Yes",
+                backgroundColor: myOrange,
+                confirmBtnColor: myOrange,
+                confirmBtnTextStyle: TextStyle(
+                    fontSize: dynamicWidth(context, 0.04), color: myWhite),
                 onConfirmBtnTap: () {
                   Navigator.of(context, rootNavigator: true).pop();
                   guestArrivedNow(context, snapshotTable, indexTable);
@@ -78,6 +84,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     MenuPage(
                       saleId: snapshotTable[indexTable]["sale_id"].toString(),
                       tableNo: snapshotTable[indexTable]["table_id"].toString(),
+                      tableName: snapshotTable[indexTable]["table_name"],
                     ));
               } else if (buttonText2 == "View details") {
                 push(
