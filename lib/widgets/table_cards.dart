@@ -294,10 +294,12 @@ Widget tableCardsExtension(
                 indexTable,
                 assignTable,
                 function,
-                snapshotTable[indexTable]["order_status"] == "1" ||
-                        snapshotTable[indexTable]["order_status"] == "2"
-                    ? visibleButton
-                    : false,
+                pageDecider == "Dine In Orders"
+                    ? (snapshotTable[indexTable]["order_status"] == "1" ||
+                            snapshotTable[indexTable]["order_status"] == "2")
+                        ? visibleButton
+                        : false
+                    : visibleButton,
                 searchDelegate)
           ],
         )
