@@ -135,7 +135,7 @@ class _ContactInformationState extends State<ContactInformation> {
                       description: "Reserved successfully",
                       dismissable: true,
                     ).show(context);
-                    pageDecider = "All Reservations";
+                    pageDecider = "Waiting For Arrival";
                     popUntil(customContext);
                   }
                 }
