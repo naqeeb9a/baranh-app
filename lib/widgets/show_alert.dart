@@ -62,19 +62,19 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                     i < (snapshot2.data as List).length;
                                     i++) {
                                   if ((snapshot2.data as List)[i]
-                                                  ["booking_date"] ==
-                                              DateFormat('yyyy-MM-dd')
-                                                  .format(DateTime.now())
-                                                  .toString() &&
-                                          (snapshot2.data as List)[i]
+                                              ["booking_date"] ==
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(DateTime.now())
+                                              .toString() &&
+                                      ((snapshot2.data as List)[i]
                                                   ["order_status"] ==
                                               "1" ||
-                                      (snapshot2.data as List)[i]
+                                          (snapshot2.data as List)[i]
                                                   ["order_status"] ==
-                                              "2" &&
-                                          snapshot.data[index]["id"] ==
-                                              (snapshot2.data as List)[i]
-                                                  ["table_id"]) {
+                                              "2") &&
+                                      snapshot.data[index]["id"] ==
+                                          (snapshot2.data as List)[i]
+                                              ["table_id"]) {
                                     customColor = myGrey;
                                   }
                                 }

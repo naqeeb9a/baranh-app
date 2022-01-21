@@ -1,3 +1,4 @@
+import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -196,18 +197,21 @@ Widget tableCardsExtension(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
         ),
-        text(
-            context,
-            snapshotTable[indexTable]["order_status"] == "1" ||
-                    snapshotTable[indexTable]["order_status"] == "2"
-                ? "Active"
-                : "Completed",
-            0.04,
-            snapshotTable[indexTable]["order_status"] == "1" ||
-                    snapshotTable[indexTable]["order_status"] == "2"
-                ? myGreen
-                : myOrange,
-            bold: true),
+        Visibility(
+          visible: pageDecider == "Dine In Orders" ? true : false,
+          child: text(
+              context,
+              snapshotTable[indexTable]["order_status"] == "1" ||
+                      snapshotTable[indexTable]["order_status"] == "2"
+                  ? "Active"
+                  : "Completed",
+              0.04,
+              snapshotTable[indexTable]["order_status"] == "1" ||
+                      snapshotTable[indexTable]["order_status"] == "2"
+                  ? myGreen
+                  : myOrange,
+              bold: true),
+        ),
         heightBox(context, 0.02),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -245,7 +249,11 @@ Widget tableCardsExtension(
                   text(
                       context,
                       "Time: " +
-                          snapshotTable[indexTable]["opening_time"].toString(),
+                          getConvertedTime(
+                              snapshotTable[indexTable]["opening_time"]) +
+                          " - " +
+                          getConvertedTime(
+                              snapshotTable[indexTable]["closing_time"]),
                       0.035,
                       myWhite),
                   text(
@@ -256,8 +264,12 @@ Widget tableCardsExtension(
                       myWhite),
                   text(
                       context,
-                      "Status: " +
-                          snapshotTable[indexTable]["usage_status"].toString(),
+                      snapshotTable[indexTable]["usage_status"].toString() ==
+                              "dine_in"
+                          ? "Status: Dine In"
+                          : "Status: " +
+                              snapshotTable[indexTable]["usage_status"]
+                                  .toString(),
                       0.035,
                       myWhite),
                 ],
