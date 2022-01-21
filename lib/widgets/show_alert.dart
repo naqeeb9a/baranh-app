@@ -10,7 +10,8 @@ import 'package:motion_toast/motion_toast.dart';
 
 import 'essential_widgets.dart';
 
-dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
+dialogueCustom(
+    context, snapshotTable, indexTable, assignTable, function, searchDelegate) {
   showDialog(
       context: context,
       builder: (context) {
@@ -142,6 +143,9 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .pop();
+                                        if (searchDelegate != "") {
+                                          searchDelegate();
+                                        }
                                         MotionToast.success(
                                           description: snapshotTable[indexTable]
                                                           ["waiter_id"] ==
@@ -196,7 +200,7 @@ dialogueCustom(context, snapshotTable, indexTable, assignTable, function) {
 }
 
 dialogueCustomWaiter(
-    context, snapshotTable, indexTable, assignTable, function) {
+    context, snapshotTable, indexTable, assignTable, function, searchDelegate) {
   showDialog(
       context: context,
       builder: (context) {
@@ -250,6 +254,9 @@ dialogueCustomWaiter(
                           } else {
                             Navigator.pop(context, function());
                             Navigator.of(context, rootNavigator: true).pop();
+                            if (searchDelegate != "") {
+                              searchDelegate();
+                            }
                             MotionToast.success(
                               description: "Waiter assigned",
                               dismissable: true,

@@ -170,8 +170,16 @@ Widget tableCards(context, function, buttonText1, buttonText2,
 }
 
 Widget tableCardsExtension(
-    context, snapshotTable, indexTable, buttonText1, buttonText2,
-    {function = "", assignTable, visibleButton = true}) {
+  context,
+  snapshotTable,
+  indexTable,
+  buttonText1,
+  buttonText2, {
+  function = "",
+  assignTable,
+  visibleButton = true,
+  searchDelegate = "",
+}) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -276,7 +284,7 @@ Widget tableCardsExtension(
               ),
             ),
             buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
-                indexTable, assignTable, function, visibleButton)
+                indexTable, assignTable, function, visibleButton,searchDelegate)
           ],
         )
       ],

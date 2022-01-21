@@ -3,7 +3,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 
-guestArrivedNow(context, snapshotTable, indexTable) async {
+guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
   CoolAlert.show(
       context: context,
       type: CoolAlertType.loading,
@@ -31,6 +31,9 @@ guestArrivedNow(context, snapshotTable, indexTable) async {
         pageDecider = "Arrived Guests";
         globalRefresh();
         Navigator.of(context, rootNavigator: true).pop();
+        if (searchDelegate != "") {
+          searchDelegate();
+        }
       },
       backgroundColor: myOrange,
       confirmBtnColor: myOrange,

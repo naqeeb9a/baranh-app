@@ -12,7 +12,7 @@ import 'package:motion_toast/motion_toast.dart';
 import 'green_buttons.dart';
 
 buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
-    assignTable, function, visibleButton) {
+    assignTable, function, visibleButton, searchDelegate) {
   return SizedBox(
     height: dynamicWidth(context,
         buttonText1 == "View details" && visibleButton == true ? 0.37 : 0.26),
@@ -25,8 +25,8 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
               : false,
           child: greenButtons(
               context, "Change Table", snapshotTable, indexTable, function: () {
-            dialogueCustom(
-                context, snapshotTable, indexTable, assignTable, function);
+            dialogueCustom(context, snapshotTable, indexTable, assignTable,
+                function, searchDelegate);
           }),
         ),
         greenButtons(context, buttonText1, snapshotTable, indexTable,
@@ -38,11 +38,11 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                   saleId: snapshotTable[indexTable]["sale_id"].toString(),
                 ));
           } else if (buttonText1 == "Assign Table") {
-            dialogueCustom(
-                context, snapshotTable, indexTable, assignTable, function);
+            dialogueCustom(context, snapshotTable, indexTable, assignTable,
+                function, searchDelegate);
           } else if (buttonText1 == "Assign Waiter") {
-            dialogueCustomWaiter(
-                context, snapshotTable, indexTable, assignTable, function);
+            dialogueCustomWaiter(context, snapshotTable, indexTable,
+                assignTable, function, searchDelegate);
           } else if (buttonText1 == "Guest Arrived") {
             CoolAlert.show(
                 context: context,
@@ -55,7 +55,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     fontSize: dynamicWidth(context, 0.04), color: myWhite),
                 onConfirmBtnTap: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  guestArrivedNow(context, snapshotTable, indexTable);
+                  guestArrivedNow(context, snapshotTable, indexTable,searchDelegate);
                 });
           } else {
             MotionToast.info(
@@ -73,11 +73,11 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
             indexTable,
             function: () {
               if (buttonText2 == "Assign Waiter") {
-                dialogueCustomWaiter(
-                    context, snapshotTable, indexTable, assignTable, function);
+                dialogueCustomWaiter(context, snapshotTable, indexTable,
+                    assignTable, function, searchDelegate);
               } else if (buttonText2 == "Assign Table") {
-                dialogueCustom(
-                    context, snapshotTable, indexTable, assignTable, function);
+                dialogueCustom(context, snapshotTable, indexTable, assignTable,
+                    function, searchDelegate);
               } else if (buttonText2 == "Take Order") {
                 push(
                     context,

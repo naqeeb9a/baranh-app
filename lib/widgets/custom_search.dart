@@ -20,7 +20,7 @@ class CustomDineInSearchDelegate extends SearchDelegate {
     this.buttonText1,
     this.buttonText2,
   );
-
+  dynamic popStatus = "";
   @override
   ThemeData appBarTheme(BuildContext context) {
     return ThemeData(
@@ -60,6 +60,9 @@ class CustomDineInSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
+    popStatus = () {
+      close(context, null);
+    };
     return IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
@@ -104,14 +107,10 @@ class CustomDineInSearchDelegate extends SearchDelegate {
               itemCount: matchQuery.length,
               itemBuilder: (BuildContext context, int index) {
                 return tableCardsExtension(
-                  context,
-                  matchQuery,
-                  index,
-                  buttonText1,
-                  buttonText2,
-                  function: setState,
-                  assignTable: assignTable,
-                );
+                    context, matchQuery, index, buttonText1, buttonText2,
+                    function: setState,
+                    assignTable: assignTable,
+                    searchDelegate: popStatus);
               },
             ));
   }
@@ -152,14 +151,10 @@ class CustomDineInSearchDelegate extends SearchDelegate {
               itemCount: matchQuery.length,
               itemBuilder: (BuildContext context, int index) {
                 return tableCardsExtension(
-                  context,
-                  matchQuery,
-                  index,
-                  buttonText1,
-                  buttonText2,
-                  function: setState,
-                  assignTable: assignTable,
-                );
+                    context, matchQuery, index, buttonText1, buttonText2,
+                    function: setState,
+                    assignTable: assignTable,
+                    searchDelegate: popStatus);
               },
             ),
           ); // ListTile
