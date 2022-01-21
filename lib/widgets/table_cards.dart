@@ -198,17 +198,15 @@ Widget tableCardsExtension(
         ),
         text(
             context,
-            snapshotTable[indexTable]["order_status"] == "1"
+            snapshotTable[indexTable]["order_status"] == "1" ||
+                    snapshotTable[indexTable]["order_status"] == "2"
                 ? "Active"
-                : snapshotTable[indexTable]["order_status"] == "2"
-                    ? "Requested bill"
-                    : "Completed",
+                : "Completed",
             0.04,
-            snapshotTable[indexTable]["order_status"] == "1"
+            snapshotTable[indexTable]["order_status"] == "1" ||
+                    snapshotTable[indexTable]["order_status"] == "2"
                 ? myGreen
-                : snapshotTable[indexTable]["order_status"] == "2"
-                    ? myRed
-                    : myWhite,
+                : myOrange,
             bold: true),
         heightBox(context, 0.02),
         Row(
