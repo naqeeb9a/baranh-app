@@ -135,7 +135,7 @@ orderDetails(context, snapshot) {
         "PKR " +
             ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.05) +
                     int.parse(snapshot[0]["sub_total_with_discount"]))
-                .toString(),
+                .toStringAsFixed(2),
         0.03,
         myWhite,
       ),
@@ -145,7 +145,7 @@ orderDetails(context, snapshot) {
         "PKR " +
             ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.16) +
                     int.parse(snapshot[0]["sub_total_with_discount"]))
-                .toString(),
+                .toStringAsFixed(2),
         0.03,
         myWhite,
       ),
