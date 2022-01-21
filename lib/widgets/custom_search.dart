@@ -75,12 +75,20 @@ class CustomDineInSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     dynamic matchQuery = [];
     if (pageDecider == "Dine In Orders") {
-      for (var item in data) {
-        if (item["table_name"]
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase())) {
-          matchQuery.add(item);
+      if (userResponse["designation"].toString().toLowerCase() == "waiter") {
+        for (var item in data) {
+          if (item["waiter_id"] == userResponse["id"]) {
+            matchQuery.add(item);
+          }
+        }
+      } else {
+        for (var item in data) {
+          if (item["table_name"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase())) {
+            matchQuery.add(item);
+          }
         }
       }
     } else {
@@ -119,12 +127,20 @@ class CustomDineInSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     dynamic matchQuery = [];
     if (pageDecider == "Dine In Orders") {
-      for (var item in data) {
-        if (item["table_name"]
-            .toString()
-            .toLowerCase()
-            .contains(query.toLowerCase())) {
-          matchQuery.add(item);
+      if (userResponse["designation"].toString().toLowerCase() == "waiter") {
+        for (var item in data) {
+          if (item["waiter_id"] == userResponse["id"]) {
+            matchQuery.add(item);
+          }
+        }
+      } else {
+        for (var item in data) {
+          if (item["table_name"]
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase())) {
+            matchQuery.add(item);
+          }
         }
       }
     } else {
