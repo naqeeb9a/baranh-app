@@ -116,7 +116,7 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           physics: physics,
                           itemBuilder: (BuildContext context, int index) {
                             if (pageDecider == "Dine In Orders" &&
-                                userResponse["designation"] == "Waiter") {
+                                userResponse["designation"].toString().toLowerCase() == "waiter") {
                               if (snapshot.data[index]["waiter_id"] ==
                                   userResponse["id"]) {
                                 count++;
