@@ -50,7 +50,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   color: myWhite,
                 ),
                 heightBox(context, 0.01),
-                text(context, "BARANH LAHORE", 0.04, myWhite),
+                text(context, "BARANH", 0.04, myWhite),
                 inputFieldsHome("Date", hintText, context,
                     check: true, timeSlot: true, function: () {
                   setState(() {});

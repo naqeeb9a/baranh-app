@@ -115,18 +115,23 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       _scaffoldKey.currentState!.openEndDrawer();
                     }),
                     drawer: SafeArea(
-                      child: Drawer(
-                        child: drawerItems(context, () {
-                          setState(() {});
-                        }, () {
-                          setState(() {
-                            loader = true;
-                          });
-                        }),
+                      child: SizedBox(
+                        width: dynamicWidth(context, 0.7),
+                        child: Drawer(
+                          child: drawerItems(context, () {
+                            setState(() {});
+                          }, () {
+                            setState(() {
+                              loader = true;
+                            });
+                          }),
+                        ),
                       ),
                     ),
                     endDrawer: SafeArea(
-                      child: Drawer(child: drawerItems2(context)),
+                      child: SizedBox(
+                          width: dynamicWidth(context, 0.7),
+                          child: Drawer(child: drawerItems2(context))),
                     ),
                     body: child,
                   );

@@ -234,8 +234,12 @@ Widget drawerItems2(context) {
                       confirmBtnTextStyle: TextStyle(
                           fontSize: dynamicWidth(context, 0.04),
                           color: myWhite),
-                      text:
-                          "Order against Table no: $tableNameGlobal with assigned waiter ${userResponse["full_name"].toString().toUpperCase()}",
+                      text: userResponse["full_name"]
+                                  .toString()
+                                  .toUpperCase() ==
+                              "FLOORMANAGER"
+                          ? "Order against Table no: $tableNameGlobal by ${userResponse["full_name"].toString().toUpperCase()}"
+                          : "Order against Table no: $tableNameGlobal with assigned waiter ${userResponse["full_name"].toString().toUpperCase()}",
                       showCancelBtn: true,
                       onConfirmBtnTap: () async {
                         Navigator.of(context, rootNavigator: true).pop();

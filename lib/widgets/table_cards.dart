@@ -196,6 +196,20 @@ Widget tableCardsExtension(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
         ),
+        text(
+            context,
+            snapshotTable[indexTable]["order_status"] == "1"
+                ? "Active"
+                : snapshotTable[indexTable]["order_status"] == "2"
+                    ? "Requested bill"
+                    : "Completed",
+            0.04,
+            snapshotTable[indexTable]["order_status"] == "1"
+                ? myGreen
+                : snapshotTable[indexTable]["order_status"] == "2"
+                    ? myRed
+                    : myWhite,
+            bold: true),
         heightBox(context, 0.02),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
