@@ -116,7 +116,10 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           physics: physics,
                           itemBuilder: (BuildContext context, int index) {
                             if (pageDecider == "Dine In Orders" &&
-                                userResponse["designation"].toString().toLowerCase() == "waiter") {
+                                userResponse["designation"]
+                                        .toString()
+                                        .toLowerCase() ==
+                                    "waiter") {
                               if (snapshot.data[index]["waiter_id"] ==
                                   userResponse["id"]) {
                                 count++;
@@ -283,8 +286,19 @@ Widget tableCardsExtension(
                 ],
               ),
             ),
-            buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
-                indexTable, assignTable, function, visibleButton,searchDelegate)
+            buttonsColumn(
+                context,
+                buttonText1,
+                buttonText2,
+                snapshotTable,
+                indexTable,
+                assignTable,
+                function,
+                snapshotTable[indexTable]["order_status"] == "1" ||
+                        snapshotTable[indexTable]["order_status"] == "2"
+                    ? visibleButton
+                    : false,
+                searchDelegate)
           ],
         )
       ],
