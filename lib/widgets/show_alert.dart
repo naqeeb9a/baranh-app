@@ -23,10 +23,18 @@ dialogueCustom(
             height: dynamicHeight(context, 0.6),
             width: dynamicWidth(context, 0.8),
             child: FutureBuilder(
-                future: getReservationData("dinein-orders"),
+                future: getDineInOrders("dinein-orders"),
                 builder: (context, snapshot2) {
                   if (snapshot2.connectionState == ConnectionState.done) {
-                    if (snapshot2.hasData) {
+                    if (snapshot2.data == false) {
+                      return Center(
+                        child: text(
+                            context,
+                            "Check your internet or try again later",
+                            0.04,
+                            myWhite),
+                      );
+                    } else if (snapshot2.hasData) {
                       return FutureBuilder(
                         future: getTables(snapshotTable[indexTable]["sale_id"]),
                         builder:
@@ -89,8 +97,10 @@ dialogueCustom(
                                     } else if (snapshotTable[indexTable]
                                                 ["waiter_id"] ==
                                             null &&
-                                        userResponse["designation"] ==
-                                            "Floor Manager") {
+                                        userResponse["designation"]
+                                                .toString()
+                                                .toLowerCase() ==
+                                            "Floor Manager".toLowerCase()) {
                                       MotionToast.error(
                                         description: "Assign waiter first",
                                         dismissable: true,
@@ -104,8 +114,10 @@ dialogueCustom(
                                       if (snapshotTable[indexTable]
                                                   ["waiter_id"] ==
                                               null &&
-                                          userResponse["designation"] ==
-                                              "Waiter") {
+                                          userResponse["designation"]
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "Waiter".toLowerCase()) {
                                         assignTable = userResponse["id"];
 
                                         var response = await assignWaiterOnline(
@@ -150,8 +162,10 @@ dialogueCustom(
                                           description: snapshotTable[indexTable]
                                                           ["waiter_id"] ==
                                                       null &&
-                                                  userResponse["designation"] ==
-                                                      "Waiter"
+                                                  userResponse["designation"]
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      "waiter".toLowerCase()
                                               ? "Table and Waiter both Assigned"
                                               : snapshotTable[indexTable]
                                                           ["table_id"] ==

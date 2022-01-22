@@ -5,10 +5,41 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 getReservationData(query) async {
+  var url =
+      "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}";
+
   try {
     var response = await http.get(
-      Uri.parse(
-          "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}"),
+      Uri.parse(url),
+    );
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"]["result"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
+getDineInOrders(query) async {
+  var url = "";
+  if (userResponse["designation"].toString().toLowerCase() ==
+      "Floor Manager".toLowerCase()) {
+    url =
+        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/0";
+  } else if (userResponse["designation"].toString().toLowerCase() ==
+      "Waiter".toLowerCase()) {
+    url =
+        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/${userResponse["id"]}";
+  } else {
+    url =
+        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}";
+  }
+  try {
+    var response = await http.get(
+      Uri.parse(url),
     );
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {

@@ -14,19 +14,30 @@ import 'green_buttons.dart';
 buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
     assignTable, function, visibleButton, searchDelegate) {
   return SizedBox(
-    height: dynamicWidth(context,
-        buttonText1 == "View details" && visibleButton == true ? 0.37 : 0.26),
+    height: dynamicWidth(
+        context,
+        (buttonText1 == "View details" || buttonText2 == "View details") &&
+                visibleButton == true
+            ? 0.37
+            : 0.26),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: buttonText1 == "View details" && visibleButton == true
+          visible: (buttonText1 == "View details" ||
+                      buttonText2 == "View details") &&
+                  visibleButton == true
               ? true
               : false,
-          child: greenButtons(
-              context, "Change Table", snapshotTable, indexTable, function: () {
-            dialogueCustom(context, snapshotTable, indexTable, assignTable,
-                function, searchDelegate);
+          child: greenButtons(context, "Take Order", snapshotTable, indexTable,
+              function: () {
+            push(
+                context,
+                MenuPage(
+                  saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                  tableNo: snapshotTable[indexTable]["table_id"].toString(),
+                  tableName: snapshotTable[indexTable]["table_name"],
+                ));
           }),
         ),
         greenButtons(context, buttonText1, snapshotTable, indexTable,
@@ -55,7 +66,8 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     fontSize: dynamicWidth(context, 0.04), color: myWhite),
                 onConfirmBtnTap: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  guestArrivedNow(context, snapshotTable, indexTable,searchDelegate);
+                  guestArrivedNow(
+                      context, snapshotTable, indexTable, searchDelegate);
                 });
           } else {
             MotionToast.info(
@@ -75,7 +87,8 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
               if (buttonText2 == "Assign Waiter") {
                 dialogueCustomWaiter(context, snapshotTable, indexTable,
                     assignTable, function, searchDelegate);
-              } else if (buttonText2 == "Assign Table") {
+              } else if (buttonText2 == "Assign Table" ||
+                  buttonText2 == "Change Table") {
                 dialogueCustom(context, snapshotTable, indexTable, assignTable,
                     function, searchDelegate);
               } else if (buttonText2 == "Take Order") {

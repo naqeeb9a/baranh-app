@@ -42,7 +42,7 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
                   setState: () {
                     setState(() {});
                   },
-                  visible: true,
+                  visibleButton: false,
                 ),
               )
             ],

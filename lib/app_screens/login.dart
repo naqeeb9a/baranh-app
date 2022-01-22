@@ -69,6 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      Image.asset(
+                        "assets/logo.png",
+                        width: dynamicWidth(context, 0.3),
+                      ),
                       text(
                         context,
                         "TEAM LOGIN",
