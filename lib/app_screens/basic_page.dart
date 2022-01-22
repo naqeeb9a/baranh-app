@@ -7,7 +7,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
-import 'package:platform/platform.dart' as Platform;
+import 'dart:io' show Platform;
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         showReleaseNotes: true,
         canDismissDialog: true,
         shouldPopScope: () => false,
-        dialogStyle: Platform.Platform.android == true
+        dialogStyle: Platform.isAndroid
             ? UpgradeDialogStyle.material
             : UpgradeDialogStyle.cupertino,
         child: bodyPage(pageDecider),
