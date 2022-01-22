@@ -38,7 +38,7 @@ class _DineInOrdersState extends State<DineInOrders> {
               Expanded(
                 child: tableCards(
                   context,
-                  getDineInOrders("dinein-orders"),
+                  getDineInOrders("dinein-orders", false),
                   "View details",
                   "Change Table",
                   setState: () {

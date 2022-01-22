@@ -23,9 +23,12 @@ getReservationData(query) async {
   }
 }
 
-getDineInOrders(query) async {
+getDineInOrders(query, alertCheck) async {
   var url = "";
-  if (userResponse["designation"].toString().toLowerCase() ==
+  if (alertCheck == true) {
+    url =
+        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/0";
+  } else if (userResponse["designation"].toString().toLowerCase() ==
       "Floor Manager".toLowerCase()) {
     url =
         "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/0";

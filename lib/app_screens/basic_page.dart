@@ -28,7 +28,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         showIgnore: false,
         showLater: false,
         showReleaseNotes: true,
-        canDismissDialog: true,
+        // canDismissDialog: true,
         shouldPopScope: () => false,
         dialogStyle: Platform.isAndroid
             ? UpgradeDialogStyle.material
