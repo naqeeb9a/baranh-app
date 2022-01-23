@@ -44,7 +44,12 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
               future: getOrderSummary(widget.saleId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data == null) {
+                  if (snapshot.data == false) {
+                    return Expanded(
+                        child: retry(
+                      context,
+                    ));
+                  } else if (snapshot.data == null) {
                     return Expanded(
                       child: Center(
                         child: text(
@@ -55,11 +60,6 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                         ),
                       ),
                     );
-                  } else if (snapshot.data == false) {
-                    return Expanded(
-                        child: retry(
-                      context,
-                    ));
                   } else {
                     return Expanded(
                         child: orderDetails(context, snapshot.data));
@@ -102,7 +102,8 @@ orderDetails(context, snapshot) {
   return Column(
     children: [
       heightBox(context, 0.05),
-      text(context, "ORDER DETAILS #" + snapshot[0]["sale_no"], 0.05, myWhite),
+      text(context, "ORDER DETAILS #" + snapshot[0]["sale_no"].toString(), 0.05,
+          myWhite),
       const Divider(
         thickness: 1,
         color: myWhite,
@@ -133,8 +134,8 @@ orderDetails(context, snapshot) {
         context,
         "Total 5% GST: ",
         "PKR " +
-            ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.05) +
-                    int.parse(snapshot[0]["sub_total_with_discount"]))
+            ((double.parse(snapshot[0]["sub_total_with_discount"]) * 0.05) +
+                    double.parse(snapshot[0]["sub_total_with_discount"]))
                 .toStringAsFixed(2),
         0.03,
         myWhite,
@@ -143,8 +144,8 @@ orderDetails(context, snapshot) {
         context,
         "Total 16% GST: ",
         "PKR " +
-            ((int.parse(snapshot[0]["sub_total_with_discount"]) * 0.16) +
-                    int.parse(snapshot[0]["sub_total_with_discount"]))
+            ((double.parse(snapshot[0]["sub_total_with_discount"]) * 0.16) +
+                    double.parse(snapshot[0]["sub_total_with_discount"]))
                 .toStringAsFixed(2),
         0.03,
         myWhite,
