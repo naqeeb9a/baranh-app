@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:baranh/app_screens/all_reservations.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
 import 'package:baranh/app_screens/dine_in_orders.dart';
@@ -7,7 +9,6 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
-import 'dart:io' show Platform;
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -28,14 +29,13 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         showIgnore: false,
         showLater: false,
         showReleaseNotes: true,
-        // canDismissDialog: true,
+        canDismissDialog: false,
         shouldPopScope: () => false,
         dialogStyle: Platform.isAndroid
             ? UpgradeDialogStyle.material
             : UpgradeDialogStyle.cupertino,
         child: bodyPage(pageDecider),
       ),
-      // body: bodyPage(pageDecider),
     );
   }
 
