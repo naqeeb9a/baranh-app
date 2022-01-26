@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class OrderSummaryPage extends StatefulWidget {
-  final String saleId;
+  final String saleId, tableName;
 
-  const OrderSummaryPage({Key? key, required this.saleId}) : super(key: key);
+  const OrderSummaryPage(
+      {Key? key, required this.saleId, required this.tableName})
+      : super(key: key);
 
   @override
   State<OrderSummaryPage> createState() => _OrderSummaryPageState();
@@ -62,7 +64,8 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                     );
                   } else {
                     return Expanded(
-                        child: orderDetails(context, snapshot.data));
+                        child: orderDetails(
+                            context, snapshot.data, widget.tableName));
                   }
                 } else {
                   return Expanded(child: loader(context));
@@ -98,7 +101,7 @@ billRow(context, text1, text2, size, color) {
   );
 }
 
-orderDetails(context, snapshot) {
+orderDetails(context, snapshot, tableName) {
   return Column(
     children: [
       heightBox(context, 0.05),
@@ -108,6 +111,8 @@ orderDetails(context, snapshot) {
         thickness: 1,
         color: myWhite,
       ),
+      text(context, "Table no: " + tableName.toString(), 0.04, myWhite,
+          bold: true),
       heightBox(context, 0.05),
       (snapshot[0]["sale_details"].length == 0)
           ? text(
