@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 getReservationData(query) async {
-  var url =
-      "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}";
+  var url = "$callBackUrl$query/${userResponse['outlet_id']}";
 
   try {
     var response = await http.get(
@@ -26,19 +25,16 @@ getReservationData(query) async {
 getDineInOrders(query, alertCheck) async {
   var url = "";
   if (alertCheck == true) {
-    url =
-        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/0";
+    url = "$callBackUrl$query/${userResponse['outlet_id']}/0";
   } else if (userResponse["designation"].toString().toLowerCase() ==
       "Floor Manager".toLowerCase()) {
-    url =
-        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/0";
+    url = "$callBackUrl$query/${userResponse['outlet_id']}/0";
   } else if (userResponse["designation"].toString().toLowerCase() ==
       "Waiter".toLowerCase()) {
     url =
-        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}/${userResponse["id"]}";
+        "$callBackUrl$query/${userResponse['outlet_id']}/${userResponse["id"]}";
   } else {
-    url =
-        "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}";
+    url = "$callBackUrl$query/${userResponse['outlet_id']}";
   }
   try {
     var response = await http.get(
@@ -57,14 +53,13 @@ getDineInOrders(query, alertCheck) async {
 
 searchReservation(date, reservationNumber) async {
   try {
-    var response = await http
-        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-reservation"),
-            body: json.encode({
-              "reservation": "$reservationNumber",
-              "filter_date": "$date",
-              "outlet_id": userResponse["outlet_id"],
-            }),
-            headers: {
+    var response = await http.post(Uri.parse(callBackUrl + "get-reservation"),
+        body: json.encode({
+          "reservation": "$reservationNumber",
+          "filter_date": "$date",
+          "outlet_id": userResponse["outlet_id"],
+        }),
+        headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         });
@@ -82,8 +77,7 @@ searchReservation(date, reservationNumber) async {
 
 getOrderSummary(id) async {
   try {
-    var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/order-summary/$id"));
+    var response = await http.get(Uri.parse(callBackUrl + "order-summary/$id"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -97,8 +91,8 @@ getOrderSummary(id) async {
 
 getTables(saleID) async {
   try {
-    var response = await http.get(Uri.parse(
-        "https://baranhweb.cmcmtech.com/api/booking-details/$saleID"));
+    var response =
+        await http.get(Uri.parse(callBackUrl + "booking-details/$saleID"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -113,8 +107,8 @@ getTables(saleID) async {
 
 getWaiters(saleID) async {
   try {
-    var response = await http.get(Uri.parse(
-        "https://baranhweb.cmcmtech.com/api/booking-details/$saleID"));
+    var response =
+        await http.get(Uri.parse(callBackUrl + "booking-details/$saleID"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -129,8 +123,7 @@ getWaiters(saleID) async {
 
 arrivedGuests(id) async {
   try {
-    var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/guest-arrived/$id"));
+    var response = await http.get(Uri.parse(callBackUrl + "guest-arrived/$id"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -145,18 +138,17 @@ arrivedGuests(id) async {
 
 reserveTable(name, phone, email, seats, date, dropDownTime) async {
   try {
-    var response =
-        await http.post(Uri.parse("https://baranhweb.cmcmtech.com/api/reserve"),
-            body: json.encode({
-              "name": "$name",
-              "phone": "$phone",
-              "email": "$email",
-              "seats": "$seats",
-              "date": "$date",
-              "timedropdown": "$dropDownTime",
-              "outlet_id": userResponse["outlet_id"],
-            }),
-            headers: {
+    var response = await http.post(Uri.parse(callBackUrl + "reserve"),
+        body: json.encode({
+          "name": "$name",
+          "phone": "$phone",
+          "email": "$email",
+          "seats": "$seats",
+          "date": "$date",
+          "timedropdown": "$dropDownTime",
+          "outlet_id": userResponse["outlet_id"],
+        }),
+        headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         });
@@ -177,8 +169,7 @@ getTimeSlots(date) async {
     SharedPreferences loginUser = await SharedPreferences.getInstance();
     dynamic temp = loginUser.getString("userResponse");
     userResponse = temp == null ? "" : await json.decode(temp);
-    var response = await http.post(
-        Uri.parse("https://baranhweb.cmcmtech.com/api/get-timeslot"),
+    var response = await http.post(Uri.parse(callBackUrl + "get-timeslot"),
         body: json.encode(
             {"outlet_id": userResponse["outlet_id"], "filter_date": date}),
         headers: {
@@ -198,8 +189,7 @@ getTimeSlots(date) async {
 
 getMenu() async {
   try {
-    var response = await http.post(
-        Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
+    var response = await http.post(Uri.parse(callBackUrl + "searchmenu"),
         body:
             json.encode({"outletid": userResponse["outlet_id"], "term": "all"}),
         headers: {
@@ -219,8 +209,7 @@ getMenu() async {
 
 assignTableOnline(saleId, tableId) async {
   try {
-    var response = await http.post(
-        Uri.parse("http://baranhweb.cmcmtech.com/api/assign-table"),
+    var response = await http.post(Uri.parse(callBackUrl + "assign-table"),
         body: json.encode({"sale_id": saleId, "table_id": tableId}),
         headers: {
           'Content-type': 'application/json',
@@ -240,8 +229,7 @@ assignTableOnline(saleId, tableId) async {
 
 assignWaiterOnline(saleId, waiterId) async {
   try {
-    var response = await http.post(
-        Uri.parse("http://baranhweb.cmcmtech.com/api/assign-waiter"),
+    var response = await http.post(Uri.parse(callBackUrl + "assign-waiter"),
         body: json.encode({"saleid": saleId, "waiters": waiterId}),
         headers: {
           'Content-type': 'application/json',
@@ -288,7 +276,7 @@ punchOrder(total, cost) async {
   };
   try {
     var response = await http.post(
-      Uri.parse("https://baranhweb.cmcmtech.com/api/booking-punch-order"),
+      Uri.parse("$callBackUrl booking-punch-order"),
       body: json.encode(bodyJson),
       headers: {
         'Content-type': 'application/json',
@@ -309,15 +297,14 @@ punchOrder(total, cost) async {
 
 checkAvailability(date, timeDropdown, seats) async {
   try {
-    var response = await http
-        .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"),
-            body: json.encode({
-              "outlet_id": "${userResponse["outlet_id"]}",
-              "filter_date": "$date",
-              "timedropdown": "$timeDropdown",
-              "seats": "$seats"
-            }),
-            headers: {
+    var response = await http.post(Uri.parse(callBackUrl + "get-avail"),
+        body: json.encode({
+          "outlet_id": "${userResponse["outlet_id"]}",
+          "filter_date": "$date",
+          "timedropdown": "$timeDropdown",
+          "seats": "$seats"
+        }),
+        headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         });
