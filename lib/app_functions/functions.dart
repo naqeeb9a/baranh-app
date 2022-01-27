@@ -276,7 +276,7 @@ punchOrder(total, cost) async {
   };
   try {
     var response = await http.post(
-      Uri.parse("$callBackUrl booking-punch-order"),
+      Uri.parse(callBackUrl + "booking-punch-order"),
       body: json.encode(bodyJson),
       headers: {
         'Content-type': 'application/json',

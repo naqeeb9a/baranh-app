@@ -50,6 +50,7 @@ dependencies:
   dio: ^4.0.4
   native_updater: ^0.1.1
   upgrader: ^3.12.1
+  back_button_interceptor: ^5.0.2
 
 dev_dependencies:
   flutter_test:

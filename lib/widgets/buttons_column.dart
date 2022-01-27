@@ -61,6 +61,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                 showCancelBtn: true,
                 confirmBtnText: "Yes",
                 backgroundColor: myOrange,
+                barrierDismissible: false,
                 confirmBtnColor: myOrange,
                 confirmBtnTextStyle: TextStyle(
                     fontSize: dynamicWidth(context, 0.04), color: myWhite),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/app_screens/login.dart';
 import 'package:baranh/utils/config.dart';
@@ -41,11 +42,21 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   }
 
   late Animation<double> _animation;
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
 
   @override
   void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
     _controller.dispose();
     super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    return true;
   }
 
   bool loader = false;

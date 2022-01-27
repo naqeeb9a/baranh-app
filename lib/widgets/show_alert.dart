@@ -23,7 +23,7 @@ dialogueCustom(
             height: dynamicHeight(context, 0.6),
             width: dynamicWidth(context, 0.8),
             child: FutureBuilder(
-                future: getDineInOrders("dinein-orders",true),
+                future: getDineInOrders("dinein-orders", true),
                 builder: (context, snapshot2) {
                   if (snapshot2.connectionState == ConnectionState.done) {
                     if (snapshot2.data == false) {

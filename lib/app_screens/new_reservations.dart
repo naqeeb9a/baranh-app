@@ -25,11 +25,15 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   dynamic bigArray = [];
   var timeDropDown = "";
 
+
   @override
   void dispose() {
+    
     _seats.dispose();
     super.dispose();
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +194,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                     CoolAlert.show(
                         context: context,
                         type: CoolAlertType.loading,
+                        barrierDismissible: false,
                         lottieAsset: "assets/loader.json");
                     var response = await checkAvailability(
                         hintText,

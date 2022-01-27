@@ -27,6 +27,7 @@ guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
       confirmBtnText: "continue",
       cancelBtnText: "Cancel",
       type: CoolAlertType.success,
+      barrierDismissible: false,
       onConfirmBtnTap: () {
         pageDecider = "Arrived Guests";
         globalRefresh();
