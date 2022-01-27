@@ -179,16 +179,17 @@ Widget tableCardsExtension(
         Visibility(
           child: text(
               context,
-              "Waiter : " +
-                  snapshotTable[indexTable]["waiter_name"]
-                      .toString()
-                      .toUpperCase(),
+              snapshotTable[indexTable]["waiter_id"] != null
+                  ? "Waiter : " +
+                      snapshotTable[indexTable]["waiter_name"]
+                          .toString()
+                          .toUpperCase()
+                  : "No Waiter assigned",
               0.04,
-              myOrange,
+              snapshotTable[indexTable]["waiter_id"] != null ? myOrange : myRed,
               bold: true),
           visible: (pageDecider == "Arrived Guests" ||
-                      pageDecider == "Dine In Orders") &&
-                  snapshotTable[indexTable]["waiter_id"] != null
+                  pageDecider == "Dine In Orders")
               ? true
               : false,
         ),
