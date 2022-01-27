@@ -177,9 +177,17 @@ Widget tableCardsExtension(
           color: myWhite.withOpacity(0.5),
         ),
         Visibility(
-          child: text(context, "Waiter Already assigned", 0.04, myWhite,
+          child: text(
+              context,
+              "Waiter : " +
+                  snapshotTable[indexTable]["waiter_name"]
+                      .toString()
+                      .toUpperCase(),
+              0.04,
+              myOrange,
               bold: true),
-          visible: pageDecider == "Arrived Guests" &&
+          visible: (pageDecider == "Arrived Guests" ||
+                      pageDecider == "Dine In Orders") &&
                   snapshotTable[indexTable]["waiter_id"] != null
               ? true
               : false,

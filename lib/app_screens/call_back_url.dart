@@ -36,7 +36,7 @@ class _CallBackUrlState extends State<CallBackUrl> {
                 children: [
                   inputFieldsHome(
                     "Callback Url:",
-                    "https://baranhweb.cmcmtech.com/api/",
+                    "https://example.com",
                     context,
                     controller: callBackUrlController,
                   ),

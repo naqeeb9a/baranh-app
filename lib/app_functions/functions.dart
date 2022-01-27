@@ -12,9 +12,7 @@ getReservationData(query) async {
       Uri.parse(url),
     )
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -47,9 +45,7 @@ getDineInOrders(query, alertCheck) async {
       Uri.parse(url),
     )
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -75,9 +71,7 @@ searchReservation(date, reservationNumber) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -96,9 +90,7 @@ getOrderSummary(id) async {
     var response = await http
         .get(Uri.parse(callBackUrl + "/api/order-summary/$id"))
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -116,9 +108,7 @@ getTables(saleID) async {
     var response = await http
         .get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"))
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -137,9 +127,7 @@ getWaiters(saleID) async {
     var response = await http
         .get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"))
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -158,9 +146,7 @@ arrivedGuests(id) async {
     var response = await http
         .get(Uri.parse(callBackUrl + "/api/guest-arrived/$id"))
         .timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -190,9 +176,7 @@ reserveTable(name, phone, email, seats, date, dropDownTime) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -218,9 +202,7 @@ getTimeSlots(date) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -242,9 +224,7 @@ getMenu() async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -265,9 +245,7 @@ assignTableOnline(saleId, tableId) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -290,9 +268,7 @@ assignWaiterOnline(saleId, waiterId) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -342,9 +318,7 @@ punchOrder(total, cost) async {
         'Accept': 'application/json',
       },
     ).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
 
@@ -371,9 +345,7 @@ checkAvailability(date, timeDropdown, seats) async {
           'Content-type': 'application/json',
           'Accept': 'application/json',
         }).timeout(const Duration(seconds: 10), onTimeout: () {
-      // Time has run out, do what you wanted to do.
-      return http.Response(
-          'Error', 408); // Request Timeout response status code
+      return http.Response('Error', 408);
     });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
