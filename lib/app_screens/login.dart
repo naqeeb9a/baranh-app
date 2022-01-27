@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = true;
       });
-      var response = await http.post(Uri.parse(callBackUrl+"signin-waiter"),
+      var response = await http.post(Uri.parse(callBackUrl+"/api/signin-waiter"),
           body: {"email": email.text, "password": password.text});
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);

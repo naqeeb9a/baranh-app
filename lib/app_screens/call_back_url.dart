@@ -65,7 +65,7 @@ class _CallBackUrlState extends State<CallBackUrl> {
                         backgroundColor: myOrange,
                         onConfirmBtnTap: () {
                           Navigator.of(context, rootNavigator: true).pop();
-                          callBackUrl = "https://baranhweb.cmcmtech.com/api/";
+                          callBackUrl = "https://baranhweb.cmcmtech.com";
                           pageDecider = "New Reservations";
                           globalRefresh();
                         });

@@ -25,4 +25,4 @@ dynamic menuRefresh;
 dynamic drawerRefresh;
 var cartItems = [].obs;
 var reservedTable = [];
-var callBackUrl = "https://baranhweb.cmcmtech.com/api/";
+var callBackUrl = "https://baranhweb.cmcmtech.com";
