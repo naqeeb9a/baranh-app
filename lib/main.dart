@@ -45,7 +45,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    checkCallBackUrl();
     BackButtonInterceptor.add(myInterceptor);
+  }
+
+  checkCallBackUrl() async {
+    SharedPreferences callBackUrlStored = await SharedPreferences.getInstance();
+    if (callBackUrlStored.getString("SavedUrl") != null) {
+      callBackUrl = callBackUrlStored.getString("SavedUrl")!;
+    }
   }
 
   @override

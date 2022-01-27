@@ -43,7 +43,11 @@ Widget retry(context) {
           repeat: false,
         ),
         heightBox(context, 0.02),
-        text(context, "Check your internet or try again later", 0.03, myWhite),
+        text(
+            context,
+            "Check your internet or try again later or check if your call back Url is okay",
+            0.03,
+            myWhite),
         heightBox(context, 0.1),
         coloredButton(
           context,

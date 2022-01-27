@@ -5,6 +5,7 @@ import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CallBackUrl extends StatefulWidget {
   const CallBackUrl({Key? key}) : super(key: key);
@@ -45,9 +46,13 @@ class _CallBackUrlState extends State<CallBackUrl> {
                         context: context,
                         type: CoolAlertType.confirm,
                         backgroundColor: myOrange,
-                        onConfirmBtnTap: () {
+                        onConfirmBtnTap: () async {
+                          SharedPreferences callBackUrlStored =
+                              await SharedPreferences.getInstance();
                           Navigator.of(context, rootNavigator: true).pop();
                           callBackUrl = callBackUrlController.text;
+                          callBackUrlStored.setString(
+                              "SavedUrl", callBackUrlController.text);
                           pageDecider = "New Reservations";
                           globalRefresh();
                         });
