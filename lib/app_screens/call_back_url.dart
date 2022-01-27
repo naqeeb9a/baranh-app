@@ -63,9 +63,14 @@ class _CallBackUrlState extends State<CallBackUrl> {
                         context: context,
                         type: CoolAlertType.confirm,
                         backgroundColor: myOrange,
-                        onConfirmBtnTap: () {
+                        onConfirmBtnTap: () async {
                           Navigator.of(context, rootNavigator: true).pop();
-                          callBackUrl = "https://baranhweb.cmcmtech.com";
+                          SharedPreferences callBackUrlStored =
+                              await SharedPreferences.getInstance();
+                          callBackUrl = callBackUrlController.text;
+                          callBackUrlStored.setString(
+                              "SavedUrl", "https://baranh.pk");
+                          callBackUrl = "https://baranh.pk";
                           pageDecider = "New Reservations";
                           globalRefresh();
                         });
