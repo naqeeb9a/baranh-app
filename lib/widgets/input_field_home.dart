@@ -121,7 +121,7 @@ Widget inputFieldsHome(text1, hintText1, context,
                                     RegExp("[0-9a-zA-Z \\- @ _ .]"),
                                   )
                                 : FilteringTextInputFormatter.allow(
-                                    RegExp("[a-zA-Z ]"),
+                                    RegExp("[a-zA-Z /:? 0-9 \\- _]"),
                                   ),
                         keyBoardType == TextInputType.number
                             ? FilteringTextInputFormatter.deny(

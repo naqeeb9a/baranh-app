@@ -58,6 +58,15 @@ Widget drawerItems(context, function, changeState) {
       },
     },
     {
+      "icon": Icons.open_in_browser,
+      "text": "Callback Url",
+      "function": () {
+        pageDecider = "Callback Url";
+        popUntil(customContext);
+        Navigator.pop(context, function());
+      },
+    },
+    {
       "icon": Icons.logout,
       "text": "LogOut",
       "function": () async {

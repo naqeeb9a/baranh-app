@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:baranh/app_screens/all_reservations.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
+import 'package:baranh/app_screens/call_back_url.dart';
 import 'package:baranh/app_screens/dine_in_orders.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
@@ -51,6 +52,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const DineInOrders();
       case "New Reservations":
         return const NewReservationsPage();
+      case "Callback Url":
+        return const CallBackUrl();
 
       default:
         return Column(
