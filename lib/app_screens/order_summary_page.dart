@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class OrderSummaryPage extends StatefulWidget {
-  final String saleId, tableName;
+  final dynamic saleId, tableName;
 
-  const OrderSummaryPage(
-      {Key? key, required this.saleId, required this.tableName})
+  const OrderSummaryPage({Key? key, this.saleId, this.tableName})
       : super(key: key);
 
   @override
@@ -111,7 +110,13 @@ orderDetails(context, snapshot, tableName) {
         thickness: 1,
         color: myWhite,
       ),
-      text(context, "Table no: " + tableName.toString(), 0.04, myWhite,
+      text(
+          context,
+          tableName == ""
+              ? "Table no: Not assigned yet"
+              : "Table no: " + tableName.toString(),
+          0.04,
+          myWhite,
           bold: true),
       heightBox(context, 0.05),
       (snapshot[0]["sale_details"].length == 0)

@@ -47,7 +47,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                 context,
                 OrderSummaryPage(
                   saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                  tableName: snapshotTable[indexTable]["table_name"],
+                  tableName: snapshotTable[indexTable]["table_name"] ?? "",
                 ));
           } else if (buttonText1 == "Assign Table") {
             dialogueCustom(context, snapshotTable, indexTable, assignTable,
@@ -112,7 +112,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                 MotionToast.error(
                   description: "Something went Wrong",
                   width: dynamicWidth(context, 0.8),
-                );
+                ).show(context);
               }
             },
           ),

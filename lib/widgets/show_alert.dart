@@ -133,47 +133,54 @@ dialogueCustom(
                                                 "Waiter not assigned Check your internet",
                                             dismissable: true,
                                           ).show(context);
-                                        } else {}
-                                      }
-                                      assignTable = snapshot.data[index]["id"];
+                                        } else {
+                                          assignTable =
+                                              snapshot.data[index]["id"];
 
-                                      var response = await assignTableOnline(
-                                          snapshotTable[indexTable]["sale_id"],
-                                          assignTable);
-                                      if (response == false) {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                        MotionToast.error(
-                                          description:
-                                              "Table not assigned Check your internet",
-                                          dismissable: true,
-                                        ).show(context);
-                                      } else {
-                                        pageDecider = "Dine In Orders";
-                                        Navigator.pop(context, globalRefresh());
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                        if (searchDelegate != "") {
-                                          searchDelegate();
+                                          var response =
+                                              await assignTableOnline(
+                                                  snapshotTable[indexTable]
+                                                      ["sale_id"],
+                                                  assignTable);
+                                          if (response == false) {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                            MotionToast.error(
+                                              description:
+                                                  "Table not assigned Check your internet",
+                                              dismissable: true,
+                                            ).show(context);
+                                          } else {
+                                            pageDecider = "Dine In Orders";
+                                            Navigator.pop(
+                                                context, globalRefresh());
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                            if (searchDelegate != "") {
+                                              searchDelegate();
+                                            }
+                                            MotionToast.success(
+                                              description: snapshotTable[
+                                                                  indexTable]
+                                                              ["waiter_id"] ==
+                                                          null &&
+                                                      userResponse[
+                                                                  "designation"]
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          "waiter".toLowerCase()
+                                                  ? "Table and Waiter both Assigned"
+                                                  : snapshotTable[indexTable]
+                                                              ["table_id"] ==
+                                                          null
+                                                      ? "Table assigned"
+                                                      : "Table changed",
+                                              dismissable: true,
+                                            ).show(context);
+                                          }
                                         }
-                                        MotionToast.success(
-                                          description: snapshotTable[indexTable]
-                                                          ["waiter_id"] ==
-                                                      null &&
-                                                  userResponse["designation"]
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      "waiter".toLowerCase()
-                                              ? "Table and Waiter both Assigned"
-                                              : snapshotTable[indexTable]
-                                                          ["table_id"] ==
-                                                      null
-                                                  ? "Table assigned"
-                                                  : "Table changed",
-                                          dismissable: true,
-                                        ).show(context);
                                       }
                                     }
                                   },
