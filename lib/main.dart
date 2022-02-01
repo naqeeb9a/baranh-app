@@ -9,16 +9,23 @@ import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_functions/ad_service.dart';
 import 'app_functions/notification_class.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await LocalNotificationsService.instance.initialize();
+  final adService = AdService(MobileAds.instance);
+  GetIt.instance.registerSingleton<AdService>(adService);
+
+  await adService.init();
   runApp(const MyApp());
 }
 

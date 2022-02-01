@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
@@ -82,6 +83,7 @@ Widget drawerItems(context, function, changeState) {
     child: ColoredBox(
       color: myBlack.withOpacity(.9),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
@@ -164,6 +166,8 @@ Widget drawerItems(context, function, changeState) {
               ),
             ),
           ),
+          const BottomBannerAd(),
+          const BottomBannerAd(),
         ],
       ),
     ),

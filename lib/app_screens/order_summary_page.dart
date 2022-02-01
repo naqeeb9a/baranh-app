@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -22,6 +23,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),

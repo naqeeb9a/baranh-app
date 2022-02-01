@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/contact_information.dart';
 import 'package:baranh/utils/app_routes.dart';
@@ -38,6 +39,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(
