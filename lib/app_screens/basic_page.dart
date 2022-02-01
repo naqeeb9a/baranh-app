@@ -1,5 +1,7 @@
 import 'dart:io' show Platform;
 
+import 'package:baranh/app_functions/fcm_service.dart';
+import 'package:baranh/app_functions/notification_class.dart';
 import 'package:baranh/app_screens/all_reservations.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
 import 'package:baranh/app_screens/call_back_url.dart';
@@ -8,6 +10,7 @@ import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -20,6 +23,23 @@ class BasicPage extends StatefulWidget {
 
 class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   var hintText = "mm/dd/yyy";
+
+  fcmListen() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      LocalNotificationsService.instance.showChatNotification(
+          title: '${event.notification!.title}',
+          body: '${event.notification!.body}');
+
+      FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FCMServices.fcmGetTokenAndSubscribe();
+    fcmListen();
+  }
 
   @override
   Widget build(BuildContext context) {
