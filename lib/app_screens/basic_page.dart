@@ -15,6 +15,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:lottie/lottie.dart';
 import 'package:upgrader/upgrader.dart';
 
 class BasicPage extends StatefulWidget {
@@ -51,6 +52,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             backgroundColor: myOrange,
             barrierDismissible: false,
             confirmBtnColor: myOrange,
+            lottieAsset: "assets/bell.json",
             confirmBtnTextStyle: TextStyle(
               fontSize: dynamicWidth(context, 0.04),
               color: myWhite,
