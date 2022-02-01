@@ -9,7 +9,9 @@ import 'package:baranh/app_screens/dine_in_orders.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
+import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:upgrader/upgrader.dart';
@@ -26,9 +28,31 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
 
   fcmListen() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      LocalNotificationsService.instance.showChatNotification(
-          title: '${event.notification!.title}',
-          body: '${event.notification!.body}');
+      if (event.data['id'] == userResponse['id']) {
+        LocalNotificationsService.instance
+            .showChatNotification(
+              title: '${event.notification!.title}',
+              body: '${event.notification!.body}',
+            )
+            .then(
+              (value) => CoolAlert.show(
+                  context: customContext,
+                  title: '${event.notification!.title}',
+                  text: '${event.notification!.body}',
+                  type: CoolAlertType.confirm,
+                  confirmBtnText: "OK",
+                  backgroundColor: myOrange,
+                  barrierDismissible: false,
+                  confirmBtnColor: myOrange,
+                  confirmBtnTextStyle: TextStyle(
+                    fontSize: dynamicWidth(context, 0.04),
+                    color: myWhite,
+                  ),
+                  onConfirmBtnTap: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  }),
+            );
+      }
 
       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
     });

@@ -11,6 +11,8 @@ class LocalNotificationsService {
     playSound: true,
     importance: Importance.max,
     priority: Priority.high,
+    enableVibration: true,
+    channelShowBadge: true,
   );
 
   late final FlutterLocalNotificationsPlugin _notificationsPlugin;
@@ -22,9 +24,9 @@ class LocalNotificationsService {
       "@mipmap/ic_launcher",
     );
 
-    final iosSettings = IOSInitializationSettings();
+    const iosSettings = IOSInitializationSettings();
 
-    final initializationSettings = InitializationSettings(
+    const initializationSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     );
