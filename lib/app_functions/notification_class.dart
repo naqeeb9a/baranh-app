@@ -1,3 +1,4 @@
+import 'package:baranh/utils/config.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationsService {
@@ -8,6 +9,7 @@ class LocalNotificationsService {
   static const _chatNotificationChannel = AndroidNotificationDetails(
     'chat_messages',
     'Chat messages',
+    color: myOrange,
     playSound: true,
     importance: Importance.max,
     priority: Priority.high,
