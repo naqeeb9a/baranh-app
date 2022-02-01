@@ -14,6 +14,7 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:upgrader/upgrader.dart';
 
 class BasicPage extends StatefulWidget {
@@ -31,27 +32,39 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
       if (event.data['id'] == userResponse['id']) {
         LocalNotificationsService.instance
             .showChatNotification(
-              title: '${event.notification!.title}',
-              body: '${event.notification!.body}',
-            )
-            .then(
-              (value) => CoolAlert.show(
-                  context: customContext,
-                  title: '${event.notification!.title}',
-                  text: '${event.notification!.body}',
-                  type: CoolAlertType.confirm,
-                  confirmBtnText: "OK",
-                  backgroundColor: myOrange,
-                  barrierDismissible: false,
-                  confirmBtnColor: myOrange,
-                  confirmBtnTextStyle: TextStyle(
-                    fontSize: dynamicWidth(context, 0.04),
-                    color: myWhite,
-                  ),
-                  onConfirmBtnTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  }),
-            );
+          title: '${event.notification!.title}',
+          body: '${event.notification!.body}',
+        ).then((value) async {
+          await FlutterRingtonePlayer.play(
+            android: AndroidSounds.ringtone,
+            ios: IosSounds.bell,
+            looping: true,
+            volume: 1.0,
+            asAlarm: true,
+          );
+          return CoolAlert.show(
+            context: customContext,
+            title: '${event.notification!.title}',
+            text: '${event.notification!.body}',
+            type: CoolAlertType.confirm,
+            confirmBtnText: "OK",
+            backgroundColor: myOrange,
+            barrierDismissible: false,
+            confirmBtnColor: myOrange,
+            confirmBtnTextStyle: TextStyle(
+              fontSize: dynamicWidth(context, 0.04),
+              color: myWhite,
+            ),
+            onConfirmBtnTap: () {
+              FlutterRingtonePlayer.stop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            onCancelBtnTap: () {
+              FlutterRingtonePlayer.stop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+          );
+        });
       }
 
       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
