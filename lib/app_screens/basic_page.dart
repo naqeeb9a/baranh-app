@@ -15,7 +15,6 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:lottie/lottie.dart';
 import 'package:upgrader/upgrader.dart';
 
 class BasicPage extends StatefulWidget {
@@ -35,7 +34,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             .showChatNotification(
           title: '${event.notification!.title}',
           body: '${event.notification!.body}',
-        ).then((value) async {
+        )
+            .then((value) async {
           await FlutterRingtonePlayer.play(
             android: AndroidSounds.ringtone,
             ios: IosSounds.bell,
@@ -47,10 +47,11 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             context: customContext,
             title: '${event.notification!.title}',
             text: '${event.notification!.body}',
-            type: CoolAlertType.confirm,
+            type: CoolAlertType.info,
             confirmBtnText: "OK",
             backgroundColor: myOrange,
             barrierDismissible: false,
+            showCancelBtn: false,
             confirmBtnColor: myOrange,
             lottieAsset: "assets/bell.json",
             confirmBtnTextStyle: TextStyle(
@@ -58,10 +59,6 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
               color: myWhite,
             ),
             onConfirmBtnTap: () {
-              FlutterRingtonePlayer.stop();
-              Navigator.of(context, rootNavigator: true).pop();
-            },
-            onCancelBtnTap: () {
               FlutterRingtonePlayer.stop();
               Navigator.of(context, rootNavigator: true).pop();
             },
