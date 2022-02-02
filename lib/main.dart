@@ -23,6 +23,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await LocalNotificationsService.instance.initialize();
   final adService = AdService(MobileAds.instance);
+
   GetIt.instance.registerSingleton<AdService>(adService);
 
   await adService.init();

@@ -65,8 +65,6 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
           );
         });
       }
-
-      FirebaseMessaging.onMessageOpenedApp.listen((message) {});
     });
   }
 

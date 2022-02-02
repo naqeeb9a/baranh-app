@@ -167,7 +167,19 @@ Widget drawerItems(context, function, changeState) {
             ),
           ),
           const BottomBannerAd(),
-          const BottomBannerAd(),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: dynamicHeight(context, .02),
+            ),
+            child: text(
+              context,
+              "Version: $version",
+              .034,
+              myWhite,
+              maxLines: 4,
+              alignText: TextAlign.center,
+            ),
+          ),
         ],
       ),
     ),
