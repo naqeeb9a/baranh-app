@@ -1,4 +1,3 @@
-import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
@@ -166,7 +165,7 @@ Widget drawerItems(context, function, changeState) {
               ),
             ),
           ),
-          const BottomBannerAd(),
+          // const BottomBannerAd(),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: dynamicHeight(context, .02),

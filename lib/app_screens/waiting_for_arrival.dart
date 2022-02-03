@@ -1,4 +1,3 @@
-import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -17,7 +16,7 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBannerAd(),
+      // bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(
