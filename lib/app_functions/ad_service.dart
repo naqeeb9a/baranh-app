@@ -17,10 +17,10 @@ class AdService {
 
   Future<void> init() async {
     await _mobileAds.initialize();
-    // if (kDebugMode) {
-    //   final cfg = RequestConfiguration(testDeviceIds: [kTestDeviceId]);
-    //   await MobileAds.instance.updateRequestConfiguration(cfg);
-    // }
+    if (kDebugMode) {
+      final cfg = RequestConfiguration(testDeviceIds: [kTestDeviceId]);
+      await MobileAds.instance.updateRequestConfiguration(cfg);
+    }
   }
 
   BannerAd getBannerAd() {
@@ -43,9 +43,9 @@ class AdService {
   }
 
   String get _bannerUnitId {
-    // if (kDebugMode) {
-    //   return BannerAd.testAdUnitId;
-    // }
+    if (kDebugMode) {
+      return BannerAd.testAdUnitId;
+    }
 
     if (Platform.isAndroid) {
       return kAndroidBannerUnitId;

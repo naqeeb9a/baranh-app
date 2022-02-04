@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/bottom_ad_bar.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -19,7 +20,7 @@ class _CallBackUrlState extends State<CallBackUrl> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: const BottomBannerAd(),
+      bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),

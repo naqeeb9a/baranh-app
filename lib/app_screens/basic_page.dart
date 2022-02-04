@@ -79,6 +79,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     customContext = context;
     return Scaffold(
+      
       backgroundColor: myBlack,
       body: UpgradeAlert(
         showIgnore: false,
