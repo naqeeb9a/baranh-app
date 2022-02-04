@@ -6,7 +6,10 @@ import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../app_functions/ad_service.dart';
 
 class CallBackUrl extends StatefulWidget {
   const CallBackUrl({Key? key}) : super(key: key);
@@ -17,6 +20,12 @@ class CallBackUrl extends StatefulWidget {
 
 class _CallBackUrlState extends State<CallBackUrl> {
   final TextEditingController callBackUrlController = TextEditingController();
+  @override
+  void initState() {
+    GetIt.instance.get<AdService>().getInterstitialAd();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +53,7 @@ class _CallBackUrlState extends State<CallBackUrl> {
                   ),
                   heightBox(context, 0.02),
                   coloredButton(context, "Change", myOrange, function: () {
+                    GetIt.instance.get<AdService>().showInterstitialAd();
                     CoolAlert.show(
                         context: context,
                         type: CoolAlertType.confirm,
@@ -61,6 +71,7 @@ class _CallBackUrlState extends State<CallBackUrl> {
                   }),
                   heightBox(context, 0.02),
                   coloredButton(context, "Reset Url", myOrange, function: () {
+                    GetIt.instance.get<AdService>().showInterstitialAd();
                     CoolAlert.show(
                         context: context,
                         type: CoolAlertType.confirm,
