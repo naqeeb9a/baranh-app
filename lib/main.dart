@@ -61,6 +61,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   }
 
   @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
     _controller.dispose();
