@@ -1,6 +1,5 @@
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/contact_information.dart';
-import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
@@ -204,14 +203,15 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                       CoolAlert.show(
                           onConfirmBtnTap: () {
                             Navigator.of(context, rootNavigator: true).pop();
-                            push(
+                            Navigator.push(
                                 context,
-                                ContactInformation(
-                                  dropDownTime: indexValue
-                                      .substring(indexValue.indexOf("#") + 1),
-                                  seats: _seats.text,
-                                  date: hintText,
-                                ));
+                                MaterialPageRoute(
+                                    builder: (context) => ContactInformation(
+                                          dropDownTime: indexValue.substring(
+                                              indexValue.indexOf("#") + 1),
+                                          seats: _seats.text,
+                                          date: hintText,
+                                        ))).then((value) => globalRefresh());
                           },
                           title: "Slots Available",
                           text: "Do you wish to proceed?",

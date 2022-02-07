@@ -269,6 +269,7 @@ Widget drawerItems2(context) {
                       showCancelBtn: true,
                       onConfirmBtnTap: () async {
                         Navigator.of(context, rootNavigator: true).pop();
+                 
                         CoolAlert.show(
                             context: context,
                             type: CoolAlertType.loading,
