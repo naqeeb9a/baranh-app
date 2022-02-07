@@ -80,42 +80,44 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
         }),
         Visibility(
           visible: visibleButton,
-          child: greenButtons(
-            context,
-            buttonText2,
-            snapshotTable,
-            indexTable,
-            function: () {
-              if (buttonText2 == "Assign Waiter") {
-                dialogueCustomWaiter(context, snapshotTable, indexTable,
-                    assignTable, function, searchDelegate);
-              } else if (buttonText2 == "Assign Table" ||
-                  buttonText2 == "Change Table") {
-                dialogueCustom(context, snapshotTable, indexTable, assignTable,
-                    function, searchDelegate);
-              } else if (buttonText2 == "Take Order") {
-                push(
-                    context,
-                    MenuPage(
-                      saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                      tableNo: snapshotTable[indexTable]["table_id"].toString(),
-                      tableName: snapshotTable[indexTable]["table_name"],
-                    ));
-              } else if (buttonText2 == "View details") {
-                push(
+          child: greenButtons(context, buttonText2, snapshotTable, indexTable,
+              function: () {
+            if (buttonText2 == "Assign Waiter") {
+              dialogueCustomWaiter(context, snapshotTable, indexTable,
+                  assignTable, function, searchDelegate);
+            } else if (buttonText2 == "Assign Table" ||
+                buttonText2 == "Change Table") {
+              dialogueCustom(context, snapshotTable, indexTable, assignTable,
+                  function, searchDelegate);
+            } else if (buttonText2 == "Take Order") {
+              push(
                   context,
-                  OrderSummaryPage(
-                      saleId: snapshotTable[indexTable]["sale_id"].toString(),
-                      tableName: snapshotTable[indexTable]["table_name"]),
-                );
-              } else {
-                MotionToast.error(
-                  description: "Something went Wrong",
-                  width: dynamicWidth(context, 0.8),
-                ).show(context);
-              }
-            },
-          ),
+                  MenuPage(
+                    saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                    tableNo: snapshotTable[indexTable]["table_id"].toString(),
+                    tableName: snapshotTable[indexTable]["table_name"],
+                  ));
+            } else if (buttonText2 == "View details") {
+              push(
+                context,
+                OrderSummaryPage(
+                    saleId: snapshotTable[indexTable]["sale_id"].toString(),
+                    tableName: snapshotTable[indexTable]["table_name"]),
+              );
+            } else {
+              MotionToast.error(
+                description: "Something went Wrong",
+                width: dynamicWidth(context, 0.8),
+              ).show(context);
+            }
+          }, longPressFunction: () {
+            if (userResponse["designation"].toString().toLowerCase() ==
+                    "Floor Manager".toLowerCase() &&
+                buttonText2 == "Change Table") {
+              dialogueCustomWaiter(context, snapshotTable, indexTable,
+                  assignTable, function, searchDelegate);
+            }
+          }),
         ),
       ],
     ),
