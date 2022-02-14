@@ -50,12 +50,12 @@ Widget tableCards(context, function, buttonText1, buttonText2,
                           showSearch(
                             context: context,
                             delegate: CustomDineInSearchDelegate(
-                              snapshot.data,
-                              setState,
-                              assignTable,
-                              buttonText1,
-                              buttonText2,
-                            ),
+                                snapshot.data,
+                                setState,
+                                assignTable,
+                                buttonText1,
+                                buttonText2,
+                                visibleButton),
                           );
                         },
                         child: inputFieldsHome(

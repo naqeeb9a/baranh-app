@@ -11,15 +11,11 @@ class CustomDineInSearchDelegate extends SearchDelegate {
       buttonText1,
       buttonText2,
       function1check,
-      function2check;
+      function2check,
+      visibleButton;
 
-  CustomDineInSearchDelegate(
-    this.data,
-    this.setState,
-    this.assignTable,
-    this.buttonText1,
-    this.buttonText2,
-  );
+  CustomDineInSearchDelegate(this.data, this.setState, this.assignTable,
+      this.buttonText1, this.buttonText2, this.visibleButton);
   dynamic popStatus = "";
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -110,7 +106,8 @@ class CustomDineInSearchDelegate extends SearchDelegate {
                     context, matchQuery, index, buttonText1, buttonText2,
                     function: setState,
                     assignTable: assignTable,
-                    searchDelegate: popStatus);
+                    searchDelegate: popStatus,
+                    visibleButton: visibleButton);
               },
             ));
   }
@@ -154,7 +151,8 @@ class CustomDineInSearchDelegate extends SearchDelegate {
                     context, matchQuery, index, buttonText1, buttonText2,
                     function: setState,
                     assignTable: assignTable,
-                    searchDelegate: popStatus);
+                    searchDelegate: popStatus,
+                    visibleButton: visibleButton);
               },
             ),
           ); // ListTile
