@@ -68,9 +68,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     fontSize: dynamicWidth(context, 0.04), color: myWhite),
                 onConfirmBtnTap: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  if (searchDelegate != "") {
-                    searchDelegate();
-                  }
+                  
                   guestArrivedNow(
                       context, snapshotTable, indexTable, searchDelegate);
                 });
