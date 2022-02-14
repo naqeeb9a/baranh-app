@@ -29,7 +29,7 @@ class AdService {
   BannerAd getBannerAd() {
     return BannerAd(
       adUnitId: _bannerUnitId,
-      size: AdSize.fullBanner,
+      size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
