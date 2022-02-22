@@ -42,6 +42,7 @@ bar(
                   top: dynamicHeight(context, 0.02),
                   right: dynamicWidth(context, 0.02)),
               child: Badge(
+                animationType: BadgeAnimationType.fade,
                 badgeContent: text(
                   context,
                   cartItems.length.toString(),

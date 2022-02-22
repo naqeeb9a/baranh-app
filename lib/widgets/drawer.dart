@@ -18,6 +18,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.calendar_today,
       "text": "New Reservations",
       "function": () {
+        cartItems.clear();
         pageDecider = "New Reservations";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -27,6 +28,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.calendar_today,
       "text": "All Reservations",
       "function": () {
+        cartItems.clear();
         pageDecider = "All Reservations";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -36,6 +38,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.share_arrival_time_rounded,
       "text": "Waiting For Arrival",
       "function": () {
+        cartItems.clear();
         pageDecider = "Waiting For Arrival";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -45,6 +48,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.supervised_user_circle_rounded,
       "text": "Arrived Guests",
       "function": () {
+        cartItems.clear();
         pageDecider = "Arrived Guests";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -54,6 +58,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.notes_rounded,
       "text": "Dine In Orders",
       "function": () {
+        cartItems.clear();
         pageDecider = "Dine In Orders";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -63,6 +68,7 @@ Widget drawerItems(context, function, changeState) {
       "icon": Icons.open_in_browser,
       "text": "Callback Url",
       "function": () {
+        cartItems.clear();
         pageDecider = "Callback Url";
         popUntil(customContext);
         Navigator.pop(context, function());
@@ -269,7 +275,7 @@ Widget drawerItems2(context) {
                       showCancelBtn: true,
                       onConfirmBtnTap: () async {
                         Navigator.of(context, rootNavigator: true).pop();
-                 
+
                         CoolAlert.show(
                             context: context,
                             type: CoolAlertType.loading,

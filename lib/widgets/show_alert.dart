@@ -5,7 +5,6 @@ import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 import 'essential_widgets.dart';
@@ -70,12 +69,7 @@ dialogueCustom(
                                 for (var i = 0;
                                     i < (snapshot2.data as List).length;
                                     i++) {
-                                  if ((snapshot2.data as List)[i]
-                                              ["booking_date"] ==
-                                          DateFormat('yyyy-MM-dd')
-                                              .format(DateTime.now())
-                                              .toString() &&
-                                      ((snapshot2.data as List)[i]
+                                  if (((snapshot2.data as List)[i]
                                                   ["order_status"] ==
                                               "1" ||
                                           (snapshot2.data as List)[i]
