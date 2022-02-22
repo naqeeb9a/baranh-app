@@ -26,5 +26,5 @@ dynamic drawerRefresh;
 var cartItems = [].obs;
 var reservedTable = [];
 var callBackUrl = "https://baranh.pk";
-var version = "1.3.1";
+var version = "1.3.2";
 
