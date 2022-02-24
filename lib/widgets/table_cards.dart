@@ -152,12 +152,14 @@ Widget tableCardsExtension(
   searchDelegate = "",
 }) {
   return Container(
+    alignment: Alignment.center,
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(dynamicWidth(context, 0.015)),
         border: Border.all(width: 1, color: myWhite.withOpacity(0.5))),
     padding: EdgeInsets.all(dynamicWidth(context, 0.04)),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         snapshotTable[indexTable]["table_id"] == null
             ? text(
@@ -165,13 +167,15 @@ Widget tableCardsExtension(
                 snapshotTable[indexTable]["customer_name"]
                     .toString()
                     .toString(),
-                0.04,
-                myWhite)
+                0.05,
+                myWhite,
+                bold: true)
             : text(
                 context,
                 "Table: " + snapshotTable[indexTable]["table_name"].toString(),
-                0.04,
-                myWhite),
+                0.05,
+                myWhite,
+                bold: true),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
@@ -209,80 +213,19 @@ Widget tableCardsExtension(
               bold: true),
         ),
         heightBox(context, 0.02),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: dynamicWidth(context, 0.5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text(
-                      context,
-                      "Order: " +
-                          snapshotTable[indexTable]["sale_no"].toString(),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      "Name: " +
-                          snapshotTable[indexTable]["customer_name"].toString(),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      "Phone: " +
-                          snapshotTable[indexTable]["customer_phone"]
-                              .toString(),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      "Date: " +
-                          snapshotTable[indexTable]["booking_date"].toString(),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      "Time: " +
-                          getConvertedTime(
-                              snapshotTable[indexTable]["opening_time"]) +
-                          " - " +
-                          getConvertedTime(
-                              snapshotTable[indexTable]["closing_time"]),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      "Seats: " +
-                          snapshotTable[indexTable]["booked_seats"].toString(),
-                      0.035,
-                      myWhite),
-                  text(
-                      context,
-                      snapshotTable[indexTable]["usage_status"].toString() ==
-                              "dine_in"
-                          ? "Status: Dine In"
-                          : "Status: " +
-                              snapshotTable[indexTable]["usage_status"]
-                                  .toString(),
-                      0.035,
-                      myWhite),
-                ],
-              ),
-            ),
-            buttonsColumn(
-                context,
-                buttonText1,
-                buttonText2,
-                snapshotTable,
-                indexTable,
-                assignTable,
-                function,
-                visibleButton,
-                searchDelegate)
-          ],
-        )
+        text(
+            context,
+            snapshotTable[indexTable]["customer_name"].toString() +
+                "  |  " +
+                snapshotTable[indexTable]["booked_seats"].toString() +
+                "  |  " +
+                getConvertedTime(
+                    snapshotTable[indexTable]["opening_time"].toString()),
+            0.04,
+            myWhite),
+        heightBox(context, 0.02),
+        buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
+            indexTable, assignTable, function, visibleButton, searchDelegate)
       ],
     ),
   );

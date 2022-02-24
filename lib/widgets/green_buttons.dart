@@ -3,10 +3,14 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-Widget greenButtons(context, text1, snapshot, index,
-    {function = "", longPressFunction = ""}) {
+Widget greenButtons(
+  context,
+  text1,
+  snapshot,
+  index, {
+  function = "",
+}) {
   return InkWell(
-    onLongPress: longPressFunction == "" ? () {} : longPressFunction,
     onTap: function == "" ? () {} : function,
     child: Container(
       alignment: Alignment.center,
