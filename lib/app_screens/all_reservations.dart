@@ -8,7 +8,6 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-import '../app_functions/bottom_ad_bar.dart';
 
 class AllReservationsPage extends StatefulWidget {
   const AllReservationsPage({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBannerAd(),
+      // bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: RefreshIndicator(
         onRefresh: () {

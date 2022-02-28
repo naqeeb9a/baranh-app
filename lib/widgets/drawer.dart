@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../app_functions/bottom_ad_bar.dart';
 
 Widget drawerItems(context, function, changeState) {
   List drawerItemList = [
@@ -173,7 +172,7 @@ Widget drawerItems(context, function, changeState) {
               ),
             ),
           ),
-          const BottomBannerAd(),
+          // const BottomBannerAd(),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: dynamicHeight(context, .02),

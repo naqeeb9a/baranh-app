@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-import '../app_functions/bottom_ad_bar.dart';
 
 class NewReservationsPage extends StatefulWidget {
   const NewReservationsPage({Key? key}) : super(key: key);
@@ -35,7 +34,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBannerAd(),
+      // bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(

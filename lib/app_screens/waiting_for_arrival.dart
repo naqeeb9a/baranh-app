@@ -5,7 +5,6 @@ import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../app_functions/bottom_ad_bar.dart';
 
 class WaitingForArrival extends StatefulWidget {
   const WaitingForArrival({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class _WaitingForArrivalState extends State<WaitingForArrival> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBannerAd(),
+      // bottomNavigationBar: const BottomBannerAd(),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(

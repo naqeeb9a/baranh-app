@@ -77,10 +77,11 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
         }
       }),
       Visibility(
-        visible: userResponse["designation"].toString().toLowerCase() ==
-                "Floor Manager".toLowerCase()
-            ? visibleButton
-            : false,
+        visible: userResponse["designation"].toString().toLowerCase() !=
+                    "Floor Manager".toLowerCase() &&
+                pageDecider == "Dine In Orders"
+            ? false
+            : visibleButton,
         child: greenButtons(
           context,
           buttonText2,
