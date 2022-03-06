@@ -152,6 +152,8 @@ arrivedGuests(id) async {
 
     if (response.statusCode == 200) {
       return jsonData["data"];
+    } else if (response.statusCode == 400) {
+      return "cancelled";
     } else {
       return false;
     }

@@ -19,6 +19,34 @@ guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
         type: CoolAlertType.error,
         backgroundColor: myOrange,
         confirmBtnColor: myOrange);
+  } else if (response == "cancelled") {
+    Navigator.of(context, rootNavigator: true).pop();
+    CoolAlert.show(
+      context: context,
+      text: "Reservation cancelled because the guest was not on time",
+      confirmBtnText: "Book again",
+      cancelBtnText: "Book later",
+      type: CoolAlertType.error,
+      barrierDismissible: false,
+      showCancelBtn: true,
+      onConfirmBtnTap: () {
+        pageDecider = "New Reservations";
+        globalRefresh();
+        Navigator.of(context, rootNavigator: true).pop();
+        if (searchDelegate != "") {
+          searchDelegate();
+        }
+      },
+      onCancelBtnTap: () {
+        globalRefresh();
+        Navigator.of(context, rootNavigator: true).pop();
+        if (searchDelegate != "") {
+          searchDelegate();
+        }
+      },
+      backgroundColor: myOrange,
+      confirmBtnColor: myOrange,
+    );
   } else {
     Navigator.of(context, rootNavigator: true).pop();
     CoolAlert.show(
