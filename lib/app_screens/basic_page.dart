@@ -8,8 +8,14 @@ import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/waiting_for_arrival.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:upgrader/upgrader.dart';
+
+import '../app_functions/notification_class.dart';
+import '../utils/dynamic_sizes.dart';
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -24,6 +30,48 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    fcmListen();
+  }
+
+  fcmListen() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      if (event.data['id'] == userResponse['id']) {
+        LocalNotificationsService.instance
+            .showChatNotification(
+          title: '${event.notification!.title}',
+          body: '${event.notification!.body}',
+        )
+            .then((value) async {
+          await FlutterRingtonePlayer.play(
+            android: AndroidSounds.ringtone,
+            ios: IosSounds.bell,
+            looping: true,
+            volume: 1.0,
+            asAlarm: true,
+          );
+          return CoolAlert.show(
+            context: customContext,
+            title: '${event.notification!.title}',
+            text: '${event.notification!.body}',
+            type: CoolAlertType.info,
+            confirmBtnText: "OK",
+            backgroundColor: myOrange,
+            barrierDismissible: false,
+            showCancelBtn: false,
+            confirmBtnColor: myOrange,
+            lottieAsset: "assets/bell.json",
+            confirmBtnTextStyle: TextStyle(
+              fontSize: dynamicWidth(context, 0.04),
+              color: myWhite,
+            ),
+            onConfirmBtnTap: () {
+              FlutterRingtonePlayer.stop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+          );
+        });
+      }
+    });
   }
 
   @override
