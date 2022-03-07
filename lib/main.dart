@@ -7,24 +7,74 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_functions/fcm_service.dart';
 import 'app_functions/notification_class.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await LocalNotificationsService.instance.initialize();
+  FCMServices.fcmGetTokenAndSubscribe();
+  fcmListen();
   // final adService = AdService(MobileAds.instance);
 
   // GetIt.instance.registerSingleton<AdService>(adService);
 
   // await adService.init();
   runApp(const MyApp());
+}
+
+fcmListen() async {
+  BuildContext? context;
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    if (event.data['id'] == userResponse['id']) {
+      LocalNotificationsService.instance
+          .showChatNotification(
+        title: '${event.notification!.title}',
+        body: '${event.notification!.body}',
+      )
+          .then((value) async {
+        await FlutterRingtonePlayer.play(
+          android: AndroidSounds.ringtone,
+          ios: IosSounds.bell,
+          looping: true,
+          volume: 1.0,
+          asAlarm: true,
+        );
+        return CoolAlert.show(
+          context: customContext,
+          title: '${event.notification!.title}',
+          text: '${event.notification!.body}',
+          type: CoolAlertType.info,
+          confirmBtnText: "OK",
+          backgroundColor: myOrange,
+          barrierDismissible: false,
+          showCancelBtn: false,
+          confirmBtnColor: myOrange,
+          lottieAsset: "assets/bell.json",
+          confirmBtnTextStyle: TextStyle(
+            fontSize: dynamicWidth(context!, 0.04),
+            // fontSize: 20,
+            color: myWhite,
+          ),
+          onConfirmBtnTap: () {
+            FlutterRingtonePlayer.stop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        );
+      });
+    }
+  });
 }
 
 class MyApp extends StatefulWidget {
