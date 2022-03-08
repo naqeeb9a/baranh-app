@@ -150,6 +150,7 @@ dialogueCustom(
                                                   snapshotTable[indexTable]
                                                       ["sale_id"],
                                                   assignTable);
+
                                           if (response == false) {
                                             Navigator.of(context,
                                                     rootNavigator: true)
@@ -157,6 +158,19 @@ dialogueCustom(
                                             MotionToast.error(
                                               description:
                                                   "Table not assigned Check your internet",
+                                              dismissable: true,
+                                            ).show(context);
+                                          } else if (response ==
+                                              "already reserved") {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                            MotionToast.error(
+                                              description:
+                                                  "Table already assigned reopen the dialogue to get the updated status",
                                               dismissable: true,
                                             ).show(context);
                                           } else {
@@ -204,6 +218,19 @@ dialogueCustom(
                                           MotionToast.error(
                                             description:
                                                 "Table not assigned Check your internet",
+                                            dismissable: true,
+                                          ).show(context);
+                                        } else if (response ==
+                                            "already reserved") {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          MotionToast.error(
+                                            description:
+                                                "Table already assigned reopen the dialogue to get the updated status",
                                             dismissable: true,
                                           ).show(context);
                                         } else {

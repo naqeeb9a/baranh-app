@@ -253,6 +253,8 @@ assignTableOnline(saleId, tableId) async {
 
     if (response.statusCode == 200) {
       return jsonData["data"];
+    } else if (response.statusCode == 400) {
+      return "already reserved";
     } else {
       return false;
     }
