@@ -5,7 +5,6 @@ import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class ArrivedGuest extends StatefulWidget {
   const ArrivedGuest({Key? key}) : super(key: key);
 
@@ -38,16 +37,22 @@ class _ArrivedGuestState extends State<ArrivedGuest> {
                 color: myWhite,
               ),
               Expanded(
-                child: tableCards(
-                  context,
-                  getReservationData("arrived"),
-                  "Assign Waiter",
-                  "Assign Table",
-                  setState: () {
-                    setState(() {});
-                  },
-                  visible: true,
-                ),
+                child: (userResponse["designation"].toString().toLowerCase() !=
+                        "Floor Manager".toLowerCase())
+                    ? tableCards(context, getReservationData("arrived"),
+                        "Assign Table", "Assign Table", setState: () {
+                        setState(() {});
+                      }, visible: true, visibleButton: false)
+                    : tableCards(
+                        context,
+                        getReservationData("arrived"),
+                        "Assign Waiter",
+                        "Assign Table",
+                        setState: () {
+                          setState(() {});
+                        },
+                        visible: true,
+                      ),
               )
             ],
           ),

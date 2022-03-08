@@ -15,7 +15,21 @@ dialogueCustom(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: text(context, "Assign Table", 0.04, myWhite, bold: true),
+          title: InkWell(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                text(context, "Assign Table", 0.04, myWhite, bold: true),
+                const Icon(
+                  Icons.close,
+                  color: myWhite,
+                )
+              ],
+            ),
+          ),
           backgroundColor: myBlack,
           content: Container(
             color: myBlack,
@@ -265,7 +279,21 @@ dialogueCustomWaiter(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: text(context, "Assign Waiter", 0.04, myWhite, bold: true),
+          title: InkWell(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                text(context, "Assign Waiter", 0.04, myWhite, bold: true),
+                const Icon(
+                  Icons.close,
+                  color: myWhite,
+                )
+              ],
+            ),
+          ),
           backgroundColor: myBlack,
           content: Container(
             color: myBlack,

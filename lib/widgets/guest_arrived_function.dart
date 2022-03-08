@@ -57,9 +57,9 @@ guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
       type: CoolAlertType.success,
       barrierDismissible: false,
       onConfirmBtnTap: () {
+        Navigator.of(context, rootNavigator: true).pop();
         pageDecider = "Arrived Guests";
         globalRefresh();
-        Navigator.of(context, rootNavigator: true).pop();
         if (searchDelegate != "") {
           searchDelegate();
         }

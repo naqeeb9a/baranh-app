@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/contact_information.dart';
 import 'package:baranh/utils/config.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-
 class NewReservationsPage extends StatefulWidget {
   const NewReservationsPage({Key? key}) : super(key: key);
 
@@ -20,15 +21,28 @@ class NewReservationsPage extends StatefulWidget {
 
 class _NewReservationsPageState extends State<NewReservationsPage> {
   final TextEditingController _seats = TextEditingController();
-
+  late Timer _timer;
   String indexValue = "";
   dynamic bigArray = [];
   var timeDropDown = "";
-
+  dynamic letsRefresh = "";
   @override
   void dispose() {
+    _timer.cancel();
     _seats.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      if (letsRefresh == "") {
+      } else {
+        debugPrint("StateRefreshed");
+        letsRefresh();
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -57,120 +71,165 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   setState(() {});
                 }),
                 heightBox(context, 0.02),
-                hintText == "mm/dd/yyyy"
-                    ? Container()
-                    : SizedBox(
-                        height: dynamicWidth(context, 0.2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text(
-                              context,
-                              "Time",
-                              0.04,
-                              myWhite,
-                            ),
-                            widthBox(context, 0.1),
-                            FutureBuilder(
-                              future: getTimeSlots(hintText),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  (snapshot.data == false)
-                                      ? ""
-                                      : indexValue = getConvertedTime(snapshot
-                                              .data[0]["opening_time"]) +
-                                          " - " +
-                                          getConvertedTime(snapshot.data[0]
-                                              ["closing_time"]) +
-                                          "  ${snapshot.data[0]["discount"]} % off" +
-                                          "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
-                                  return (snapshot.data == false)
-                                      ? InkWell(
-                                          onTap: () {
-                                            globalRefresh();
-                                          },
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.rotate_right_outlined,
-                                                color: myOrange,
-                                                size:
-                                                    dynamicWidth(context, 0.08),
-                                              ),
-                                              text(context, "Retry", 0.04,
-                                                  myWhite)
-                                            ],
-                                          ),
-                                        )
-                                      : StatefulBuilder(
-                                          builder: (BuildContext context,
-                                              changeSate) {
-                                            return SizedBox(
-                                              width: dynamicWidth(context, 0.6),
-                                              child: DropdownButton<String>(
-                                                isExpanded: true,
-                                                hint: FittedBox(
-                                                  child: text(
-                                                    context,
-                                                    indexValue.substring(
-                                                        0,
-                                                        indexValue
-                                                            .indexOf("#")),
-                                                    0.04,
-                                                    myWhite,
-                                                  ),
-                                                ),
-                                                items: snapshot.data
-                                                    .map<
-                                                        DropdownMenuItem<
-                                                            String>>((value) =>
-                                                        DropdownMenuItem<
-                                                            String>(
-                                                          value: getConvertedTime(
-                                                                  value[
-                                                                      "opening_time"]) +
-                                                              " - " +
-                                                              getConvertedTime(
-                                                                  value[
-                                                                      "closing_time"]) +
-                                                              "  ${value["discount"]} % off" +
-                                                              "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                          child: FittedBox(
-                                                            child: Text(getConvertedTime(
-                                                                    value[
-                                                                        "opening_time"]) +
-                                                                " - " +
-                                                                getConvertedTime(
-                                                                    value[
-                                                                        "closing_time"]) +
-                                                                "  ${value["discount"]} % off"),
-                                                          ),
-                                                        ))
-                                                    .toList(),
-                                                onChanged: (value) {
-                                                  changeSate(() {
-                                                    indexValue = value!;
-                                                  });
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
-                                } else {
-                                  return LottieBuilder.asset(
-                                    "assets/loader.json",
-                                    width: dynamicWidth(context, 0.3),
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
+                SizedBox(
+                  height: dynamicWidth(context, 0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      text(
+                        context,
+                        "Time",
+                        0.04,
+                        myWhite,
                       ),
+                      widthBox(context, 0.1),
+                      FutureBuilder(
+                        future: getTimeSlots(hintText),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            (snapshot.data == false)
+                                ? ""
+                                : indexValue = "Select time";
+                            if (snapshot.data == false) {
+                              return InkWell(
+                                onTap: () {
+                                  globalRefresh();
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.rotate_right_outlined,
+                                      color: myOrange,
+                                      size: dynamicWidth(context, 0.08),
+                                    ),
+                                    text(context, "Retry", 0.04, myWhite)
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return StatefulBuilder(
+                                  builder: (context, superState) {
+                                letsRefresh = () {
+                                  superState(() {});
+                                };
+                                indexValue = "Select time";
+                                var localVariable = false;
+                                var counter = 0;
+                                for (var item in snapshot.data) {
+                                  if ((DateTime.now().minute).toString().length ==
+                                          1
+                                      ? (double.parse(item["opening_time"]
+                                              .toString()
+                                              .replaceAll(":", "."))) >=
+                                          double.parse(
+                                              (DateTime.now().hour).toString() +
+                                                  ".0" +
+                                                  (DateTime.now().minute)
+                                                      .toString())
+                                      : (double.parse(item["opening_time"]
+                                              .toString()
+                                              .replaceAll(":", "."))) >=
+                                          double.parse(
+                                              (DateTime.now().hour).toString() +
+                                                  "." +
+                                                  (DateTime.now().minute)
+                                                      .toString())) {
+                                    if (counter == 0) {
+                                      indexValue = getConvertedTime(
+                                              item["opening_time"]) +
+                                          "  ${item["discount"]} % off" +
+                                          "#${item["id"]}#${item["seats"]}#${item["booksum"]}#${item["discount"]}";
+                                      counter++;
+                                    }
+                                  }
+                                }
+                                return StatefulBuilder(
+                                  builder: (BuildContext context, changeSate) {
+                                    return SizedBox(
+                                      width: dynamicWidth(context, 0.4),
+                                      child: DropdownButton<String>(
+                                        hint: text(
+                                          context,
+                                          indexValue == "Select time"
+                                              ? indexValue
+                                              : localVariable == false
+                                                  ? indexValue.substring(0,
+                                                      indexValue.indexOf("#"))
+                                                  : indexValue.substring(0,
+                                                      indexValue.indexOf("#")),
+                                          0.04,
+                                          myWhite,
+                                        ),
+                                        items: snapshot.data
+                                            .map<DropdownMenuItem<String>>(
+                                                (value) {
+                                          if ((DateTime.now().minute).toString().length == 1
+                                              ? (double.parse(value["opening_time"]
+                                                      .toString()
+                                                      .replaceAll(":", "."))) >=
+                                                  double.parse((DateTime.now().hour).toString() +
+                                                      "." +
+                                                      (DateTime.now().minute)
+                                                          .toString())
+                                              : (double.parse(value["opening_time"]
+                                                      .toString()
+                                                      .replaceAll(":", "."))) >=
+                                                  double.parse((DateTime.now().hour)
+                                                          .toString() +
+                                                      "." +
+                                                      (DateTime.now().minute).toString())) {
+                                            return DropdownMenuItem<String>(
+                                              value: getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off" +
+                                                  "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                              child: Text(getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off"),
+                                            );
+                                          } else {
+                                            return DropdownMenuItem<String>(
+                                              value: getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off" +
+                                                  "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                              child: Text(
+                                                getConvertedTime(
+                                                        value["opening_time"]) +
+                                                    "  ${value["discount"]} % off",
+                                                style: const TextStyle(
+                                                    color: myGrey),
+                                              ),
+                                              enabled: false,
+                                            );
+                                          }
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          changeSate(() {
+                                            localVariable = true;
+                                            indexValue = value!;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              });
+                            }
+                          } else {
+                            return LottieBuilder.asset(
+                              "assets/loader.json",
+                              width: dynamicWidth(context, 0.3),
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 heightBox(context, hintText == "mm/dd/yyyy" ? 0 : 0.02),
                 inputFieldsHome(
                   "Seats:",
@@ -182,7 +241,9 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                 heightBox(context, 0.03),
                 coloredButton(context, "CHECK AVAILABILITY", myOrange,
                     function: () async {
-                  if (_seats.text.isEmpty || hintText == "mm/dd/yyyy") {
+                  if (_seats.text.isEmpty ||
+                      hintText == "mm/dd/yyyy" ||
+                      indexValue == "Select time") {
                     MotionToast.info(
                       description: "check provided seats or dates",
                       dismissable: true,
@@ -263,6 +324,9 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
 }
 
 getConvertedTime(String time) {
+  if (time == "not provided") {
+    return "Not Provided";
+  }
   var parsedTime = int.parse(time.substring(0, time.length - 3));
   if (parsedTime > 12) {
     return (parsedTime - 12) >= 10

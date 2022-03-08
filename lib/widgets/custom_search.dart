@@ -102,8 +102,12 @@ class CustomDineInSearchDelegate extends SearchDelegate {
             child: ListView.builder(
               itemCount: matchQuery.length,
               itemBuilder: (BuildContext context, int index) {
-                return tableCardsExtension(
-                    context, matchQuery, index, buttonText1, buttonText2,
+                return TableCardsExtension(
+                    context: context,
+                    snapshotTable: matchQuery,
+                    indexTable: index,
+                    buttonText1: buttonText1,
+                    buttonText2: buttonText2,
                     function: setState,
                     assignTable: assignTable,
                     searchDelegate: popStatus,
@@ -147,8 +151,12 @@ class CustomDineInSearchDelegate extends SearchDelegate {
             child: ListView.builder(
               itemCount: matchQuery.length,
               itemBuilder: (BuildContext context, int index) {
-                return tableCardsExtension(
-                    context, matchQuery, index, buttonText1, buttonText2,
+                return TableCardsExtension(
+                    context: context,
+                    snapshotTable: matchQuery,
+                    indexTable: index,
+                    buttonText1: buttonText1,
+                    buttonText2: buttonText2,
                     function: setState,
                     assignTable: assignTable,
                     searchDelegate: popStatus,

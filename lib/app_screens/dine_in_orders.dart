@@ -5,7 +5,6 @@ import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class DineInOrders extends StatefulWidget {
   const DineInOrders({Key? key}) : super(key: key);
 

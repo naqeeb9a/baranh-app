@@ -293,7 +293,7 @@ punchOrder(total, cost) async {
         "productname": item["name"],
         "productcode": item["code"],
         "productprice": item["sale_price"],
-        "itemUnitCost": item["cost"] ?? "0",
+        "itemUnitCost": item["cost"] == "" ? "0" : item["cost"] ?? "0",
         "productqty": item["qty"],
         "productimg": item["photo"]
       });

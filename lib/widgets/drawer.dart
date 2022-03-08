@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 Widget drawerItems(context, function, changeState) {
   List drawerItemList = [
     {
@@ -205,7 +204,8 @@ Widget drawerItems2(context) {
     getCost() {
       num cost = 0;
       for (var item in cartItems) {
-        cost += num.parse(item["cost"] ?? "0") * item["qty"];
+        cost += num.parse(item["cost"] == "" ? "0" : item["cost"] ?? "0") *
+            item["qty"];
       }
       return cost;
     }
