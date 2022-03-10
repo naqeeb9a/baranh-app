@@ -98,7 +98,7 @@ class _UpdateTableCardsState extends State<UpdateTableCards> {
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 10), ((timer) async {
-      debugPrint("Refreshed");
+
       await updateOrders();
     }));
     super.initState();
