@@ -98,6 +98,7 @@ class _UpdateTableCardsState extends State<UpdateTableCards> {
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 10), ((timer) async {
+      debugPrint("Refreshed");
       await updateOrders();
     }));
     super.initState();
@@ -320,7 +321,7 @@ class TableCardsExtension extends StatelessWidget {
               0.04,
               myWhite),
           heightBox(context, 0.02),
-          buttonsColumn(context, buttonText1, buttonText2, snapshotTable,
+          buttonsColumn(customContext, buttonText1, buttonText2, snapshotTable,
               indexTable, assignTable, function, visibleButton, searchDelegate)
         ],
       ),

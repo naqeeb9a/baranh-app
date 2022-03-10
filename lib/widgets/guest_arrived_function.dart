@@ -27,7 +27,7 @@ guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
       confirmBtnText: "Book again",
       cancelBtnText: "Book later",
       type: CoolAlertType.error,
-      barrierDismissible: false,
+      barrierDismissible: true,
       showCancelBtn: true,
       onConfirmBtnTap: () {
         pageDecider = "New Reservations";
@@ -55,7 +55,7 @@ guestArrivedNow(context, snapshotTable, indexTable, searchDelegate) async {
       confirmBtnText: "continue",
       cancelBtnText: "Cancel",
       type: CoolAlertType.success,
-      barrierDismissible: false,
+      barrierDismissible: true,
       onConfirmBtnTap: () {
         Navigator.of(context, rootNavigator: true).pop();
         pageDecider = "Arrived Guests";
