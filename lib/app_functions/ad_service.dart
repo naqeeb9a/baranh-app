@@ -43,8 +43,7 @@ class AdService {
       ),
       // You can fire-and-forget the call to .load(),
       // it does not need to be awaited
-    )
-      ..load();
+    )..load();
   }
 
   void getInterstitialAd() {
@@ -73,17 +72,16 @@ class AdService {
       return;
     } else {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-          onAdShowedFullScreenContent: (InterstitialAd ad) =>
-              debugPrint('%ad onAdShowedFullScreenContent.'),
-          onAdDismissedFullScreenContent: (InterstitialAd ad) {
-            debugPrint('$ad onAdDismissedFullScreenContent.');
-            ad.dispose();
-          },
-          onAdFailedToShowFullScreenContent: (InterstitialAd ad,
-              AdError error) {
-            ad.dispose();
-          },
-          onAdImpression: (InterstitialAd ad) =>
+        onAdShowedFullScreenContent: (InterstitialAd ad) =>
+            debugPrint('%ad onAdShowedFullScreenContent.'),
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          debugPrint('$ad onAdDismissedFullScreenContent.');
+          ad.dispose();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+        },
+        onAdImpression: (InterstitialAd ad) => debugPrint('$ad.'),
       );
     }
     _interstitialAd!.show();
@@ -121,7 +119,6 @@ class AdService {
     }
 
     throw UnimplementedError(
-        "${Platform
-            .operatingSystem} is not implemented for InterstitialAd ads");
+        "${Platform.operatingSystem} is not implemented for InterstitialAd ads");
   }
 }
