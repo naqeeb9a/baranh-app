@@ -6,13 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 getReservationData(query) async {
   var url = "$callBackUrl/api/$query/${userResponse['outlet_id']}";
   try {
-    var response = await http
-        .get(
+    var response = await http.get(
       Uri.parse(url),
-    )
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    );
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"]["result"];
@@ -39,13 +35,9 @@ getDineInOrders(query, alertCheck) async {
     url = "$callBackUrl/api/$query/${userResponse['outlet_id']}";
   }
   try {
-    var response = await http
-        .get(
+    var response = await http.get(
       Uri.parse(url),
-    )
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    );
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"]["result"];
@@ -69,9 +61,7 @@ searchReservation(date, reservationNumber) async {
             headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -86,11 +76,8 @@ searchReservation(date, reservationNumber) async {
 
 getOrderSummary(id) async {
   try {
-    var response = await http
-        .get(Uri.parse(callBackUrl + "/api/order-summary/$id"))
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    var response =
+        await http.get(Uri.parse(callBackUrl + "/api/order-summary/$id"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -104,11 +91,8 @@ getOrderSummary(id) async {
 
 getTables(saleID) async {
   try {
-    var response = await http
-        .get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"))
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    var response =
+        await http.get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -123,11 +107,8 @@ getTables(saleID) async {
 
 getWaiters(saleID) async {
   try {
-    var response = await http
-        .get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"))
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    var response =
+        await http.get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -142,11 +123,8 @@ getWaiters(saleID) async {
 
 arrivedGuests(id) async {
   try {
-    var response = await http
-        .get(Uri.parse(callBackUrl + "/api/guest-arrived/$id"))
-        .timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+    var response =
+        await http.get(Uri.parse(callBackUrl + "/api/guest-arrived/$id"));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -176,9 +154,7 @@ reserveTable(name, phone, email, seats, date, dropDownTime) async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -202,9 +178,7 @@ getTimeSlots(date) async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -224,9 +198,7 @@ getMenu() async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -245,9 +217,7 @@ assignTableOnline(saleId, tableId) async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -270,9 +240,7 @@ assignWaiterOnline(saleId, waiterId) async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        }).timeout(const Duration(seconds: 10), onTimeout: () {
-      return http.Response('Error', 408);
-    });
+        });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
