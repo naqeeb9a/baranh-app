@@ -44,8 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 
-        print("loginRes => $jsonData");
-
         return jsonData["data"];
       } else {
         return "Error";
@@ -66,8 +64,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         fireBaseToken = value;
       });
-
-      print("\n\n\ntoken ===>>>$fireBaseToken<<<");
     });
   }
 
