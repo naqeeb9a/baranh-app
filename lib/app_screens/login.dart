@@ -7,6 +7,7 @@ import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/form_fields.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -34,10 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = true;
       });
-      var response = await http.post(Uri.parse(callBackUrl+"/api/signin-waiter"),
-          body: {"email": email.text, "password": password.text});
+      var response =
+          await http.post(Uri.parse(callBackUrl + "/api/signin-waiter"), body: {
+        "email": email.text,
+        "password": password.text,
+        "token": fireBaseToken,
+      });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
+
+        print("loginRes => $jsonData");
 
         return jsonData["data"];
       } else {
@@ -46,6 +53,22 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    func();
+  }
+
+  func() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      setState(() {
+        fireBaseToken = value;
+      });
+
+      print("\n\n\ntoken ===>>>$fireBaseToken<<<");
+    });
   }
 
   @override
