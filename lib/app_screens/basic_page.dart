@@ -44,7 +44,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             .then((value) async {
           await FlutterRingtonePlayer.play(
             android: AndroidSounds.ringtone,
-            ios: IosSounds.bell,
+            ios: IosSounds.electronic,
             looping: true,
             volume: 1.0,
             asAlarm: true,
@@ -77,6 +77,9 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     customContext = context;
+
+    // print("object ${userResponse['id']}");
+
     return Scaffold(
       backgroundColor: myBlack,
       body: UpgradeAlert(

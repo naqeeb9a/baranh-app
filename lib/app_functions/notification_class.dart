@@ -18,6 +18,7 @@ class LocalNotificationsService {
   );
 
   late final FlutterLocalNotificationsPlugin _notificationsPlugin;
+  
 
   Future<void> initialize() async {
     _notificationsPlugin = FlutterLocalNotificationsPlugin();

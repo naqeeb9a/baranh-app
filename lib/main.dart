@@ -8,6 +8,7 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -22,12 +23,35 @@ Future<void> main() async {
   await LocalNotificationsService.instance.initialize();
   FCMServices.fcmGetTokenAndSubscribe();
 
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  notificationFunction();
+
   // final adService = AdService(MobileAds.instance);
 
   // GetIt.instance.registerSingleton<AdService>(adService);
 
   // await adService.init();
   runApp(const MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  debugPrint(message.notification?.body);
+  debugPrint(message.notification?.title);
+
+  LocalNotificationsService.instance.showChatNotification(
+    title: '${message.notification!.title}',
+    body: '${message.notification!.body}',
+  );
+}
+
+notificationFunction() async {
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) async {
+    await LocalNotificationsService.instance.showChatNotification(
+      title: '${event.notification!.title}',
+      body: '${event.notification!.body}',
+    );
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -110,7 +134,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ),
       ),
       home: MaterialApp(
-        title: 'Baranh Team',
+        title: 'Res Force',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: primaryColor,
