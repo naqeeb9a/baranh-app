@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await http.post(Uri.parse(callBackUrl + "/api/signin-waiter"), body: {
         "email": email.text,
         "password": password.text,
-        "token": fireBaseToken,
+        "token": func(),
       });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -53,18 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    func();
-  }
-
-  func() {
+  String func() {
     FirebaseMessaging.instance.getToken().then((value) {
-      setState(() {
-        fireBaseToken = value;
-      });
+      fireBaseToken = value!;
     });
+    return fireBaseToken;
   }
 
   @override

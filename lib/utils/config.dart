@@ -27,4 +27,4 @@ var cartItems = [].obs;
 var reservedTable = [];
 var callBackUrl = "https://baranh.pk";
 var version = "1.4.5";
-dynamic fireBaseToken = "";
+String fireBaseToken = "";

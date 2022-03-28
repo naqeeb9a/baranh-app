@@ -68,13 +68,14 @@ class UpdateTableCards extends StatefulWidget {
       required this.visibleButton,
       required this.visible})
       : super(key: key);
-
+  bool isMount = true;
   @override
   State<UpdateTableCards> createState() => _UpdateTableCardsState();
 }
 
 class _UpdateTableCardsState extends State<UpdateTableCards> {
   final TextEditingController _tableNo = TextEditingController();
+
   var assignTable = 0;
   updateOrders() async {
     dynamic newData = "";
@@ -88,9 +89,11 @@ class _UpdateTableCardsState extends State<UpdateTableCards> {
       newData = await getReservationData("arrived");
     }
 
-    setState(() {
-      widget.snapshot = newData;
-    });
+    if (widget.isMount == true) {
+      setState(() {
+        widget.snapshot = newData;
+      });
+    }
   }
 
   late Timer _timer;
@@ -98,7 +101,6 @@ class _UpdateTableCardsState extends State<UpdateTableCards> {
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 10), ((timer) async {
-
       await updateOrders();
     }));
     super.initState();
@@ -106,6 +108,8 @@ class _UpdateTableCardsState extends State<UpdateTableCards> {
 
   @override
   void dispose() {
+    widget.isMount = false;
+
     _timer.cancel();
     super.dispose();
   }

@@ -37,7 +37,8 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (letsRefresh == "") {} else {
+      if (letsRefresh == "") {
+      } else {
         letsRefresh();
       }
     });
@@ -67,8 +68,8 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                 text(context, "BARANH", 0.04, myWhite),
                 inputFieldsHome("Date", hintText, context,
                     check: true, timeSlot: true, function: () {
-                      setState(() {});
-                    }),
+                  setState(() {});
+                }),
                 heightBox(context, 0.02),
                 SizedBox(
                   height: dynamicWidth(context, 0.2),
@@ -111,145 +112,112 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                             } else {
                               return StatefulBuilder(
                                   builder: (context, superState) {
-                                    letsRefresh = () {
-                                      superState(() {});
-                                    };
-                                    indexValue = "Select time";
-                                    var localVariable = false;
-                                    var counter = 0;
-                                    for (var item in snapshot.data) {
-                                      if ((DateTime
-                                          .now()
-                                          .minute)
-                                          .toString()
-                                          .length ==
+                                letsRefresh = () {
+                                  superState(() {});
+                                };
+                                indexValue = "Select time";
+                                var localVariable = false;
+                                var counter = 0;
+                                for (var item in snapshot.data) {
+                                  if ((DateTime.now().minute).toString().length ==
                                           1
-                                          ? (double.parse(item["opening_time"]
-                                          .toString()
-                                          .replaceAll(":", "."))) >=
+                                      ? (double.parse(item["opening_time"]
+                                              .toString()
+                                              .replaceAll(":", "."))) >=
                                           double.parse(
-                                              (DateTime
-                                                  .now()
-                                                  .hour).toString() +
+                                              (DateTime.now().hour).toString() +
                                                   ".0" +
-                                                  (DateTime
-                                                      .now()
-                                                      .minute)
+                                                  (DateTime.now().minute)
                                                       .toString())
-                                          : (double.parse(item["opening_time"]
-                                          .toString()
-                                          .replaceAll(":", "."))) >=
+                                      : (double.parse(item["opening_time"]
+                                              .toString()
+                                              .replaceAll(":", "."))) >=
                                           double.parse(
-                                              (DateTime
-                                                  .now()
-                                                  .hour).toString() +
+                                              (DateTime.now().hour).toString() +
                                                   "." +
-                                                  (DateTime
-                                                      .now()
-                                                      .minute)
+                                                  (DateTime.now().minute)
                                                       .toString())) {
-                                        if (counter == 0) {
-                                          indexValue = getConvertedTime(
+                                    if (counter == 0) {
+                                      indexValue = getConvertedTime(
                                               item["opening_time"]) +
-                                              "  ${item["discount"]} % off" +
-                                              "#${item["id"]}#${item["seats"]}#${item["booksum"]}#${item["discount"]}";
-                                          counter++;
-                                        }
-                                      }
+                                          "  ${item["discount"]} % off" +
+                                          "#${item["id"]}#${item["seats"]}#${item["booksum"]}#${item["discount"]}";
+                                      counter++;
                                     }
-                                    return StatefulBuilder(
-                                      builder: (BuildContext context,
-                                          changeSate) {
-                                        return SizedBox(
-                                          width: dynamicWidth(context, 0.4),
-                                          child: DropdownButton<String>(
-                                            hint: text(
-                                              context,
-                                              indexValue == "Select time"
-                                                  ? indexValue
-                                                  : localVariable == false
+                                  }
+                                }
+                                return StatefulBuilder(
+                                  builder: (BuildContext context, changeSate) {
+                                    return SizedBox(
+                                      width: dynamicWidth(context, 0.4),
+                                      child: DropdownButton<String>(
+                                        hint: text(
+                                          context,
+                                          indexValue == "Select time"
+                                              ? indexValue
+                                              : localVariable == false
                                                   ? indexValue.substring(0,
-                                                  indexValue.indexOf("#"))
+                                                      indexValue.indexOf("#"))
                                                   : indexValue.substring(0,
-                                                  indexValue.indexOf("#")),
-                                              0.04,
-                                              myWhite,
-                                            ),
-                                            items: snapshot.data
-                                                .map<DropdownMenuItem<String>>(
-                                                    (value) {
-                                                  if ((DateTime
-                                                      .now()
-                                                      .minute)
+                                                      indexValue.indexOf("#")),
+                                          0.04,
+                                          myWhite,
+                                        ),
+                                        items: snapshot.data
+                                            .map<DropdownMenuItem<String>>(
+                                                (value) {
+                                          if ((DateTime.now().minute).toString().length == 1
+                                              ? (double.parse(value["opening_time"]
                                                       .toString()
-                                                      .length == 1
-                                                      ? (double.parse(
-                                                      value["opening_time"]
-                                                          .toString()
-                                                          .replaceAll(
-                                                          ":", "."))) >=
-                                                      double.parse((DateTime
-                                                          .now()
-                                                          .hour).toString() +
-                                                          "." +
-                                                          (DateTime
-                                                              .now()
-                                                              .minute)
-                                                              .toString())
-                                                      : (double.parse(
-                                                      value["opening_time"]
-                                                          .toString()
-                                                          .replaceAll(
-                                                          ":", "."))) >=
-                                                      double.parse((DateTime
-                                                          .now()
-                                                          .hour)
+                                                      .replaceAll(":", "."))) >=
+                                                  double.parse((DateTime.now().hour).toString() +
+                                                      "." +
+                                                      (DateTime.now().minute)
+                                                          .toString())
+                                              : (double.parse(value["opening_time"]
+                                                      .toString()
+                                                      .replaceAll(":", "."))) >=
+                                                  double.parse((DateTime.now().hour)
                                                           .toString() +
-                                                          "." +
-                                                          (DateTime
-                                                              .now()
-                                                              .minute)
-                                                              .toString())) {
-                                                    return DropdownMenuItem<
-                                                        String>(
-                                                      value: getConvertedTime(
-                                                          value["opening_time"]) +
-                                                          "  ${value["discount"]} % off" +
-                                                          "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                      child: Text(
-                                                          getConvertedTime(
-                                                              value["opening_time"]) +
-                                                              "  ${value["discount"]} % off"),
-                                                    );
-                                                  } else {
-                                                    return DropdownMenuItem<
-                                                        String>(
-                                                      value: getConvertedTime(
-                                                          value["opening_time"]) +
-                                                          "  ${value["discount"]} % off" +
-                                                          "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                      child: Text(
-                                                        getConvertedTime(
-                                                            value["opening_time"]) +
-                                                            "  ${value["discount"]} % off",
-                                                        style: const TextStyle(
-                                                            color: myGrey),
-                                                      ),
-                                                      enabled: false,
-                                                    );
-                                                  }
-                                                }).toList(),
-                                            onChanged: (value) {
-                                              changeSate(() {
-                                                localVariable = true;
-                                                indexValue = value!;
-                                              });
-                                            },
-                                          ),
-                                        );
-                                      },
+                                                      "." +
+                                                      (DateTime.now().minute).toString())) {
+                                            return DropdownMenuItem<String>(
+                                              value: getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off" +
+                                                  "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                              child: Text(getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off"),
+                                            );
+                                          } else {
+                                            return DropdownMenuItem<String>(
+                                              value: getConvertedTime(
+                                                      value["opening_time"]) +
+                                                  "  ${value["discount"]} % off" +
+                                                  "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                              child: Text(
+                                                getConvertedTime(
+                                                        value["opening_time"]) +
+                                                    "  ${value["discount"]} % off",
+                                                style: const TextStyle(
+                                                    color: myGrey),
+                                              ),
+                                              enabled: false,
+                                            );
+                                          }
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          changeSate(() {
+                                            localVariable = true;
+                                            indexValue = value!;
+                                          });
+                                        },
+                                      ),
                                     );
-                                  });
+                                  },
+                                );
+                              });
                             }
                           } else {
                             return LottieBuilder.asset(
@@ -273,83 +241,79 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                 heightBox(context, 0.03),
                 coloredButton(context, "CHECK AVAILABILITY", myOrange,
                     function: () async {
-                      if (_seats.text.isEmpty ||
-                          hintText == "mm/dd/yyyy" ||
-                          indexValue == "Select time") {
-                        MotionToast.info(
-                          description: "check provided seats or dates",
-                          dismissable: true,
-                        ).show(context);
-                      } else {
-                        CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.loading,
-                            barrierDismissible: false,
-                            lottieAsset: "assets/loader.json");
-                        var response = await checkAvailability(
-                            hintText,
-                            indexValue.substring(indexValue.indexOf("#") + 1),
-                            _seats.text);
-                        if (response == true) {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          CoolAlert.show(
-                              onConfirmBtnTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ContactInformation(
-                                              dropDownTime: indexValue
-                                                  .substring(
-                                                  indexValue.indexOf("#") + 1),
-                                              seats: _seats.text,
-                                              date: hintText,
-                                            ))).then((value) =>
-                                    globalRefresh());
-                              },
-                              title: "Slots Available",
-                              text: "Do you wish to proceed?",
-                              context: context,
-                              loopAnimation: true,
-                              backgroundColor: myOrange,
-                              confirmBtnColor: myOrange,
-                              confirmBtnText: "Continue",
-                              confirmBtnTextStyle: TextStyle(
-                                  fontSize: dynamicWidth(context, 0.04),
-                                  color: myWhite),
-                              type: CoolAlertType.confirm,
-                              animType: CoolAlertAnimType.slideInRight);
-                        } else if (response == false) {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          MotionToast.error(
-                            description:
+                  if (_seats.text.isEmpty ||
+                      hintText == "mm/dd/yyyy" ||
+                      indexValue == "Select time") {
+                    MotionToast.info(
+                      description: "check provided seats or dates",
+                      dismissable: true,
+                    ).show(context);
+                  } else {
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.loading,
+                        barrierDismissible: false,
+                        lottieAsset: "assets/loader.json");
+                    var response = await checkAvailability(
+                        hintText,
+                        indexValue.substring(indexValue.indexOf("#") + 1),
+                        _seats.text);
+                    if (response == true) {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      CoolAlert.show(
+                          onConfirmBtnTap: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ContactInformation(
+                                          dropDownTime: indexValue.substring(
+                                              indexValue.indexOf("#") + 1),
+                                          seats: _seats.text,
+                                          date: hintText,
+                                        ))).then((value) => globalRefresh());
+                          },
+                          title: "Slots Available",
+                          text: "Do you wish to proceed?",
+                          context: context,
+                          loopAnimation: true,
+                          backgroundColor: myOrange,
+                          confirmBtnColor: myOrange,
+                          confirmBtnText: "Continue",
+                          confirmBtnTextStyle: TextStyle(
+                              fontSize: dynamicWidth(context, 0.04),
+                              color: myWhite),
+                          type: CoolAlertType.confirm,
+                          animType: CoolAlertAnimType.slideInRight);
+                    } else if (response == false) {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      MotionToast.error(
+                        description:
                             "Slots are not available try again after some time",
-                            dismissable: true,
-                          ).show(context);
-                        } else if (response == "internet") {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          MotionToast.warning(
-                            description: "Check your internet",
-                            dismissable: true,
-                          );
-                        } else {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          CoolAlert.show(
-                            title: "Server Error",
-                            text: "please Try again",
-                            context: context,
-                            loopAnimation: true,
-                            backgroundColor: myOrange,
-                            confirmBtnColor: myOrange,
-                            confirmBtnText: "Retry",
-                            type: CoolAlertType.error,
-                            animType: CoolAlertAnimType.slideInRight,
-                          );
-                        }
-                      }
-                    }),
+                        dismissable: true,
+                      ).show(context);
+                    } else if (response == "internet") {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      MotionToast.warning(
+                        description: "Check your internet",
+                        dismissable: true,
+                      );
+                    } else {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      CoolAlert.show(
+                        title: "Server Error",
+                        text: "please Try again",
+                        context: context,
+                        loopAnimation: true,
+                        backgroundColor: myOrange,
+                        confirmBtnColor: myOrange,
+                        confirmBtnText: "Retry",
+                        type: CoolAlertType.error,
+                        animType: CoolAlertAnimType.slideInRight,
+                      );
+                    }
+                  }
+                }),
               ],
             ),
           ),
