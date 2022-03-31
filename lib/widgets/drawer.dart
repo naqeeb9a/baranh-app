@@ -5,9 +5,10 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget drawerItems(context, function, changeState) {
@@ -251,10 +252,7 @@ Widget drawerItems2(context) {
               fontSize: 0.035,
               function: () async {
                 if (cartItems.isEmpty) {
-                  MotionToast.info(
-                    description: const Text("Cart is empty"),
-                    dismissable: true,
-                  ).show(context);
+                  customToastFlutter("Cart is empty");
                 } else {
                   CoolAlert.show(
                       context: context,
@@ -284,10 +282,8 @@ Widget drawerItems2(context) {
                         var response = await punchOrder(getTotal(), getCost());
                         if (response == false) {
                           Navigator.of(context, rootNavigator: true).pop();
-                          MotionToast.error(
-                            description: const Text("Server Error or check your internet"),
-                            dismissable: true,
-                          ).show(context);
+                          customToastFlutter(
+                              "Server Error or check your internet");
                         } else {
                           Navigator.of(context, rootNavigator: true).pop();
                           cartItems.clear();

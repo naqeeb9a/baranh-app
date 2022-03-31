@@ -7,10 +7,10 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 class NewReservationsPage extends StatefulWidget {
   const NewReservationsPage({Key? key}) : super(key: key);
@@ -244,10 +244,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   if (_seats.text.isEmpty ||
                       hintText == "mm/dd/yyyy" ||
                       indexValue == "Select time") {
-                    MotionToast.info(
-                      description: const Text("check provided seats or dates"),
-                      dismissable: true,
-                    ).show(context);
+                    customToastFlutter("check provided seats or dates");
                   } else {
                     CoolAlert.show(
                         context: context,
@@ -287,17 +284,11 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                           animType: CoolAlertAnimType.slideInRight);
                     } else if (response == false) {
                       Navigator.of(context, rootNavigator: true).pop();
-                      MotionToast.error(
-                        description:
-                            const Text("Slots are not available try again after some time"),
-                        dismissable: true,
-                      ).show(context);
+                      customToastFlutter(
+                          "Slots are not available try again after some time");
                     } else if (response == "internet") {
                       Navigator.of(context, rootNavigator: true).pop();
-                      MotionToast.warning(
-                        description: const Text("Check your internet"),
-                        dismissable: true,
-                      );
+                      customToastFlutter("Check your internet");
                     } else {
                       Navigator.of(context, rootNavigator: true).pop();
                       CoolAlert.show(

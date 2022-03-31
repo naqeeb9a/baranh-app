@@ -6,12 +6,13 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/form_fields.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:motion_toast/motion_toast.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -127,27 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       coloredButton(context, "SIGN IN", myOrange,
                           function: () async {
                         if (!EmailValidator.validate(email.text)) {
-                          MotionToast.error(
-                            title: const Text("Error"),
-                            dismissable: true,
-                            description: const Text(
-                              "Please enter valid email!",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ).show(context);
+                          customToastFlutter("Please enter valid email!");
                         } else if (password.text.isEmpty) {
-                          MotionToast.error(
-                            title: const Text("Error"),
-                            dismissable: true,
-                            description: const Text(
-                              "Please enter valid password!",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ).show(context);
+                          customToastFlutter("Please enter valid password!");
                         } else {
                           var response = await loginFunction();
 
@@ -155,30 +138,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               loading = false;
                             });
-                            MotionToast.error(
-                              title: const Text("Error"),
-                              dismissable: true,
-                              description: const Text(
-                                "Invalid Credentials",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ).show(context);
+                            customToastFlutter("Invalid Credentials");
                           } else if (response == false) {
                             setState(() {
                               loading = false;
                             });
-                            MotionToast.error(
-                              title: const Text("Error"),
-                              dismissable: true,
-                              description: const Text(
-                                "Check your Internet or try again later",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ).show(context);
+                            customToastFlutter(
+                                "Check your Internet or try again later");
                           } else {
                             SharedPreferences loginUser =
                                 await SharedPreferences.getInstance();

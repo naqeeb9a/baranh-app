@@ -5,9 +5,8 @@ import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/table_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
-
 
 class AllReservationsPage extends StatefulWidget {
   const AllReservationsPage({Key? key}) : super(key: key);
@@ -71,16 +70,7 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                                 searchCheck = true;
                               });
                             } else {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                
-                                description: const Text("Empty Fields",
-                                  style:TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ).show(context);
+                              customToastFlutter("Empty Fields");
                             }
                           },
                         ),

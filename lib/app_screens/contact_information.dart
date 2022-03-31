@@ -5,10 +5,10 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/input_field_home.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 class ContactInformation extends StatefulWidget {
   final String seats, dropDownTime, date;
@@ -94,16 +94,10 @@ class _ContactInformationState extends State<ContactInformation> {
               heightBox(context, 0.04),
               coloredButton(context, "Submit", myOrange, function: () async {
                 if (_name.text.isEmpty || _phone.text.isEmpty) {
-                  MotionToast.info(
-                    description: const Text("Fill all fields appropriately"),
-                    dismissable: true,
-                  ).show(context);
+                  customToastFlutter("Fill all fields appropriately");
                 } else if (_email.text.isNotEmpty &&
                     !_email.text.contains("@")) {
-                  MotionToast.info(
-                    description: const Text("Enter a Valid Email"),
-                    dismissable: true,
-                  ).show(context);
+                  customToastFlutter("Enter a Valid Email");
                 } else {
                   CoolAlert.show(
                       context: context,
@@ -132,10 +126,8 @@ class _ContactInformationState extends State<ContactInformation> {
                         animType: CoolAlertAnimType.slideInRight);
                   } else {
                     Navigator.of(context, rootNavigator: true).pop();
-                    MotionToast.info(
-                      description: const Text("Reserved successfully"),
-                      dismissable: true,
-                    ).show(context);
+                    customToastFlutter("Reserved successfully");
+
                     pageDecider = "Waiting For Arrival";
                     popUntil(customContext);
                   }

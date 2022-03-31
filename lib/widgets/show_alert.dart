@@ -3,9 +3,9 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 import 'essential_widgets.dart';
 
@@ -98,10 +98,8 @@ dialogueCustom(
                                 return InkWell(
                                   onTap: () async {
                                     if (customColor == myGrey) {
-                                      MotionToast.error(
-                                        description: const Text("Table Already reserved"),
-                                        dismissable: true,
-                                      ).show(context);
+                                      customToastFlutter(
+                                          "Table Already reserved");
                                     } else if (snapshotTable[indexTable]
                                                 ["waiter_id"] ==
                                             null &&
@@ -109,10 +107,7 @@ dialogueCustom(
                                                 .toString()
                                                 .toLowerCase() ==
                                             "Floor Manager".toLowerCase()) {
-                                      MotionToast.error(
-                                        description: const Text("Assign waiter first"),
-                                        dismissable: true,
-                                      ).show(context);
+                                      customToastFlutter("Assign waiter first");
                                     } else {
                                       CoolAlert.show(
                                           context: context,
@@ -136,11 +131,8 @@ dialogueCustom(
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pop();
-                                          MotionToast.error(
-                                            description:
-                                                const Text("Waiter not assigned Check your internet"),
-                                            dismissable: true,
-                                          ).show(context);
+                                          customToastFlutter(
+                                              "Waiter not assigned Check your internet");
                                         } else {
                                           assignTable =
                                               snapshot.data[index]["id"];
@@ -155,11 +147,8 @@ dialogueCustom(
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pop();
-                                            MotionToast.error(
-                                              description:
-                                                  const Text("Table not assigned Check your internet"),
-                                              dismissable: true,
-                                            ).show(context);
+                                            customToastFlutter(
+                                                "Table not assigned Check your internet");
                                           } else if (response ==
                                               "already reserved") {
                                             Navigator.of(context,
@@ -168,11 +157,8 @@ dialogueCustom(
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pop();
-                                            MotionToast.error(
-                                              description:
-                                                  const Text("Table already assigned reopen the dialogue to get the updated status"),
-                                              dismissable: true,
-                                            ).show(context);
+                                            customToastFlutter(
+                                                "Table already assigned reopen the dialogue to get the updated status");
                                           } else {
                                             pageDecider = "Dine In Orders";
                                             Navigator.pop(
@@ -183,24 +169,20 @@ dialogueCustom(
                                             if (searchDelegate != "") {
                                               searchDelegate();
                                             }
-                                            MotionToast.success(
-                                              description: Text(snapshotTable[
-                                                                  indexTable]
-                                                              ["waiter_id"] ==
-                                                          null &&
-                                                      userResponse[
-                                                                  "designation"]
-                                                              .toString()
-                                                              .toLowerCase() ==
-                                                          "waiter".toLowerCase()
-                                                  ? "Table and Waiter both Assigned"
-                                                  : snapshotTable[indexTable]
-                                                              ["table_id"] ==
-                                                          null
-                                                      ? "Table assigned"
-                                                      : "Table changed"),
-                                              dismissable: true,
-                                            ).show(context);
+                                            customToastFlutter(snapshotTable[
+                                                                indexTable]
+                                                            ["waiter_id"] ==
+                                                        null &&
+                                                    userResponse["designation"]
+                                                            .toString()
+                                                            .toLowerCase() ==
+                                                        "waiter".toLowerCase()
+                                                ? "Table and Waiter both Assigned"
+                                                : snapshotTable[indexTable]
+                                                            ["table_id"] ==
+                                                        null
+                                                    ? "Table assigned"
+                                                    : "Table changed");
                                           }
                                         }
                                       } else {
@@ -215,11 +197,8 @@ dialogueCustom(
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pop();
-                                          MotionToast.error(
-                                            description:
-                                                const Text("Table not assigned Check your internet"),
-                                            dismissable: true,
-                                          ).show(context);
+                                          customToastFlutter(
+                                              "Table not assigned Check your internet");
                                         } else if (response ==
                                             "already reserved") {
                                           Navigator.of(context,
@@ -228,11 +207,8 @@ dialogueCustom(
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pop();
-                                          MotionToast.error(
-                                            description:
-                                                const Text("Table already assigned reopen the dialogue to get the updated status"),
-                                            dismissable: true,
-                                          ).show(context);
+                                          customToastFlutter(
+                                              "Table already assigned reopen the dialogue to get the updated status");
                                         } else {
                                           pageDecider = "Dine In Orders";
                                           Navigator.pop(
@@ -243,23 +219,20 @@ dialogueCustom(
                                           if (searchDelegate != "") {
                                             searchDelegate();
                                           }
-                                          MotionToast.success(
-                                            description: Text(snapshotTable[
-                                                                indexTable]
-                                                            ["waiter_id"] ==
-                                                        null &&
-                                                    userResponse["designation"]
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        "waiter".toLowerCase()
-                                                ? "Table and Waiter both Assigned"
-                                                : snapshotTable[indexTable]
-                                                            ["table_id"] ==
-                                                        null
-                                                    ? "Table assigned"
-                                                    : "Table changed"),
-                                            dismissable: true,
-                                          ).show(context);
+                                          customToastFlutter(snapshotTable[
+                                                              indexTable]
+                                                          ["waiter_id"] ==
+                                                      null &&
+                                                  userResponse["designation"]
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      "waiter".toLowerCase()
+                                              ? "Table and Waiter both Assigned"
+                                              : snapshotTable[indexTable]
+                                                          ["table_id"] ==
+                                                      null
+                                                  ? "Table assigned"
+                                                  : "Table changed");
                                         }
                                       }
                                     }
@@ -362,21 +335,15 @@ dialogueCustomWaiter(
                                 assignTable);
                             if (response == false) {
                               Navigator.of(context, rootNavigator: true).pop();
-                              MotionToast.error(
-                                description:
-                                    const Text("Waiter not assigned Check your internet"),
-                                dismissable: true,
-                              ).show(context);
+                              customToastFlutter(
+                                  "Waiter not assigned Check your internet");
                             } else {
                               Navigator.pop(context, function());
                               Navigator.of(context, rootNavigator: true).pop();
                               if (searchDelegate != "") {
                                 searchDelegate();
                               }
-                              MotionToast.success(
-                                description: const Text("Waiter assigned"),
-                                dismissable: true,
-                              ).show(context);
+                              customToastFlutter("Waiter assigned");
                             }
                           },
                           child: Container(
@@ -408,9 +375,6 @@ dialogueCustomWaiter(
         });
   } catch (e) {
     Navigator.of(context, rootNavigator: true).pop();
-    MotionToast.success(
-      description: const Text("Something went wrong please contact the developer"),
-      dismissable: true,
-    ).show(context);
+    customToastFlutter("Something went wrong please contact the developer");
   }
 }

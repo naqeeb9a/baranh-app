@@ -9,9 +9,9 @@ import 'package:baranh/widgets/buttons_column.dart';
 import 'package:baranh/widgets/custom_search.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 import 'input_field_home.dart';
 
@@ -331,19 +331,19 @@ class TableCardsExtension extends StatelessWidget {
               indexTable, assignTable, function, visibleButton, searchDelegate),
           heightBox(context, 0.02),
           Visibility(
-              visible: visibleButton,
+              visible: pageDecider == "Arrived Guests" ? visibleButton : false,
               child: InkWell(
                 onTap: () async {
                   CoolAlert.show(
-                      context: context,
+                      context: customContext,
                       type: CoolAlertType.confirm,
                       backgroundColor: myOrange,
                       confirmBtnColor: myOrange,
                       showCancelBtn: true,
                       onConfirmBtnTap: () async {
-                        Navigator.of(context, rootNavigator: true).pop();
+                        Navigator.of(customContext, rootNavigator: true).pop();
                         CoolAlert.show(
-                            context: context,
+                            context: customContext,
                             type: CoolAlertType.loading,
                             barrierDismissible: false,
                             lottieAsset: "assets/loader.json");
@@ -351,19 +351,15 @@ class TableCardsExtension extends StatelessWidget {
                         var res = await cancelReservation(
                             snapshotTable[indexTable]["sale_id"].toString());
                         if (res == false) {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          MotionToast.error(
-                            description:
-                                const Text("Check your internet or try again"),
-                            dismissable: true,
-                          ).show(context);
+                          Navigator.of(customContext, rootNavigator: true)
+                              .pop();
+                          customToastFlutter(
+                              "Check your internet or try again");
                         } else {
-                          Navigator.of(context, rootNavigator: true).pop();
+                          Navigator.of(customContext, rootNavigator: true)
+                              .pop();
                           globalRefresh();
-                          MotionToast.success(
-                            description: const Text("Reservation Cancelled"),
-                            dismissable: true,
-                          ).show(context);
+                          customToastFlutter("Reservation Cancelled");
                         }
                       });
                 },

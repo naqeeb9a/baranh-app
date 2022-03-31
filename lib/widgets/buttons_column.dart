@@ -5,9 +5,9 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/guest_arrived_function.dart';
 import 'package:baranh/widgets/show_alert.dart';
+import 'package:baranh/widgets/toast.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 import 'green_buttons.dart';
 
@@ -70,10 +70,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     context, snapshotTable, indexTable, searchDelegate);
               });
         } else {
-          MotionToast.info(
-            description: const Text("Something Went wrong"),
-            dismissable: true,
-          ).show(context);
+          customToastFlutter("Something Went wrong");
         }
       }),
       Visibility(
@@ -111,10 +108,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
                     tableName: snapshotTable[indexTable]["table_name"]),
               );
             } else {
-              MotionToast.error(
-                description: const Text("Something went Wrong"),
-                width: dynamicWidth(context, 0.8),
-              ).show(context);
+              customToastFlutter("Something Went wrong");
             }
           },
         ),
