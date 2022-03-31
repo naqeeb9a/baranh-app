@@ -95,13 +95,13 @@ class _ContactInformationState extends State<ContactInformation> {
               coloredButton(context, "Submit", myOrange, function: () async {
                 if (_name.text.isEmpty || _phone.text.isEmpty) {
                   MotionToast.info(
-                    description: "Fill all fields appropriately",
+                    description: const Text("Fill all fields appropriately"),
                     dismissable: true,
                   ).show(context);
                 } else if (_email.text.isNotEmpty &&
                     !_email.text.contains("@")) {
                   MotionToast.info(
-                    description: "Enter a Valid Email",
+                    description: const Text("Enter a Valid Email"),
                     dismissable: true,
                   ).show(context);
                 } else {
@@ -133,7 +133,7 @@ class _ContactInformationState extends State<ContactInformation> {
                   } else {
                     Navigator.of(context, rootNavigator: true).pop();
                     MotionToast.info(
-                      description: "Reserved successfully",
+                      description: const Text("Reserved successfully"),
                       dismissable: true,
                     ).show(context);
                     pageDecider = "Waiting For Arrival";

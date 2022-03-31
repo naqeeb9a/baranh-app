@@ -72,12 +72,14 @@ class _AllReservationsPageState extends State<AllReservationsPage> {
                               });
                             } else {
                               MotionToast.error(
-                                title: "Error",
+                                title: const Text("Error"),
                                 dismissable: true,
-                                titleStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                
+                                description: const Text("Empty Fields",
+                                  style:TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                description: "Empty Fields",
                               ).show(context);
                             }
                           },

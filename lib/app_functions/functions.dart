@@ -282,26 +282,6 @@ punchOrder(total, cost) async {
   };
 
   try {
-    // var httpClient = io.HttpClient();
-    // io.HttpClientRequest request = await httpClient
-    //     .postUrl(Uri.parse(callBackUrl + "/api/booking-punch-order"));
-    // request.headers.set('Content-type', 'application/json');
-    // request.headers.set('Accept', 'application/json');
-    // request.write(json.encode(bodyJson));
-    // try {
-    //   var response = await request
-    //       .close()
-    //       .then(
-    //         (_) => print('Got eventual response'),
-    //       )
-    //       .timeout(
-    //         const Duration(seconds: 1),
-    //       );
-    // } on TimeoutException catch (_) {
-    //   print('Timed out');
-    //   request.abort();
-    // }
-    // print(request);
     var response = await http.post(
       Uri.parse(callBackUrl + "/api/booking-punch-order"),
       body: json.encode(bodyJson),
@@ -345,5 +325,33 @@ checkAvailability(date, timeDropdown, seats) async {
     }
   } catch (e) {
     return "server";
+  }
+}
+
+cancelReservation(saleId) async {
+  try {
+    SharedPreferences loginUser = await SharedPreferences.getInstance();
+    dynamic temp = loginUser.getString("userResponse");
+    userResponse = temp == null ? "" : await json.decode(temp);
+
+    var response = await http.post(
+        Uri.parse(callBackUrl + "/api/cancel-reservation"),
+        body: json.encode({
+          "saleid": saleId.toString(),
+          "waiter_id": userResponse["id"].toString()
+        }),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        });
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+   
+    return false;
   }
 }

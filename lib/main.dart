@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:baranh/app_screens/basic_page.dart';
@@ -10,6 +11,7 @@ import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +33,10 @@ Future<void> main() async {
   // GetIt.instance.registerSingleton<AdService>(adService);
 
   // await adService.init();
+
+  if (Platform.isIOS) {
+    IOSFlutterLocalNotificationsPlugin().requestPermissions();
+  }
   runApp(const MyApp());
 }
 
@@ -148,6 +154,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
               changeState(() {});
             };
             checkLoginStatus(context);
+
             return loader == true
                 ? Scaffold(
                     backgroundColor: myBlack,

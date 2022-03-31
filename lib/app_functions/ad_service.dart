@@ -90,6 +90,7 @@ class AdService {
 
   String get _bannerUnitId {
     if (kDebugMode) {
+      // ignore: deprecated_member_use
       return BannerAd.testAdUnitId;
     }
 
@@ -107,6 +108,7 @@ class AdService {
 
   String get _interstitialAdUnitId {
     if (kDebugMode) {
+      // ignore: deprecated_member_use
       return InterstitialAd.testAdUnitId;
     }
 

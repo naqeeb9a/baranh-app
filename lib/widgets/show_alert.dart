@@ -99,7 +99,7 @@ dialogueCustom(
                                   onTap: () async {
                                     if (customColor == myGrey) {
                                       MotionToast.error(
-                                        description: "Table Already reserved",
+                                        description: const Text("Table Already reserved"),
                                         dismissable: true,
                                       ).show(context);
                                     } else if (snapshotTable[indexTable]
@@ -110,7 +110,7 @@ dialogueCustom(
                                                 .toLowerCase() ==
                                             "Floor Manager".toLowerCase()) {
                                       MotionToast.error(
-                                        description: "Assign waiter first",
+                                        description: const Text("Assign waiter first"),
                                         dismissable: true,
                                       ).show(context);
                                     } else {
@@ -138,7 +138,7 @@ dialogueCustom(
                                               .pop();
                                           MotionToast.error(
                                             description:
-                                                "Waiter not assigned Check your internet",
+                                                const Text("Waiter not assigned Check your internet"),
                                             dismissable: true,
                                           ).show(context);
                                         } else {
@@ -157,7 +157,7 @@ dialogueCustom(
                                                 .pop();
                                             MotionToast.error(
                                               description:
-                                                  "Table not assigned Check your internet",
+                                                  const Text("Table not assigned Check your internet"),
                                               dismissable: true,
                                             ).show(context);
                                           } else if (response ==
@@ -170,7 +170,7 @@ dialogueCustom(
                                                 .pop();
                                             MotionToast.error(
                                               description:
-                                                  "Table already assigned reopen the dialogue to get the updated status",
+                                                  const Text("Table already assigned reopen the dialogue to get the updated status"),
                                               dismissable: true,
                                             ).show(context);
                                           } else {
@@ -184,7 +184,7 @@ dialogueCustom(
                                               searchDelegate();
                                             }
                                             MotionToast.success(
-                                              description: snapshotTable[
+                                              description: Text(snapshotTable[
                                                                   indexTable]
                                                               ["waiter_id"] ==
                                                           null &&
@@ -198,7 +198,7 @@ dialogueCustom(
                                                               ["table_id"] ==
                                                           null
                                                       ? "Table assigned"
-                                                      : "Table changed",
+                                                      : "Table changed"),
                                               dismissable: true,
                                             ).show(context);
                                           }
@@ -217,7 +217,7 @@ dialogueCustom(
                                               .pop();
                                           MotionToast.error(
                                             description:
-                                                "Table not assigned Check your internet",
+                                                const Text("Table not assigned Check your internet"),
                                             dismissable: true,
                                           ).show(context);
                                         } else if (response ==
@@ -230,7 +230,7 @@ dialogueCustom(
                                               .pop();
                                           MotionToast.error(
                                             description:
-                                                "Table already assigned reopen the dialogue to get the updated status",
+                                                const Text("Table already assigned reopen the dialogue to get the updated status"),
                                             dismissable: true,
                                           ).show(context);
                                         } else {
@@ -244,7 +244,7 @@ dialogueCustom(
                                             searchDelegate();
                                           }
                                           MotionToast.success(
-                                            description: snapshotTable[
+                                            description: Text(snapshotTable[
                                                                 indexTable]
                                                             ["waiter_id"] ==
                                                         null &&
@@ -257,7 +257,7 @@ dialogueCustom(
                                                             ["table_id"] ==
                                                         null
                                                     ? "Table assigned"
-                                                    : "Table changed",
+                                                    : "Table changed"),
                                             dismissable: true,
                                           ).show(context);
                                         }
@@ -302,107 +302,115 @@ dialogueCustom(
 
 dialogueCustomWaiter(
     context, snapshotTable, indexTable, assignTable, function, searchDelegate) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: InkWell(
-            onTap: () {
-              Navigator.of(context, rootNavigator: true).pop();
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                text(context, "Assign Waiter", 0.04, myWhite, bold: true),
-                const Icon(
-                  Icons.close,
-                  color: myWhite,
-                )
-              ],
+  try {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: InkWell(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  text(context, "Assign Waiter", 0.04, myWhite, bold: true),
+                  const Icon(
+                    Icons.close,
+                    color: myWhite,
+                  )
+                ],
+              ),
             ),
-          ),
-          backgroundColor: myBlack,
-          content: Container(
-            color: myBlack,
-            height: dynamicHeight(context, 0.6),
-            width: dynamicWidth(context, 0.8),
-            child: FutureBuilder(
-              future: getWaiters(snapshotTable[indexTable]["sale_id"]),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return loader(context);
-                } else if (snapshot.data == false) {
-                  return retry(
-                    context,
-                  );
-                } else if (snapshot.data.length == 0) {
-                  return Center(
-                      child: text(context, "no Waiters!!", 0.028, myWhite));
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () async {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.loading,
-                              barrierDismissible: false,
-                              lottieAsset: "assets/loader.json");
-                          assignTable = snapshot.data[index]["id"];
+            backgroundColor: myBlack,
+            content: Container(
+              color: myBlack,
+              height: dynamicHeight(context, 0.6),
+              width: dynamicWidth(context, 0.8),
+              child: FutureBuilder(
+                future: getWaiters(snapshotTable[indexTable]["sale_id"]),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return loader(context);
+                  } else if (snapshot.data == false) {
+                    return retry(
+                      context,
+                    );
+                  } else if (snapshot.data.length == 0) {
+                    return Center(
+                        child: text(context, "no Waiters!!", 0.028, myWhite));
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () async {
+                            CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.loading,
+                                barrierDismissible: false,
+                                lottieAsset: "assets/loader.json");
+                            assignTable = snapshot.data[index]["id"];
 
-                          var response = await assignWaiterOnline(
-                              snapshotTable[indexTable]["sale_id"],
-                              assignTable);
-                          if (response == false) {
-                            Navigator.of(context, rootNavigator: true).pop();
-                            MotionToast.error(
-                              description:
-                                  "Waiter not assigned Check your internet",
-                              dismissable: true,
-                            ).show(context);
-                          } else {
-                            Navigator.pop(context, function());
-                            Navigator.of(context, rootNavigator: true).pop();
-                            if (searchDelegate != "") {
-                              searchDelegate();
+                            var response = await assignWaiterOnline(
+                                snapshotTable[indexTable]["sale_id"],
+                                assignTable);
+                            if (response == false) {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              MotionToast.error(
+                                description:
+                                    const Text("Waiter not assigned Check your internet"),
+                                dismissable: true,
+                              ).show(context);
+                            } else {
+                              Navigator.pop(context, function());
+                              Navigator.of(context, rootNavigator: true).pop();
+                              if (searchDelegate != "") {
+                                searchDelegate();
+                              }
+                              MotionToast.success(
+                                description: const Text("Waiter assigned"),
+                                dismissable: true,
+                              ).show(context);
                             }
-                            MotionToast.success(
-                              description: "Waiter assigned",
-                              dismissable: true,
-                            ).show(context);
-                          }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: myOrange,
-                          child: FittedBox(
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.all(dynamicWidth(context, 0.01)),
-                              child: text(
-                                  context,
-                                  snapshot.data[index]["full_name"],
-                                  0.04,
-                                  myWhite,
-                                  alignText: TextAlign.center),
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            color: myOrange,
+                            child: FittedBox(
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(dynamicWidth(context, 0.01)),
+                                child: text(
+                                    context,
+                                    snapshot.data[index]["full_name"],
+                                    0.04,
+                                    myWhite,
+                                    alignText: TextAlign.center),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return text(context, "not working", 0.028, myWhite);
-                }
-              },
+                        );
+                      },
+                    );
+                  } else {
+                    return text(context, "not working", 0.028, myWhite);
+                  }
+                },
+              ),
             ),
-          ),
-        );
-      });
+          );
+        });
+  } catch (e) {
+    Navigator.of(context, rootNavigator: true).pop();
+    MotionToast.success(
+      description: const Text("Something went wrong please contact the developer"),
+      dismissable: true,
+    ).show(context);
+  }
 }

@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await http.post(Uri.parse(callBackUrl + "/api/signin-waiter"), body: {
         "email": email.text,
         "password": password.text,
-        "token": func(),
+        "token": fireBaseToken,
       });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -53,11 +53,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  String func() {
+  func() {
     FirebaseMessaging.instance.getToken().then((value) {
-      fireBaseToken = value!;
+      setState(() {
+        fireBaseToken = value!;
+      });
     });
-    return fireBaseToken;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    func();
   }
 
   @override
@@ -121,21 +128,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           function: () async {
                         if (!EmailValidator.validate(email.text)) {
                           MotionToast.error(
-                            title: "Error",
+                            title: const Text("Error"),
                             dismissable: true,
-                            titleStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                            description: const Text(
+                              "Please enter valid email!",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            description: "Please enter valid email!",
                           ).show(context);
                         } else if (password.text.isEmpty) {
                           MotionToast.error(
-                            title: "Error",
+                            title: const Text("Error"),
                             dismissable: true,
-                            titleStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                            description: const Text(
+                              "Please enter valid password!",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            description: "Please enter valid password!",
                           ).show(context);
                         } else {
                           var response = await loginFunction();
@@ -145,25 +156,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               loading = false;
                             });
                             MotionToast.error(
-                              title: "Error",
+                              title: const Text("Error"),
                               dismissable: true,
-                              titleStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                              description: const Text(
+                                "Invalid Credentials",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              description: "Invalid Credentials",
                             ).show(context);
                           } else if (response == false) {
                             setState(() {
                               loading = false;
                             });
                             MotionToast.error(
-                              title: "Error",
+                              title: const Text("Error"),
                               dismissable: true,
-                              titleStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                              description: const Text(
+                                "Check your Internet or try again later",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              description:
-                                  "Check your Internet or try again later",
                             ).show(context);
                           } else {
                             SharedPreferences loginUser =

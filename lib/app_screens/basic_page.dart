@@ -35,42 +35,40 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
 
   fcmListen() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      if (event.data['id'] == userResponse['id']) {
-        LocalNotificationsService.instance
-            .showChatNotification(
+      LocalNotificationsService.instance
+          .showChatNotification(
+        title: '${event.notification!.title}',
+        body: '${event.notification!.body}',
+      )
+          .then((value) async {
+        await FlutterRingtonePlayer.play(
+          android: AndroidSounds.ringtone,
+          ios: IosSounds.electronic,
+          looping: true,
+          volume: 1.0,
+          asAlarm: true,
+        );
+        return CoolAlert.show(
+          context: customContext,
           title: '${event.notification!.title}',
-          body: '${event.notification!.body}',
-        )
-            .then((value) async {
-          await FlutterRingtonePlayer.play(
-            android: AndroidSounds.ringtone,
-            ios: IosSounds.electronic,
-            looping: true,
-            volume: 1.0,
-            asAlarm: true,
-          );
-          return CoolAlert.show(
-            context: customContext,
-            title: '${event.notification!.title}',
-            text: '${event.notification!.body}',
-            type: CoolAlertType.info,
-            confirmBtnText: "OK",
-            backgroundColor: myOrange,
-            barrierDismissible: false,
-            showCancelBtn: false,
-            confirmBtnColor: myOrange,
-            lottieAsset: "assets/bell.json",
-            confirmBtnTextStyle: TextStyle(
-              fontSize: dynamicWidth(context, 0.04),
-              color: myWhite,
-            ),
-            onConfirmBtnTap: () {
-              FlutterRingtonePlayer.stop();
-              Navigator.of(context, rootNavigator: true).pop();
-            },
-          );
-        });
-      }
+          text: '${event.notification!.body}',
+          type: CoolAlertType.info,
+          confirmBtnText: "OK",
+          backgroundColor: myOrange,
+          barrierDismissible: false,
+          showCancelBtn: false,
+          confirmBtnColor: myOrange,
+          lottieAsset: "assets/bell.json",
+          confirmBtnTextStyle: TextStyle(
+            fontSize: dynamicWidth(context, 0.04),
+            color: myWhite,
+          ),
+          onConfirmBtnTap: () {
+            FlutterRingtonePlayer.stop();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        );
+      });
     });
   }
 

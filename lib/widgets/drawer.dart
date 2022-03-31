@@ -252,7 +252,7 @@ Widget drawerItems2(context) {
               function: () async {
                 if (cartItems.isEmpty) {
                   MotionToast.info(
-                    description: "Cart is empty",
+                    description: const Text("Cart is empty"),
                     dismissable: true,
                   ).show(context);
                 } else {
@@ -285,7 +285,7 @@ Widget drawerItems2(context) {
                         if (response == false) {
                           Navigator.of(context, rootNavigator: true).pop();
                           MotionToast.error(
-                            description: "Server Error or check your internet",
+                            description: const Text("Server Error or check your internet"),
                             dismissable: true,
                           ).show(context);
                         } else {

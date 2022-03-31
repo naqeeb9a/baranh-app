@@ -245,7 +245,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                       hintText == "mm/dd/yyyy" ||
                       indexValue == "Select time") {
                     MotionToast.info(
-                      description: "check provided seats or dates",
+                      description: const Text("check provided seats or dates"),
                       dismissable: true,
                     ).show(context);
                   } else {
@@ -289,13 +289,13 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                       Navigator.of(context, rootNavigator: true).pop();
                       MotionToast.error(
                         description:
-                            "Slots are not available try again after some time",
+                            const Text("Slots are not available try again after some time"),
                         dismissable: true,
                       ).show(context);
                     } else if (response == "internet") {
                       Navigator.of(context, rootNavigator: true).pop();
                       MotionToast.warning(
-                        description: "Check your internet",
+                        description: const Text("Check your internet"),
                         dismissable: true,
                       );
                     } else {

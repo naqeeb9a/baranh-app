@@ -71,7 +71,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
               });
         } else {
           MotionToast.info(
-            description: "Something Went wrong",
+            description: const Text("Something Went wrong"),
             dismissable: true,
           ).show(context);
         }
@@ -112,7 +112,7 @@ buttonsColumn(context, buttonText1, buttonText2, snapshotTable, indexTable,
               );
             } else {
               MotionToast.error(
-                description: "Something went Wrong",
+                description: const Text("Something went Wrong"),
                 width: dynamicWidth(context, 0.8),
               ).show(context);
             }
