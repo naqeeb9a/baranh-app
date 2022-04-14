@@ -6,10 +6,10 @@ PODS:
   - Firebase/Messaging (8.11.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.11.0)
-  - firebase_core (1.12.0):
+  - firebase_core (1.13.1):
     - Firebase/CoreOnly (= 8.11.0)
     - Flutter
-  - firebase_messaging (11.2.6):
+  - firebase_messaging (11.2.11):
     - Firebase/Messaging (= 8.11.0)
     - firebase_core
     - Flutter
@@ -41,6 +41,9 @@ PODS:
     - Flutter
   - flutter_ringtone_player (0.0.1):
     - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - Google-Mobile-Ads-SDK (8.11.0):
     - GoogleAppMeasurement (< 9.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
@@ -105,6 +108,7 @@ PODS:
   - PromisesObjC (2.0.0)
   - shared_preferences_ios (0.0.1):
     - Flutter
+  - Toast (4.0.0)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -115,6 +119,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_ringtone_player (from `.symlinks/plugins/flutter_ringtone_player/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -136,6 +141,7 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
     - PromisesObjC
+    - Toast
 
 EXTERNAL SOURCES:
   device_info_plus:
@@ -150,6 +156,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_ringtone_player:
     :path: ".symlinks/plugins/flutter_ringtone_player/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   google_mobile_ads:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
   package_info:
@@ -166,8 +174,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
-  firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
-  firebase_messaging: 8dc3a6f069774a0bf4dac04dd79fdaffcb62e145
+  firebase_core: 08f6a85f62060111de5e98d6a214810d11365de9
+  firebase_messaging: 4a993bb4aa1a83349988d853c637fbb0494dab15
   FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
   FirebaseCoreDiagnostics: 64d9709d804a6c25bd77841371c1fcfd909d5601
   FirebaseInstallations: 044eede8a049bce71c4541ee68d6e4364fcbe774
@@ -175,6 +183,7 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_ringtone_player: 15eba85187230b87b2512f0e1b92225618bc03e7
+  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   Google-Mobile-Ads-SDK: be2192b51b74d74a6ed70590c2e8275412f1b71e
   google_mobile_ads: a2f8b901601401bf7e691b4224d5992e9a37599a
   GoogleAppMeasurement: aa3cb422fab2b05d2efac543a5720d1a85b9dea5
@@ -184,10 +193,11 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
-  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

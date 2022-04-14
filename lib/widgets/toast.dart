@@ -3,5 +3,5 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 customToastFlutter(msg) {
   Fluttertoast.showToast(
-      msg: msg, backgroundColor: myOrange, textColor: myWhite);
+      msg: msg, backgroundColor: myOrange, textColor: myWhite,);
 }

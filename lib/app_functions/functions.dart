@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:baranh/utils/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -240,7 +242,9 @@ assignWaiterOnline(saleId, waiterId) async {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-        });
+        }).timeout(const Duration(seconds: 10), onTimeout: () {
+      throw TimeoutException("message");
+    });
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -248,6 +252,10 @@ assignWaiterOnline(saleId, waiterId) async {
     } else {
       return false;
     }
+  } on TimeoutException {
+    return "timeOut";
+  } on SocketException {
+    return "internet";
   } catch (e) {
     return false;
   }
@@ -351,7 +359,6 @@ cancelReservation(saleId) async {
       return false;
     }
   } catch (e) {
-   
     return false;
   }
 }
