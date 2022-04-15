@@ -10,6 +10,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:upgrader/upgrader.dart';
@@ -31,6 +32,11 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     fcmListen();
+    FirebaseMessaging.instance.getToken().then((value) {
+      if (kDebugMode) {
+        print("token $value");
+      }
+    });
   }
 
   fcmListen() async {
@@ -105,7 +111,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
       case "Dine In Orders":
         return const DineInOrders();
       case "New Reservations":
-        return const NewReservationsPage();
+        return NewReservationsPage();
       case "Callback Url":
         return const CallBackUrl();
 

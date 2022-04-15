@@ -26,5 +26,5 @@ dynamic drawerRefresh;
 var cartItems = [].obs;
 var reservedTable = [];
 var callBackUrl = "https://baranh.pk";
-var version = "1.4.6";
+var version = "1.4.8";
 String fireBaseToken = "";

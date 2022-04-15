@@ -12,9 +12,11 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+// ignore: must_be_immutable
 class NewReservationsPage extends StatefulWidget {
-  const NewReservationsPage({Key? key}) : super(key: key);
+  NewReservationsPage({Key? key}) : super(key: key);
 
+  bool isMount = true;
   @override
   State<NewReservationsPage> createState() => _NewReservationsPageState();
 }
@@ -29,6 +31,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
 
   @override
   void dispose() {
+    widget.isMount = false;
     _timer.cancel();
     _seats.dispose();
     super.dispose();
@@ -37,9 +40,10 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (letsRefresh == "") {
-      } else {
-        letsRefresh();
+      if (widget.isMount = true) {
+        if (letsRefresh != "") {
+          letsRefresh();
+        }
       }
     });
     super.initState();
